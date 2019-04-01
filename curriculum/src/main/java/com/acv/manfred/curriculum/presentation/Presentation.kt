@@ -1,9 +1,9 @@
 package com.acv.manfred.curriculum.presentation
 
 import arrow.core.Some
-import com.acv.manfredcv.domain.model.BaseError
-import com.acv.manfredcv.domain.model.NotFoundError
-import com.acv.manfredcv.domain.model.UnknownServerError
+import com.acv.manfred.curriculum.domain.model.BaseError
+import com.acv.manfred.curriculum.domain.model.NotFoundError
+import com.acv.manfred.curriculum.domain.model.UnknownServerError
 
 
 interface BaseView {

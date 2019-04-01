@@ -1,8 +1,5 @@
 package com.acv.manfred.curriculum.data.example
 
-import com.acv.manfred.curriculum.data.example.Profile
-import com.acv.manfred.curriculum.data.example.SignificantRelationship
-
 
 /**
  * Main data of the CV author

@@ -1,6 +1,6 @@
 package com.acv.manfred.curriculum.presentation
 
-import com.acv.manfredcv.domain.model.BaseError
+import com.acv.manfred.curriculum.domain.model.BaseError
 
 interface ScreenState
 object empty : ScreenState

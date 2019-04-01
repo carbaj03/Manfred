@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.acv.manfred.curriculum.presentation.BaseView
 import com.acv.manfred.curriculum.presentation.Failure
 import com.acv.manfred.curriculum.presentation.Transaction
-import com.acv.manfredcv.domain.model.BaseError
+import com.acv.manfred.curriculum.domain.model.BaseError
 
 
 open class BaseViewModel : ViewModel(), BaseView {
