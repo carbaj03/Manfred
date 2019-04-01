@@ -43,4 +43,7 @@ data class Example(
      *
      */
     var questionnaire: Set<Questionnaire>? = null
-)
+){
+    fun toDomain(): Example = this
+}
+
