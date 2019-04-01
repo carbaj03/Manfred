@@ -1,1 +1,1 @@
-include ':curriculum', ':app', ':base', ':instantapp'
+include ':curriculum', ':app', ':base', ':instantapp', ':uikit'

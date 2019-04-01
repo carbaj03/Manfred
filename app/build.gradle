@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    
-
 
     defaultConfig {
         applicationId "com.acv.manfred.app"
@@ -11,8 +9,6 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
-
     }
 
     buildTypes {
@@ -22,9 +18,15 @@ android {
        }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
     implementation project(':curriculum')
     implementation project(':base')
+    implementation project(':uikit')
 }

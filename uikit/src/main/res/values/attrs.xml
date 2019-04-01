@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <attr format="reference" name="string"/>
+  <attr format="string" name="textAction"/>
+  <attr format="reference" name="icon"/>
+  <attr format="reference" name="error"/>
+  <attr format="boolean" name="click"/>
+
+  <declare-styleable name="HeaderAction">
+    <attr name="text"/>
+    <attr name="textAction"/>
+    <attr name="icon"/>
+  </declare-styleable>
+
+  <declare-styleable name="ChipHeaderAction">
+    <attr name="text"/>
+    <attr name="textAction"/>
+    <attr name="icon"/>
+    <attr name="error"/>
+  </declare-styleable>
+
+  <declare-styleable name="Input">
+    <attr name="input_style"/>
+    <attr name="leading_icon" format="reference"/>
+    <attr name="trailing_icon" format="reference"/>
+    <attr name="click" />
+  </declare-styleable>
+
+</resources>
