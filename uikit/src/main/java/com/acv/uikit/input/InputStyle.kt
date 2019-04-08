@@ -11,7 +11,5 @@ sealed class InputStyle(
     val compoundDrawable: Option<CompoundDrawable>
 ) : Style
 
-object InputDate :
-    InputStyle(1000, CompoundDrawable(R.drawable.ic_event.some(), R.drawable.ic_arrow_drop_down.some()).some())
-
-object InputText : InputStyle(1001, None)
+object InputText : InputStyle(1000, None)
+object InputDate : InputStyle(1001, CompoundDrawable(R.drawable.ic_event.some(), R.drawable.ic_arrow_drop_down.some()).some())

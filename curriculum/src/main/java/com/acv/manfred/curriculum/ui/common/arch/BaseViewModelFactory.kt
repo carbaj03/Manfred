@@ -12,4 +12,13 @@ object EmptyViewModelFactory : ViewModelProvider.Factory {
     }
 }
 
+//class AssetViewModelFactory(private val id: IdAsset) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(AssetViewModel::class.java)) {
+//            return AssetViewModel(id) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}
+
 object EmptyViewModel : BaseViewModel()

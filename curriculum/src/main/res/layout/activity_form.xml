@@ -11,17 +11,34 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.acv.uikit.input.Input
-                android:id="@+id/tilDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="description"
-                app:boxBackgroundColor="@color/primaryColor"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <!--<com.acv.uikit.input.Input-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Full name"-->
+        <!--android:layout_margin="8dp"-->
+        <!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>-->
+
+        <!--<com.acv.uikit.input.Input-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Date"-->
+        <!--android:layout_margin="8dp"-->
+        <!--app:input_style="Date"-->
+        <!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>-->
+
+        <!--<com.acv.uikit.input.Input-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Year Experience"-->
+        <!--android:layout_margin="8dp"-->
+        <!--style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"-->
+        <!--app:boxStrokeColor="@color/design_default_color_primary_dark"/>-->
+
 
     </LinearLayout>
 

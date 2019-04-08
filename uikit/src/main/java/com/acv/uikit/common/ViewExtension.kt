@@ -1,4 +1,4 @@
-package com.fintonic.uikit.common
+package com.acv.uikit.common
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,6 @@ import com.google.android.material.navigation.NavigationView
 
 infix fun ViewGroup.inflate(res: Int) =
         LayoutInflater.from(context).inflate(res, this, false)
-
 
 infix fun View.click(f: () -> Unit) =
         setOnClickListener { f() }

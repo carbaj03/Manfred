@@ -1,37 +1,48 @@
-package com.acv.manfredcv.presentation.common.activity
+package com.acv.manfred.curriculum.ui.common.activity
 
-import android.view.KeyEvent
-import android.view.MenuItem
+import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.acv.manfredcv.presentation.common.fragment.BaseFragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.acv.manfred.curriculum.R
+import com.acv.manfred.curriculum.ui.common.arch.EmptyViewModelFactory
+import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-            when (item.itemId) {
-                android.R.id.home -> {
-                    onBackPressed()
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            super.onBackPressed()
-            //additional code
-        } else {
-            supportFragmentManager.fragments.map { (it as BaseFragment).onBackPressed() }
-//            supportFragmentManager.popBackStack()
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(getLayout())
+        create(SavedInstance(savedInstanceState))
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            onBackPressed()
-            return false
-        }
-        return super.onKeyDown(keyCode, event)
+    abstract fun create(savedInstance: SavedInstance)
+    abstract fun getLayout(): Int
+
+    fun <T : BaseFragment> T.load(container: Int = R.id.fragment_container): Unit =
+        supportFragmentManager
+            .beginTransaction()
+            .replace(container, this)
+            .commitNow()
+}
+
+inline fun <reified T : ViewModel> BaseActivity.viewModelProviders(factory: ViewModelProvider.Factory = EmptyViewModelFactory): T =
+    viewModelProvider(factory).get(T::class.java)
+
+fun BaseActivity.viewModelProvider(factory: ViewModelProvider.Factory): ViewModelProvider =
+    if (factory !== EmptyViewModelFactory) ViewModelProviders.of(this, factory)
+    else ViewModelProviders.of(this)
+
+inline fun <reified M> BaseActivity.createIntent(f: Intent.() -> Unit = {}): Intent =
+    Intent(this, M::class.java).apply { f() }
+
+
+data class SavedInstance(val a: Bundle) {
+    companion object {
+        operator fun invoke(a: Bundle?): SavedInstance =
+            a?.let { SavedInstance(a) } ?: SavedInstance(Bundle())
     }
 }

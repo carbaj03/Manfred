@@ -1,4 +1,4 @@
-package com.acv.manfredcv.presentation.common.activity
+package com.acv.manfred.curriculum.ui.common.activity
 
 import android.widget.Toast
 
