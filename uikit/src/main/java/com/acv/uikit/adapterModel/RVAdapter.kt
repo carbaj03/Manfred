@@ -1,32 +1,30 @@
-package com.acv.uikit.adapterRender
+package com.acv.uikit.adapterModel
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.acv.uikit.adapter.POSITION
-import com.acv.uikit.adapterModel.Adapter
-import com.acv.uikit.adapterModel.BaseViewHolder
-import com.acv.uikit.adapterModel.Layout
 import com.acv.uikit.common.inflate
-import java.util.*
 
 typealias Layout = Int
 
-open class RVAdapter<M : Any>(
-    private val l: (M, View) -> BaseViewHolder<M>,
+abstract class AdapterModel(val layout: Layout)
+
+open class RVAdapter<M : AdapterModel>(
     private val items: MutableList<M> = mutableListOf(),
-    val f: HashMap<Class<out M>, Layout>
+    private val l: (M, View) -> BaseViewHolder<M>
 ) : RecyclerView.Adapter<BaseViewHolder<M>>(), Adapter<M> {
+    private val a: HashMap<Layout, Class<out M>> = hashMapOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Layout): BaseViewHolder<M> =
-        l(getKeysByValue(f, viewType)!!.newInstance(), parent.inflate(viewType))
+        l(a[viewType]!!.newInstance(), parent.inflate(viewType))
 
     override fun onBindViewHolder(holder: BaseViewHolder<M>, position: Int): Unit =
         holder.bindTo(items[position])
 
     override fun getItemViewType(position: Int): Int {
-        //Video -> R.layout.video
-        return f[items[position]::class.java] ?: 0
+        a[items[position].layout] = items[position]::class.java
+        return items[position].layout
     }
 
     override fun getItemCount(): Int =
@@ -38,19 +36,9 @@ open class RVAdapter<M : Any>(
     }
 
     override fun swap(newItems: List<M>, compare: (M, M) -> Boolean) {
-        val diffResult = com.acv.uikit.adapterModel.autoNotify(items, newItems, compare)
+        val diffResult = autoNotify(items, newItems, compare)
         items.clear()
         items.addAll(newItems)
         diffResult.dispatchUpdatesTo(this)
     }
-}
-
-
-fun <T, E> getKeysByValue(map: Map<T, E>, value: E): T? {
-    for ((key, value1) in map) {
-        if (Objects.equals(value, value1)) {
-            return key
-        }
-    }
-    return null
 }

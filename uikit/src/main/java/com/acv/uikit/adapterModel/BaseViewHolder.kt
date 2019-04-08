@@ -1,8 +1,7 @@
-package com.acv.uikit.adapterRender
+package com.acv.uikit.adapterModel
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.acv.uikit.adapterModel.BaseViewHolder
 import kotlinx.android.extensions.LayoutContainer
 
 abstract class BaseViewHolder<in M>(

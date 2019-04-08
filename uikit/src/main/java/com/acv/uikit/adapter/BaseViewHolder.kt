@@ -2,7 +2,7 @@ package com.acv.uikit.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.acv.uikit.adapterRender.BaseViewHolder
+import com.acv.uikit.adapterModel.BaseViewHolder
 import com.fintonic.uikit.adapter.Visitable
 
 

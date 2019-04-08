@@ -4,19 +4,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.ui.common.activity.BaseActivity
 import com.acv.manfred.curriculum.ui.common.activity.SavedInstance
-import com.acv.uikit.adapterRender.RVAdapter
-import com.acv.uikit.adapterRender.ViewHolder
-import com.acv.uikit.renderer.RVRendererAdapter
-import com.acv.uikit.renderer.Renderer
-import com.acv.uikit.renderer.RendererBuilder
+import com.acv.uikit.adapterModel.RVAdapter
+import com.acv.uikit.adapterRender.RVAdapter as renderAdapter
 import kotlinx.android.synthetic.main.activity_form.*
-import java.util.*
 
 class FormActivity : BaseActivity() {
 
     //    private var adapter: RVRendererAdapter<Video>? = null
     val rvadapter by lazy {
-        RVAdapter<Media>(
+        renderAdapter(
             l = { video, v ->
                 when (video) {
                     is Video -> VideoHolder(v)
@@ -24,19 +20,33 @@ class FormActivity : BaseActivity() {
                 }
             },
             f = hashMapOf(
-                Video::class.java to VideoHolder::class.java,
-                Audio::class.java to AudioHolder::class.java
+                Video::class.java to R.layout.video_renderer,
+                Audio::class.java to R.layout.audio_renderer
             )
         )
+    }
+
+    val rvadapterModel by lazy {
+        RVAdapter<MediaAdapter> { video, v ->
+            when (video) {
+                is VideoAdapter -> VideoAdapterHolder(v)
+                is AudioAdapter -> AudioAdapterHolder(v)
+            }
+        }
     }
 
     override fun getLayout(): Int = R.layout.activity_form
 
     override fun create(savedInstance: SavedInstance) {
         rvVideo.layoutManager = LinearLayoutManager(this)
-        rvVideo.adapter = rvadapter
+
+
+//        rvVideo.adapter = rvadapter
+//        val randomVideoCollectionGenerator = RandomVideoCollectionGenerator()
+//        rvadapter.swap(randomVideoCollectionGenerator.generate(100).videos)
+        rvVideo.adapter = rvadapterModel
         val randomVideoCollectionGenerator = RandomVideoCollectionGenerator()
-        rvadapter.swap(randomVideoCollectionGenerator.generate(100).videos)
+        rvadapterModel.swap(randomVideoCollectionGenerator.generate(100).videos.toAdapter())
     }
 
 
