@@ -45,4 +45,6 @@ enum class RoleProfile private constructor(private val value: String) {
             return constant ?: throw IllegalArgumentException(value)
         }
     }
+
+    fun toDomain() = this
 }

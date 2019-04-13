@@ -1,71 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <com.acv.uikit.input.Input
+            android:id="@+id/inputFullName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-        <com.acv.uikit.input.Input
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Full name"
-                android:layout_margin="8dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Full name" />
 
         <com.acv.uikit.input.Input
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Date"
-                android:layout_margin="8dp"
-                app:input_style="Date"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Date"
+            app:input_style="Date" />
 
         <com.acv.uikit.input.Input
-                android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Year Experience"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Year Experience"
-                android:layout_margin="8dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                app:boxStrokeColor="@color/design_default_color_primary_dark"
-        />
+                android:visibility="gone"
+                android:enabled="false"
+                android:text="safda"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="222"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.acv.uikit.chip.ChipHeaderAction
-                android:id="@+id/chaCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_add"
-                app:text="Categoria"
-                app:textAction="Add"
-        />
+            android:id="@+id/chaPublicLinks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_add"
+            app:text="Public Links"
+            app:textAction="Add" />
+
+        <com.acv.uikit.chip.ChipHeaderAction
+            android:id="@+id/chaRoles"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_add"
+            app:text="Roles"
+            app:textAction="Add" />
 
     </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleGravity="top"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="top"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:title="adsf"
-                    app:titleTextColor="@color/primaryDarkColor"
-                    app:layout_collapseMode="pin"/>
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:title="adsf"
+                app:titleTextColor="@color/primaryDarkColor" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

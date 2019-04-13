@@ -3,6 +3,7 @@ package com.acv.uikit
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import arrow.core.None
 import arrow.core.Option
@@ -46,6 +47,6 @@ class HeaderAction @JvmOverloads constructor(
         }
     }
 
-    fun action(f: () -> Unit): Unit =
-        btnAction click { f() }
+    fun action(f: (View) -> Unit): Unit =
+        btnAction click { f(btnAction) }
 }

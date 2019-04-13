@@ -32,7 +32,7 @@ class ChipView @JvmOverloads constructor(
         }
 
         override fun insert(m: ChipModel) {
-            addView(Chip(context, null, R.style.Widget_MaterialComponents_Chip_Entry).config(m, childCount))
+            addView(Chip(context, null, R.style.Widget_MaterialComponents_Chip_Entry).config(m))
         }
 
         override fun moved(fromPosition: Int, toPosition: Int) {
@@ -40,21 +40,21 @@ class ChipView @JvmOverloads constructor(
         }
 
         override fun change(position: Int, m: ChipModel) {
-            getChip(position).config(m, position)
+            getChip(position).config(m)
         }
 
-        fun Chip.config(m: ChipModel, position: Int): Chip {
+        fun Chip.config(m: ChipModel): Chip {
             text = m.title
 
             m.checable.map { c ->
                 isChecked = c.isSelected
                 isCheckable = true
-                setOnClickListener { c.f(position) }
+                setOnClickListener { c.f(m) }
             }
 
             m.closelable.map { c ->
                 isCloseIconVisible = true
-                setOnCloseIconClickListener { c.f(position) }
+                setOnCloseIconClickListener { c.f(m) }
             }
             return this
         }

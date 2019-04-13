@@ -3,11 +3,10 @@ package com.acv.manfred.curriculum.ui.common.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.ui.common.arch.EmptyViewModelFactory
+import com.acv.manfred.curriculum.ui.common.arch.Obs2
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 
 
@@ -46,3 +45,7 @@ data class SavedInstance(val a: Bundle) {
             a?.let { SavedInstance(a) } ?: SavedInstance(Bundle())
     }
 }
+
+//LiveDate
+infix fun <M, T : M> BaseActivity.observe(f: () -> LiveData<T>): Obs2<T> =
+    { o: (T) -> Unit -> f().observe(this as LifecycleOwner, Observer { o(it!!) }) }
