@@ -26,10 +26,14 @@ import kotlinx.android.synthetic.main.view_popup_list.view.*
 
 class Popup @JvmOverloads constructor(
     val context: Context,
-    val attrs: AttributeSet? = null,
+    attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : PopupWindow(context, attrs, defStyleAttr), Errorable, Component<PopupModel> {
-    private val rvadapterModel by lazy { RVAdapter<PopupAdapter> { video, v -> PopupAdapterHolder(v) } }
+
+    lateinit var f: (PopupAdapter) -> Unit
+    private val rvadapterModel by lazy {
+        RVAdapter<PopupAdapter> { _, v -> PopupAdapterHolder(v) { f(it);dismiss(); } }
+    }
 
     override fun errorK(value: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -42,11 +46,11 @@ class Popup @JvmOverloads constructor(
     }
 
     override fun render(model: PopupModel): Component<PopupModel> {
-        rvadapterModel.swap(listOf(PopupAdapter("title1"), PopupAdapter("title1")))
+        show(model.view, model.list, model.onClick)
         return this
     }
 
-    fun normalMode() {
+    private fun normalMode() {
         val view = inflateView().apply {
             rvList.run {
                 layoutManager = LinearLayoutManager(context)
@@ -69,8 +73,9 @@ class Popup @JvmOverloads constructor(
     private fun inflateView() =
         LayoutInflater.from(context).inflate(R.layout.view_popup_list, null)
 
-    fun show(view: View) {
-        rvadapterModel.swap(listOf(PopupAdapter("title1"), PopupAdapter("title1")))
+    private fun show(view: View, list: List<PopupAdapter>, f: (PopupAdapter) -> Unit) {
+        this.f = f
+        rvadapterModel.swap(list)
         showAsDropDown(view)
     }
 }
@@ -82,9 +87,11 @@ data class PopupAdapter(
 
 
 class PopupAdapterHolder(
-    view: View
+    view: View,
+    val f: (PopupAdapter) -> Unit
 ) : ViewHolder<PopupAdapter>(view) {
     override fun PopupAdapter.view() {
         text.text = title
+        itemView.setOnClickListener { f(this) }
     }
 }

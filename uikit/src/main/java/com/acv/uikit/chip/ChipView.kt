@@ -2,6 +2,7 @@ package com.acv.uikit.chip
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 import com.acv.uikit.R
 import com.acv.uikit.adapterModel.CGAdapter
 import com.acv.uikit.common.Errorable
@@ -13,11 +14,7 @@ class ChipView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ChipGroup(context, attrs, defStyleAttr), Errorable {
-    private var adapter: CGAdapter
-
-    init {
-        adapter = CGAdapter(observable(), mutableListOf())
-    }
+    private var adapter: CGAdapter= CGAdapter(observable(), mutableListOf())
 
     fun swap(newItems: List<ChipModel>, compare: (ChipModel, ChipModel) -> Boolean) {
         adapter.swap(newItems, compare)
@@ -45,6 +42,8 @@ class ChipView @JvmOverloads constructor(
 
         fun Chip.config(m: ChipModel): Chip {
             text = m.title
+
+//            chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_add)
 
             m.checable.map { c ->
                 isChecked = c.isSelected

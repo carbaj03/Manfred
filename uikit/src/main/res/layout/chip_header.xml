@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:background="@drawable/box_background"
     tools:parentTag="android.widget.LinearLayout">
 
     <com.acv.uikit.HeaderAction
@@ -12,6 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         custom:text="asfdaf" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""/>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -33,4 +40,4 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         tools:text="Error" />
-</merge>
+</LinearLayout>

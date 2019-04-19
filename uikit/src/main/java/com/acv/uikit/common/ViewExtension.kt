@@ -11,5 +11,5 @@ import com.google.android.material.navigation.NavigationView
 infix fun ViewGroup.inflate(res: Int) =
         LayoutInflater.from(context).inflate(res, this, false)
 
-infix fun View.click(f: () -> Unit) =
-        setOnClickListener { f() }
+infix fun View.click(f: (View) -> Unit) =
+        setOnClickListener { f(this) }

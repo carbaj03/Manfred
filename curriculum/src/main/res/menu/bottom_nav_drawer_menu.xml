@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav1"
+            android:title="Author" />
+        <item
+            android:id="@+id/nav2"
+            android:title="experience" />
+        <item
+            android:id="@+id/nav3"
+            android:title="education" />
+        <item
+            android:id="@+id/nav4"
+            android:title="languages" />
+        <item
+            android:id="@+id/nav5"
+            android:title="miscEducation" />
+        <item
+            android:id="@+id/nav6"
+            android:title="questionnaire" />
+    </group>
+</menu>

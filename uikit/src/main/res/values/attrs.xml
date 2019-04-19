@@ -12,11 +12,20 @@
         <attr name="icon"/>
     </declare-styleable>
 
-    <declare-styleable name="ChipHeaderAction">
+    <declare-styleable name="ChipsView">
         <attr name="text"/>
         <attr name="textAction"/>
         <attr name="icon"/>
         <attr name="error"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="ChipsSocialView">
+        <attr name="text"/>
+        <attr name="textAction"/>
+        <attr name="icon"/>
+        <attr name="error"/>
+
     </declare-styleable>
 
     <declare-styleable name="Input">
