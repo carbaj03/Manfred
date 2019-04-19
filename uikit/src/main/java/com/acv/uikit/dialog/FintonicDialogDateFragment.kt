@@ -27,6 +27,7 @@ class FintonicDialogDateFragment : DialogFragment() {
     }
 
     var title: String = ""
+    var cal: Calendar = Calendar.getInstance()
     val text : String get() = tieInput.text.toString()
     var accept: DialogDateAction = NoneDateAction
     var cancel: DialogDateAction = NoneDateAction

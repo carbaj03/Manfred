@@ -60,7 +60,7 @@ class Input @JvmOverloads constructor(
             isFocusable = true
             editText!!.isClickable = false
             editText!!.isFocusable = false
-            setOnClickListener { action.extract() }
+            editText!!.setOnClickListener { action.value() }
         }
     }
 
