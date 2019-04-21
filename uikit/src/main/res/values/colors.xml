@@ -10,4 +10,5 @@
     <color name="secondaryTextColor">#000000</color>
 
     <color name="background">#FFF</color>
+    <color name="border_enabled">#555</color>
 </resources>

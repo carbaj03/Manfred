@@ -46,5 +46,6 @@ enum class RoleProfile private constructor(private val value: String) {
         }
     }
 
-    fun toDomain() = this
+    fun
+            toDomain() = this
 }

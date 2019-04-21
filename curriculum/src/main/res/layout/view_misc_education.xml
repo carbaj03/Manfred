@@ -12,16 +12,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Explain to your future company what kind of professional you are"/>
+            android:text="Miscellaneous education such as courses, certifications, awards, projects, etc."/>
 
         <com.acv.uikit.input.Input
-            android:id="@+id/inputFullName"
+            android:id="@+id/inputMiscEducation"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-
-            android:hint="Intro" />
+            android:hint="Miscellany" />
 
 
     </LinearLayout>

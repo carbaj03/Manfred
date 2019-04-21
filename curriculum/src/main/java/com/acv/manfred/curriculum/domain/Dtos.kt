@@ -9,3 +9,7 @@ data class GetCvDto(
 data class RolesDto(
     val id: String, val stepName: StepName
 )
+
+data class ProficiencyDto(
+    val id: String, val stepName: StepName
+)

@@ -13,3 +13,4 @@ sealed class InputStyle(
 
 object InputText : InputStyle(1000, None)
 object InputDate : InputStyle(1001, CompoundDrawable(R.drawable.ic_event.some(), R.drawable.ic_arrow_drop_down.some()).some())
+object InputSpinner : InputStyle(1002, CompoundDrawable(trailing = R.drawable.ic_arrow_drop_down.some()).some())

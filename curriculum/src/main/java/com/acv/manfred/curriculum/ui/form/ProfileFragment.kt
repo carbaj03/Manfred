@@ -7,8 +7,10 @@ import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.example.Example
 import com.acv.manfred.curriculum.data.example.RoleProfile
+import com.acv.manfred.curriculum.data.gateway.NetworkFetcher
 import com.acv.manfred.curriculum.data.gateway.RequestOperations
 import com.acv.manfred.curriculum.data.gateway.datasource.ApiModule
+import com.acv.manfred.curriculum.data.gateway.networkFetcher
 import com.acv.manfred.curriculum.ui.common.arch.FormViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
@@ -20,11 +22,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 class ProfileFragment : BaseFragment() {
-    private val model by lazy { viewModelProviders<FormViewModel>(FormViewModelFactory(dependencies)) }
+    private val model by lazy {
+        viewModelProviders<FormViewModel>(FormViewModelFactory(dependencies))
+    }
 
     private val dependencies by lazy {
-        object : RequestOperations<ForIO>, Async<ForIO> by IO.async() {
-            override val network: ApiModule = ApiModule()
+        object : RequestOperations<ForIO, ApiModule>,
+            Async<ForIO> by IO.async(),
+            NetworkFetcher<ApiModule> by ApiModule.networkFetcher()
+        {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }

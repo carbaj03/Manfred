@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.acv.manfred.curriculum.R
+import com.acv.manfred.curriculum.data.example.Proficiency
 import com.acv.manfred.curriculum.ui.common.activity.BaseActivity
 import com.acv.manfred.curriculum.ui.common.activity.createIntent
 import com.acv.manfred.curriculum.ui.common.fragment.createFragment
@@ -49,6 +50,8 @@ interface ModalNavigation : Launcher {
             R.id.nav1 -> baseActivity.run { createFragment<AuthorFragment>().load() }
             R.id.nav2 -> baseActivity.run { createFragment<ExperienceFragment>().load() }
             R.id.nav3 -> baseActivity.run { createFragment<EducationFragment>().load() }
+            R.id.nav4 -> baseActivity.run { createFragment<LanguageFragment>().load() }
+            R.id.nav5 -> baseActivity.run { createFragment<MiscEducationFragment>().load() }
             else -> baseActivity.run { createFragment<IntroFragment>().load() }
         }
 }

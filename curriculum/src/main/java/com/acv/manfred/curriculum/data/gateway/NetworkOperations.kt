@@ -1,31 +1,66 @@
 package com.acv.manfred.curriculum.data.gateway
 
 import arrow.Kind
-import arrow.core.left
-import arrow.core.right
-import arrow.effects.typeclasses.Async
+import arrow.extension
 import com.acv.manfred.curriculum.data.example.Example
-import com.acv.manfred.curriculum.data.example.Profile
+import com.acv.manfred.curriculum.data.example.Proficiency
 import com.acv.manfred.curriculum.data.example.RoleProfile
 import com.acv.manfred.curriculum.data.gateway.datasource.ApiModule
-import com.acv.manfred.curriculum.data.gateway.datasource.Role
 import com.acv.manfred.curriculum.domain.GetCvDto
+import com.acv.manfred.curriculum.domain.ProficiencyDto
 import com.acv.manfred.curriculum.domain.Result
 import com.acv.manfred.curriculum.domain.RolesDto
 
-interface NetworkOperations<F> : Async<F> {
-    val network: ApiModule
 
-    fun GetCvDto.requestCv(): Kind<F, Result<Example>> =
-            call(network::requestGet)
+@extension
+interface NetworkModuleNetworkFetcher : NetworkFetcher<ApiModule> {
+    companion object {
+        private val apiModule = ApiModule()
+    }
 
-    fun RolesDto.requestRoles(): Kind<F, Result<List<RoleProfile>>> =
-        call(network::requestRoles)
+    override fun requestGet(getBookingDto: GetCvDto, error: (Throwable) -> Unit, success: (Result<Example>) -> Unit) =
+        apiModule.requestGet(getBookingDto, error, success)
 
-    fun <A, R> A.call(a: Request<A, R>): Kind<F, R> =
-            async { callback ->
-                a(this, { err -> callback(err.left()) }, { value -> callback(value.right()) })
-            }
+    override fun requestRoles(roles: RolesDto, error: (Throwable) -> Unit, success: (Result<List<RoleProfile>>) -> Unit) =
+        apiModule.requestRoles(roles, error, success)
+
+    override fun requestProficiency(proficiency: ProficiencyDto, error: (Throwable) -> Unit, success: (Result<List<Proficiency>>) -> Unit) =
+        apiModule.requestProficiency(proficiency, error, success)
+}
+
+fun ApiModule.Companion.networkFetcher(): NetworkFetcher<ApiModule> =
+    object : NetworkModuleNetworkFetcher {}
+
+interface NetworkFetcher<N> {
+    fun requestGet(
+        getBookingDto: GetCvDto,
+        error: (Throwable) -> Unit,
+        success: (Result<Example>) -> Unit
+    ): Unit
+
+    fun requestRoles(
+        roles: RolesDto,
+        error: (Throwable) -> Unit,
+        success: (Result<List<RoleProfile>>) -> Unit
+    ): Unit
+
+    fun requestProficiency(
+        proficiency: ProficiencyDto,
+        error: (Throwable) -> Unit,
+        success: (Result<List<Proficiency>>) -> Unit
+    ): Unit
+}
+
+interface NetworkOperations<F, N> : CallAsync<F>, NetworkFetcher<N> {
+    fun GetCvDto.request(): Kind<F, Result<Example>> =
+        call(::requestGet)
+
+    fun RolesDto.request(): Kind<F, Result<List<RoleProfile>>> =
+        call(::requestRoles)
+
+    fun ProficiencyDto.request(): Kind<F, Result<List<Proficiency>>> =
+        call(::requestProficiency)
+
 }
 
 typealias Request <A, R> = (A, (Throwable) -> Unit, (R) -> Unit) -> Unit

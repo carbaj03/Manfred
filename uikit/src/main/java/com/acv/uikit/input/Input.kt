@@ -14,13 +14,15 @@ import com.acv.uikit.common.Component
 import com.acv.uikit.common.drawable
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import org.w3c.dom.Text
 
 class Input @JvmOverloads constructor(
     context: Context,
     val attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    private val style: Option<InputStyle> = None
+    defStyleAttr: Int = 0
 ) : TextInputLayout(context, attrs, defStyleAttr), Errorable, Component<InputModel>, EditMode {
+
+    private var model: Option<InputModel> = None
 
     var value
         get() = et.text.toString()
@@ -33,21 +35,29 @@ class Input @JvmOverloads constructor(
     }
 
     override fun editMode() {
-        addView(TextInputEditText(context).apply { layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT) })
+        addView(TextInputEditText(context).apply {
+            layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        })
         attrs.obtainStyle(context).getInt(R.styleable.Input_input_style, InputDate.id)
     }
 
     override fun normalMode() {
-        addView(TextInputEditText(context).apply { layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT) })
-        style.applyStyle(attrs, context)
+        addView(TextInputEditText(context).apply {
+            layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        })
+//        model.style.render()
+        model.applyStyle(attrs, context)
     }
 
     override fun errorK(value: String) {
         this.error = value
     }
 
-    override fun render(model: InputModel): Input =
-        apply { model.apply() }
+    override fun render(model: InputModel): Input {
+        this.model = model.some()
+        model.apply()
+        return this
+    }
 
     private fun InputModel.apply() {
         editText!!.setText(value)
@@ -64,10 +74,10 @@ class Input @JvmOverloads constructor(
         }
     }
 
-    private fun Option<InputStyle>.applyStyle(attrs: AttributeSet?, context: Context): Unit =
+    private fun Option<InputModel>.applyStyle(attrs: AttributeSet?, context: Context): Unit =
         fold(
             ifEmpty = { attrs.getStyle(context).map { style -> style.render() } },
-            ifSome = { style -> style.render() })
+            ifSome = { style -> style.style.render() })
 
 
     private fun AttributeSet?.getStyle(context: Context): Option<InputStyle> =
@@ -89,14 +99,22 @@ class Input @JvmOverloads constructor(
         }
 
     private fun InputStyle.render() {
-        compoundDrawable.map { et.drawable(it) }
+        compoundDrawable.map { drawable(it) }
     }
 
     fun watch(f: TextWatcher): Unit =
         et.addTextChangedListener(f)
+
+    fun disableAction() {
+//        setEndIconOnClickListener { et.text.clear() }
+    }
+
+    fun enableAction() {
+//        setEndIconOnClickListener { et.text.clear() }
+    }
 }
 
 data class CompoundDrawable(
-    val leading: Option<Int>,
-    val trailing: Option<Int>
+    val leading: Option<Int> = None,
+    val trailing: Option<Int> = None
 )

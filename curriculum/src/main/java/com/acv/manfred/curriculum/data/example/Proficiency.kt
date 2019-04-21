@@ -30,4 +30,5 @@ enum class Proficiency constructor(private val value: String) {
         }
     }
 
+    fun toDomain() = this
 }
