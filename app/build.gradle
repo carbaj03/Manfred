@@ -30,4 +30,9 @@ dependencies {
     implementation project(':curriculum')
     implementation project(':base')
     implementation project(':uikit')
+
+//    implementation "androidx.work:work-runtime-ktx:$workVersion"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+//    implementation "androidx.room:room-runtime:$room_version"
 }

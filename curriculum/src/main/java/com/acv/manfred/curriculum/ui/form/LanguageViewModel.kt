@@ -1,12 +1,10 @@
 package com.acv.manfred.curriculum.ui.form
 
 import androidx.lifecycle.MutableLiveData
-import arrow.effects.typeclasses.Disposable
-import com.acv.manfred.curriculum.data.example.Example
-import com.acv.manfred.curriculum.data.example.Proficiency
-import com.acv.manfred.curriculum.data.example.RoleProfile
-import com.acv.manfred.curriculum.data.gateway.datasource.Role
-import com.acv.manfred.curriculum.domain.*
+import com.acv.manfred.curriculum.domain.GatewayIO
+import com.acv.manfred.curriculum.domain.ProficiencyDto
+import com.acv.manfred.curriculum.domain.executeResult
+import com.acv.manfred.curriculum.domain.model.Proficiency
 import com.acv.manfred.curriculum.ui.common.arch.BaseViewModel
 
 class LanguageViewModel(

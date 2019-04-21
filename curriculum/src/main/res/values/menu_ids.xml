@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="author" />
+    <item type="id" name="experience" />
+    <item type="id" name="education" />
+    <item type="id" name="languages" />
+    <item type="id" name="misc_education" />
+    <item type="id" name="questionnaire" />
+    <item type="id" name="error" />
+</resources>

@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.example.Proficiency
 import com.acv.manfred.curriculum.ui.common.activity.BaseActivity
-import com.acv.manfred.curriculum.ui.common.activity.createIntent
 import com.acv.manfred.curriculum.ui.common.fragment.createFragment
 import com.acv.manfred.curriculum.ui.common.navigator.Launcher
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,14 +27,8 @@ class BottomSheetDialogFragment : AppCompatDialogFragment(), ModalNavigation {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navigation_view.setNavigationItemSelectedListener { menuItem ->
-            menuItem.itemId.navigate()
+            MainNavigation(menuItem.itemId).navigate()
             dismiss()
-//            // Bottom Navigation Drawer menu item clicks
-//            when (menuItem.itemId) {
-//                R.id.nav1 -> Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
-//                R.id.nav2 -> Toast.makeText(context, "2", Toast.LENGTH_SHORT).show()
-//                R.id.nav3 -> Toast.makeText(context, "3", Toast.LENGTH_SHORT).show()
-//            }
             true
         }
     }
@@ -45,13 +37,37 @@ class BottomSheetDialogFragment : AppCompatDialogFragment(), ModalNavigation {
 interface ModalNavigation : Launcher {
     override val baseActivity: BaseActivity
 
-    fun Int.navigate(): Unit =
+    fun MainNavigation.navigate(): Unit =
         when (this) {
-            R.id.nav1 -> baseActivity.run { createFragment<AuthorFragment>().load() }
-            R.id.nav2 -> baseActivity.run { createFragment<ExperienceFragment>().load() }
-            R.id.nav3 -> baseActivity.run { createFragment<EducationFragment>().load() }
-            R.id.nav4 -> baseActivity.run { createFragment<LanguageFragment>().load() }
-            R.id.nav5 -> baseActivity.run { createFragment<MiscEducationFragment>().load() }
-            else -> baseActivity.run { createFragment<IntroFragment>().load() }
+            Author -> baseActivity.run { createFragment<AuthorFragment>().load() }
+            Experience -> baseActivity.run { createFragment<ExperienceFragment>().load() }
+            Education -> baseActivity.run { createFragment<EducationFragment>().load() }
+            Language -> baseActivity.run { createFragment<LanguageFragment>().load() }
+            MiscEducation -> baseActivity.run { createFragment<MiscEducationFragment>().load() }
+            Questionnaire -> baseActivity.run { createFragment<QuestionaireFragment>().load() }
+            Error -> baseActivity.run { createFragment<IntroFragment>().load() }
         }
 }
+
+sealed class MainNavigation(val id: Int) {
+    companion object {
+        operator fun invoke(id: Int): MainNavigation =
+            when (id) {
+                Author.id -> Author
+                Experience.id -> Experience
+                Education.id -> Education
+                Language.id -> Language
+                MiscEducation.id -> MiscEducation
+                Questionnaire.id -> Questionnaire
+                else -> Error
+            }
+    }
+}
+
+object Author : MainNavigation(R.id.author)
+object Experience : MainNavigation(R.id.experience)
+object Education : MainNavigation(R.id.education)
+object Language : MainNavigation(R.id.languages)
+object MiscEducation : MainNavigation(R.id.misc_education)
+object Questionnaire : MainNavigation(R.id.questionnaire)
+object Error : MainNavigation(R.id.error)

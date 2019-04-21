@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav1"
+            android:id="@id/author"
             android:title="Author" />
         <item
-            android:id="@+id/nav2"
-            android:title="experience" />
+            android:id="@id/experience"
+            android:title="Experience" />
         <item
-            android:id="@+id/nav3"
-            android:title="education" />
+            android:id="@id/education"
+            android:title="Education" />
         <item
-            android:id="@+id/nav4"
-            android:title="languages" />
+            android:id="@id/languages"
+            android:title="Languages" />
         <item
-            android:id="@+id/nav5"
-            android:title="miscEducation" />
+            android:id="@id/misc_education"
+            android:title="MiscEducation" />
         <item
-            android:id="@+id/nav6"
-            android:title="questionnaire" />
+            android:id="@id/questionnaire"
+            android:title="Questionnaire" />
     </group>
 </menu>

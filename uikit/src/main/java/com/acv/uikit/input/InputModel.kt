@@ -25,7 +25,7 @@ data class DateModel(
 ) : InputModel(InputDate, cal.format(), Eval.always { action() }.some(), DateRules())
 
 data class SpinnerModel(
-    override val value: String,
+    override val value: String = "",
     val action: () -> Unit
 ) : InputModel(InputSpinner, value, Eval.always { action() }.some(), DateRules())
 

@@ -5,12 +5,12 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.example.Example
-import com.acv.manfred.curriculum.data.example.RoleProfile
 import com.acv.manfred.curriculum.data.gateway.NetworkFetcher
 import com.acv.manfred.curriculum.data.gateway.RequestOperations
-import com.acv.manfred.curriculum.data.gateway.datasource.ApiModule
+import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.networkFetcher
+import com.acv.manfred.curriculum.domain.model.Example
+import com.acv.manfred.curriculum.domain.model.RoleProfile
 import com.acv.manfred.curriculum.ui.common.arch.FormViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
@@ -29,8 +29,7 @@ class ProfileFragment : BaseFragment() {
     private val dependencies by lazy {
         object : RequestOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
-            NetworkFetcher<ApiModule> by ApiModule.networkFetcher()
-        {
+            NetworkFetcher<ApiModule> by ApiModule.networkFetcher() {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }
@@ -53,7 +52,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     fun showRoles(cv: List<RoleProfile>) {
-        chaRoles.action(cv.map { PopupAdapter(it.value()) })
+        chaRoles.action(cv.map { PopupAdapter(it.value) })
 //        chaRoles.swap(cv.map { ChipModel(it.name, it.value()) }) { a, b -> a.id == b.id }
     }
 

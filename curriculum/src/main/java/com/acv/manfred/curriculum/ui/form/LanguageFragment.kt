@@ -5,11 +5,11 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.example.Proficiency
 import com.acv.manfred.curriculum.data.gateway.NetworkFetcher
 import com.acv.manfred.curriculum.data.gateway.RequestOperations
-import com.acv.manfred.curriculum.data.gateway.datasource.ApiModule
+import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.networkFetcher
+import com.acv.manfred.curriculum.domain.model.Proficiency
 import com.acv.manfred.curriculum.ui.common.arch.LanguageViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
@@ -49,10 +49,10 @@ class LanguageFragment : BaseFragment() {
     }
 
     fun showProficiencies(cv: List<Proficiency>) {
-        inputProficiency.render(SpinnerModel("") { createPopup(cv.map { PopupAdapter(it.value()) }, inputLanguage)() })
+        inputProficiency.render(SpinnerModel("") { createPopup(cv.map { PopupAdapter(it.value) }, inputProficiency)() })
     }
 
-    fun createPopup(list:List<PopupAdapter> , input: Input): () -> Component<PopupModel> = {
+    fun createPopup(list: List<PopupAdapter>, input: Input): () -> Component<PopupModel> = {
         Popup(compatActivity).render(PopupModel(input, list) { x ->
             input.render(SpinnerModel(x.title) { createPopup(list, input)() })
         })

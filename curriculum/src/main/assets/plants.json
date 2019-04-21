@@ -1,0 +1,24 @@
+{
+  "example": {
+    "author": {
+      "profile": {
+        "name": "",
+        "birthday": "",
+        "image": "",
+        "publicLinks": "",
+        "roles": [],
+        "yearsOfExperience": 0
+      },
+      "intro": "",
+      "professionalGoals": [],
+      "significantExperience": [],
+      "significantRelationships": [],
+      "transportableSkills": []
+    },
+    "education": [],
+    "experience": [],
+    "languages": [],
+    "miscEducation": [],
+    "questionaire": []
+  }
+}
