@@ -16,3 +16,5 @@ interface CallAsync<F> : Async<F> {
             this(a, { err -> callback(err.left()) }, { value -> callback(value.right()) })
         }
 }
+
+typealias Request <A, R> = (A, (Throwable) -> Unit, (R) -> Unit) -> Unit

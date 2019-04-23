@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment() {
     private val dependencies by lazy {
         object : RequestOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
-            NetworkFetcher<ApiModule> by ApiModule.networkFetcher() {
+            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(compatActivity) {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }

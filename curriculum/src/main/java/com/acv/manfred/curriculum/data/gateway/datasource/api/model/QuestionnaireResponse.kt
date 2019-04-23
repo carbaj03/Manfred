@@ -16,5 +16,6 @@ data class QuestionnaireResponse(
      */
     var answer: String? = null
 ) {
-    fun toDomain() = Questionnaire(question, answer)
+    fun toDomain(): Questionnaire =
+        Questionnaire(question = question, answer = answer)
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.acv.manfred.curriculum.domain.GatewayIO
 import com.acv.manfred.curriculum.ui.form.FormViewModel
 import com.acv.manfred.curriculum.ui.form.LanguageViewModel
+import com.acv.manfred.curriculum.ui.form.QuestionaireViewModel
 
 object EmptyViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -28,6 +29,15 @@ class LanguageViewModelFactory(private val dependencies: GatewayIO) : ViewModelP
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LanguageViewModel::class.java)) {
             return LanguageViewModel(dependencies) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class QuestionaireViewModelFactory(private val dependencies: GatewayIO) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(QuestionaireViewModel::class.java)) {
+            return QuestionaireViewModel(dependencies) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

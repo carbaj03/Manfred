@@ -4,10 +4,14 @@ import arrow.Kind
 import arrow.typeclasses.MonadError
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ExampleResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyResponse
+import com.acv.manfred.curriculum.data.gateway.datasource.api.model.QuestionnaireResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toDomain
 import com.acv.manfred.curriculum.domain.Result
 import com.acv.manfred.curriculum.domain.model.Example
 import com.acv.manfred.curriculum.domain.model.Proficiency
+import com.acv.manfred.curriculum.domain.model.Questionnaire
 import com.acv.manfred.curriculum.domain.model.RoleProfile
 
 
@@ -20,6 +24,9 @@ interface DomainMapper<F> : MonadError<F, Throwable> {
         flatMap { catch { it.map { it.map { it.toDomain() } } } }
 
     fun ProficiencyProfileT<F>.toDomainProficiency(): Kind<F, Result<List<Proficiency>>> =
+        flatMap { catch { it.map { it.map { it.toDomain() } } } }
+
+    fun Kind<F, Result<List<QuestionnaireEntity>>>.toDomainQuestionnaire(): Kind<F, Result<List<Questionnaire>>> =
         flatMap { catch { it.map { it.map { it.toDomain() } } } }
 }
 
