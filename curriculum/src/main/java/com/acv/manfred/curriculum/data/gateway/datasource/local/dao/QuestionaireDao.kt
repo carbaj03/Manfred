@@ -8,11 +8,11 @@ interface QuestionaireDao {
     @Query("SELECT * FROM questionaire ORDER BY id")
     fun getQuestionaire(): List<QuestionnaireEntity>
 
-//    @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
+    //    @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
 //    fun getPlantsWithGrowZoneNumber(growZoneNumber: Int): LiveData<List<Plant>>
 //
-//    @Query("SELECT * FROM plants WHERE id = :plantId")
-//    fun getPlant(plantId: String): LiveData<Plant>
+    @Query("SELECT * FROM questionaire WHERE id = :id")
+    fun getQuestionaire(id: String): QuestionnaireEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(plants: List<QuestionnaireEntity>)

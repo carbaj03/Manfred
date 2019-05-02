@@ -9,6 +9,7 @@ import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyR
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.local.AppDatabase
 import com.acv.manfred.curriculum.data.gateway.datasource.local.DbModule
+import com.acv.manfred.curriculum.domain.Result
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.domain.*
 
@@ -32,8 +33,12 @@ interface NetworkModuleNetworkFetcher : NetworkFetcher<ApiModule> {
     override fun requestProficiency(proficiency: ProficiencyDto, error: (Throwable) -> Unit, success: (Result<List<ProficiencyResponse>>) -> Unit) =
         apiModule.requestProficiency(proficiency, error, success)
 
+
     override fun save(proficiency: QuestionnaireDto, error: (Throwable) -> Unit, success: (Result<List<QuestionnaireEntity>>) -> Unit) =
         dbModule.save(proficiency, error, success)
+
+    override fun remove(proficiency: RemoveQuestionnaireDto, error: (Throwable) -> Unit, success: (Result<List<QuestionnaireEntity>>) -> Unit) =
+        dbModule.remove(proficiency, error, success)
 
     override fun all(proficiency: GetQuestionnaireDto, error: (Throwable) -> Unit, success: (Result<List<QuestionnaireEntity>>) -> Unit) =
         dbModule.all(proficiency, error, success)
@@ -69,6 +74,13 @@ interface NetworkFetcher<N> {
         success: (Result<List<QuestionnaireEntity>>) -> Unit
     ): Unit
 
+    fun remove(
+        questionnaireDto: RemoveQuestionnaireDto,
+        error: (Throwable) -> Unit,
+        success: (Result<List<QuestionnaireEntity>>) -> Unit
+    ): Unit
+
+
     fun all(
         proficiency: GetQuestionnaireDto,
         error: (Throwable) -> Unit,
@@ -87,8 +99,13 @@ interface NetworkOperations<F, N> : CallAsync<F>, NetworkFetcher<N> {
     fun ProficiencyDto.request(): Kind<F, Result<List<ProficiencyResponse>>> =
         call(::requestProficiency)
 
+
+
     fun QuestionnaireDto.persist(): Kind<F, Result<List<QuestionnaireEntity>>> =
         call(::save)
+
+    fun RemoveQuestionnaireDto.delete(): Kind<F, Result<List<QuestionnaireEntity>>> =
+        call(::remove)
 
     fun GetQuestionnaireDto.request(): Kind<F, Result<List<QuestionnaireEntity>>> =
         call(::all)

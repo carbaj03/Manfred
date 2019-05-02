@@ -15,6 +15,7 @@ import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.common.fragment.observe
 import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
+import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.common.Component
 import com.acv.uikit.input.Input
 import com.acv.uikit.input.SpinnerModel
@@ -32,7 +33,7 @@ class LanguageFragment : BaseFragment() {
     }
 
     private val dependencies by lazy {
-        object : RequestOperations<ForIO, ApiModule>,
+        object : ViewOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
             NetworkFetcher<ApiModule> by ApiModule.networkFetcher(compatActivity) {
             override val main: CoroutineContext = Dispatchers.Main

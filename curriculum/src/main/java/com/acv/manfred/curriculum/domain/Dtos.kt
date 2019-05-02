@@ -1,6 +1,7 @@
 package com.acv.manfred.curriculum.domain
 
 import com.acv.manfred.curriculum.domain.model.Questionnaire
+import com.acv.manfred.curriculum.ui.form.QuestionnaireModel
 
 typealias StepName = String
 
@@ -17,7 +18,15 @@ data class ProficiencyDto(
 )
 
 data class QuestionnaireDto(
-    val questionnaires: List<Questionnaire>
+    val questionnaires: List<QuestionnaireModel>
+)
+
+data class AddQuestionnaireDto(
+    val questionnaires: Questionnaire
+)
+
+data class RemoveQuestionnaireDto(
+    val questionnaire: String
 )
 
 object GetQuestionnaireDto

@@ -3,6 +3,7 @@ package com.acv.manfred.curriculum.ui.common.arch
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.acv.manfred.curriculum.domain.GatewayIO
+import com.acv.manfred.curriculum.domain.UsesCasesIO
 import com.acv.manfred.curriculum.ui.form.FormViewModel
 import com.acv.manfred.curriculum.ui.form.LanguageViewModel
 import com.acv.manfred.curriculum.ui.form.QuestionaireViewModel
@@ -34,7 +35,7 @@ class LanguageViewModelFactory(private val dependencies: GatewayIO) : ViewModelP
     }
 }
 
-class QuestionaireViewModelFactory(private val dependencies: GatewayIO) : ViewModelProvider.Factory {
+class QuestionaireViewModelFactory(private val dependencies: UsesCasesIO) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuestionaireViewModel::class.java)) {
             return QuestionaireViewModel(dependencies) as T

@@ -2,16 +2,17 @@ package com.acv.manfred.curriculum.ui.common.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.ui.common.arch.EmptyViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.Obs2
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 abstract class BaseActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
@@ -49,3 +50,17 @@ data class SavedInstance(val a: Bundle) {
 //LiveDate
 infix fun <M, T : M> BaseActivity.observe(f: () -> LiveData<T>): Obs2<T> =
     { o: (T) -> Unit -> f().observe(this as LifecycleOwner, Observer { o(it!!) }) }
+
+
+fun BaseActivity.fab(f: FloatingActionButton.() -> Unit) {
+    when (this) {
+        is Actionable -> config { f() }
+        else -> Log.e("Error", "Is not actionable")
+    }
+}
+
+interface Actionable {
+    val fb: FloatingActionButton
+    fun config(f: FloatingActionButton.() -> Unit) =
+        f(fb)
+}
