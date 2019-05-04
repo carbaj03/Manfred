@@ -12,7 +12,7 @@ class QuestionaireViewModel(
 
     val questionnaire by lazy { MutableLiveData<List<QuestionnaireModel>>() }
 
-    val fab by lazy { MutableLiveData<ComponentValidation>() }
+    val fab by lazy {  MutableLiveData<ComponentValidation>() }
 
     fun State.state(): Unit =
         when (this) {
@@ -23,17 +23,15 @@ class QuestionaireViewModel(
 
     fun ComponentAction.action(): Unit =
         when (this) {
-            is Cancel -> {
-            }
+            is Cancel -> { }
             is Remove -> remove(id)
-            is Save -> save(items)
+            is Save -> save(item)
         }
 
     private fun getQuestionnaire() {
         GetQuestionnaireDto.allView().executeResult {
             fab.value = Valid
-            questionnaire.value = it
-        }
+            questionnaire.value = it }
     }
 
     private fun addQuestionnaire() {
@@ -48,7 +46,7 @@ class QuestionaireViewModel(
         RemoveQuestionnaireDto(id).removeView().executeResult { questionnaire.value = it }
     }
 
-    private fun save(questionaires: List<QuestionnaireModel>) {
+    private fun save(questionaires: ComponentResponse) {
         QuestionnaireDto(questionaires).saveView().executeResult(
             error = { Log.e("sdf", it.message) },
             success = {

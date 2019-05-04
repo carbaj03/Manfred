@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
+import com.acv.manfred.curriculum.domain.model.Questionnaire
 import com.acv.uikit.common.textWatcher
 import com.acv.uikit.input.Input
 import com.acv.uikit.invisible
@@ -20,18 +21,19 @@ interface Validable {
     val state: ObservableValidation
 }
 
+interface Actionable {
+    val actions: ObservableAction
+}
+
 sealed class ComponentValidation
 object Valid : ComponentValidation()
 object Invalid : ComponentValidation()
 
-typealias ObservableType = MutableLiveData<ComponentType>
 
 sealed class ComponentType(open val componentState: ComponentState)
 data class Persisted(override val componentState: ComponentState) : ComponentType(componentState)
 data class New(override val componentState: ComponentState) : ComponentType(componentState)
 
-
-typealias ObservableState = MutableLiveData<ComponentState>
 
 sealed class ComponentState
 object NotModified : ComponentState()
@@ -45,31 +47,48 @@ typealias ObservableAction = MutableLiveData<ComponentAction>
 sealed class ComponentAction
 data class Cancel(val id: String) : ComponentAction()
 data class Remove(val id: String) : ComponentAction()
-data class Save(val items: List<QuestionnaireModel>) : ComponentAction()
+data class Save(val item: ComponentResponse) : ComponentAction()
+
+data class ComponentResponse(
+    val id: String?,
+    var question: String,
+    var answer: String
+) {
+    fun toDomain(): Questionnaire =
+        id?.let { Questionnaire(id = it, question = question, answer = answer) } ?: Questionnaire(question = question, answer = answer)
+}
+
+data class ByDefault(
+    val id: String?,
+    var question: String,
+    var answer: String
+)
 
 class QuestionnaireComponent @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) , Validable {
+) : LinearLayout(context, attrs, defStyleAttr), Validable, Actionable {
     override val state: ObservableValidation = MutableLiveData()
-    val actions: ObservableAction = MutableLiveData()
-    var type: ObservableType = MutableLiveData()
-//    val state: ObservableState = MutableLiveData()
+    override val actions: ObservableAction = MutableLiveData()
 
-    private var model = QuestionnaireModel()
+    private val Input.isValid: Boolean
+        get() = value.isNotBlank()
 
-    private val questionState
-        get() = if (inputQuestion.value.isBlank()) Invalid else Valid
+    private val Input.isInvalid: Boolean
+        get() = value.isBlank()
 
-    private val answerState
-        get() = if (inputAnswer.value.isBlank()) Invalid else Valid
-
-    private fun isModified() =
-        when {
-            questionState is Valid && answerState is Invalid -> Completed
+    private val isModified
+        get() = when {
+            inputQuestion.isValid && inputAnswer.isValid -> Completed
             else -> Incompleted
         }
+
+    private val isCompleted
+        get() = isModified is Completed
+
+    private val isIncompleted
+        get() = isModified is Incompleted
 
     init {
         val mInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -77,16 +96,22 @@ class QuestionnaireComponent @JvmOverloads constructor(
         orientation = VERTICAL
     }
 
-    fun render(model: QuestionnaireModel): QuestionnaireComponent {
-        this.model = model
-        inputQuestion.value = model.question ?: ""
-        inputAnswer.value = model.answer ?: ""
-        initActions()
+    fun renderType(model: QuestionnaireModel): QuestionnaireComponent {
+        val byDefault: ByDefault = createByDefault(model)
         state.value = if (model.componentType is Persisted) Valid else Invalid
-//        model.actions.render()
-        model.componentType.render()
-        listener()
+        initActions()
+        model.renderFields()
+        model.renderType(byDefault)
+        model.listener(byDefault)
         return this
+    }
+
+    private fun createByDefault(model: QuestionnaireModel) =
+        ByDefault(id = model.id, question = model.question ?: "", answer = model.answer ?: "")
+
+    private fun QuestionnaireModel.renderFields() {
+        inputQuestion.value = question ?: ""
+        inputAnswer.value = answer ?: ""
     }
 
     private fun initActions() {
@@ -95,70 +120,65 @@ class QuestionnaireComponent @JvmOverloads constructor(
         btnCancel.invisible()
     }
 
-    private fun listener() {
-        inputQuestion.listener(model.question)
-        inputAnswer.listener(model.answer)
+    private fun QuestionnaireModel.listener(byDefault: ByDefault) {
+        inputQuestion.listener(question, byDefault)
+        inputAnswer.listener(answer, byDefault)
     }
 
-    private fun Input.listener(toCompare: String?) {
+    private fun Input.listener(toCompare: String?, byDefault: ByDefault) {
         watch(textWatcher {
-            if (value == toCompare || isModified() is Completed) {
+            if (value == toCompare || isIncompleted) {
                 this@QuestionnaireComponent.btnCancel.invisible()
                 this@QuestionnaireComponent.btnSave.invisible()
             } else {
-                this@QuestionnaireComponent.btnCancel.cancel()
-                this@QuestionnaireComponent.btnSave.save()
+                this@QuestionnaireComponent.btnCancel.cancel(byDefault)
+                this@QuestionnaireComponent.btnSave.save(byDefault.id)
             }
         })
     }
 
-    private fun List<ComponentAction>.render(): Unit = forEach {
-        when (it) {
-            is Remove -> btnRemove.remove()
-            is Save -> btnSave.save()
-            is Cancel -> btnCancel.cancel()
-        }
-    }
-
-    private fun ComponentType.render() =
-        when (this) {
-            is Persisted -> when (componentState) {
+    private fun QuestionnaireModel.renderType(byDefault: ByDefault) =
+        when (componentType) {
+            is Persisted -> when (componentType.componentState) {
                 Incompleted -> {
-                    btnRemove.remove()
-                    btnCancel.cancel()
+                    btnRemove.remove(id!!)
+                    btnCancel.cancel(byDefault)
                 }
                 Completed -> {
-                    btnRemove.remove()
-                    btnSave.save()
-                    btnCancel.cancel()
+                    btnRemove.remove(id!!)
+                    btnSave.save(id)
+                    btnCancel.cancel(byDefault)
                 }
-                NotModified -> btnRemove.remove()
+                NotModified -> btnRemove.remove(id!!)
             }
-            is New -> when (componentState) {
-                Incompleted -> btnCancel.cancel()
+            is New -> when (componentType.componentState) {
+                Incompleted -> btnCancel.cancel(byDefault)
                 Completed -> {
-                    btnSave.save()
-                    btnCancel.cancel()
+                    btnSave.save(id)
+                    btnCancel.cancel(byDefault)
                 }
                 NotModified -> {
                 }
             }
         }
 
-    private fun MaterialButton.remove(): Unit =
-        action { actions.value = Remove(model.id!!) }
+    private fun MaterialButton.remove(id: String): Unit =
+        action { actions.value = Remove(id) }
 
-    private fun MaterialButton.save(): Unit =
-        action {
-            model.answer = this@QuestionnaireComponent.inputAnswer.value
-            model.question = this@QuestionnaireComponent.inputQuestion.value
-            actions.value = Save(listOf(model))
-        }
+    private fun MaterialButton.save(id: String?): Unit =
+        action { actions.value = Save(createResponse(id)) }
 
-    private fun MaterialButton.cancel(): Unit =
+    private fun createResponse(id: String?): ComponentResponse =
+        ComponentResponse(
+            id = id,
+            answer = this@QuestionnaireComponent.inputAnswer.value,
+            question = this@QuestionnaireComponent.inputQuestion.value
+        )
+
+    private fun MaterialButton.cancel(byDefault: ByDefault): Unit =
         action {
-            this@QuestionnaireComponent.inputAnswer.value = model.answer ?: ""
-            this@QuestionnaireComponent.inputQuestion.value = model.question ?: ""
+            this@QuestionnaireComponent.inputAnswer.value = byDefault.answer
+            this@QuestionnaireComponent.inputQuestion.value = byDefault.question
             invisible()
         }
 
@@ -166,4 +186,6 @@ class QuestionnaireComponent @JvmOverloads constructor(
         visible()
         onClick { f() }
     }
+
+
 }

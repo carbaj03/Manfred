@@ -22,7 +22,7 @@ class DbModule(val dao: QuestionaireDao) {
         success: (Result<List<QuestionnaireEntity>>) -> Unit
     ): Unit =
         try {
-            dao.insertAll(dto.questionnaires.map { it.toDomain().toEntity() })
+            dao.insert(dto.questionnaires.toDomain().toEntity())
             success(dao.getQuestionaire().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())

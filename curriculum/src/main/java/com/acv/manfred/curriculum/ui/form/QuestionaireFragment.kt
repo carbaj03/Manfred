@@ -1,10 +1,5 @@
 package com.acv.manfred.curriculum.ui.form
 
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.lifecycle.MediatorLiveData
-import arrow.data.extensions.list.foldable.forAll
 import arrow.effects.ForIO
 import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
@@ -19,17 +14,14 @@ import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.common.fragment.observe
 import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
-import com.acv.manfred.curriculum.ui.form.components.common.MediatorState
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.*
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.onClick
-import com.itextpdf.awt.geom.misc.HashCode.combine
 import kotlinx.android.synthetic.main.view_questionaire.*
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 class QuestionaireFragment : BaseFragment() {
-
 
     private val model by lazy {
         viewModelProviders<QuestionaireViewModel>(QuestionaireViewModelFactory(dependencies))
@@ -63,43 +55,39 @@ class QuestionaireFragment : BaseFragment() {
             Invalid -> compatActivity.fab { hide() }
         }
 
-    private val state: MediatorState = MediatorLiveData()
-
-    private fun List<Validable>.combine(): ComponentValidation =
-        firstOrNull { it.state.value is Valid }?.state?.value ?: defaultState()
-
-    private fun List<Validable>.defaultState(): ComponentValidation =
-        if (forAll { it.state.value == Valid }) Valid else Invalid
-
-    private val component: List<Validable>
-        get() {
-            val temp: MutableList<Validable> = mutableListOf()
-            container().forEachChild { temp.add(it as Validable) }
-            return temp
-        }
-
-    private fun container(): LinearLayout = (questionnaire_container as LinearLayout)
-
-    inline fun ViewGroup.forEachChild(action: (View) -> Unit) {
-        for (i in 0 until childCount) {
-            action(getChildAt(i))
-        }
-    }
-
     private fun showQuestionnarie(it: List<QuestionnaireModel>) {
         questionnaire_container.removeAllViews()
         it.map {
             val c = QuestionnaireComponent(compatActivity)
             observe { c.actions } map { model.run { Action(it).state() } }
-            questionnaire_container.addView(c.render(it))
+            questionnaire_container.addView(c.renderType(it))
         }
-
-//        component.combine().buttonAdd()
-//
-//        component.map { state.addSource(it.state) { state.value = component.combine() } }
-//
-//        observe { state } map { it.buttonAdd() }
     }
 }
 
+
+//interface a{
+//    private val state: MediatorState = MediatorLiveData()
+//
+//    private fun List<Validable>.combine(): ComponentValidation =
+//        firstOrNull { it.state.value is Valid }?.state?.value ?: defaultState()
+//
+//    private fun List<Validable>.defaultState(): ComponentValidation =
+//        if (forAll { it.state.value == Valid }) Valid else Invalid
+//
+//    private val component: List<Validable>
+//        get() {
+//            val temp: MutableList<Validable> = mutableListOf()
+//            container().forEachChild { temp.add(it as Validable) }
+//            return temp
+//        }
+//
+//    private fun container(): LinearLayout = (questionnaire_container as LinearLayout)
+//
+//    inline fun ViewGroup.forEachChild(action: (View) -> Unit) {
+//        for (i in 0 until childCount) {
+//            action(getChildAt(i))
+//        }
+//    }
+//}
 

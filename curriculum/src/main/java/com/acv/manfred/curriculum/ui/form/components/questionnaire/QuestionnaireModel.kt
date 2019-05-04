@@ -7,7 +7,6 @@ data class QuestionnaireModel(
     var question: String? = null,
     var answer: String? = null,
     var componentType: ComponentType = New(NotModified)
-//    var actions: List<ComponentAction> = emptyList()
 )
 
 fun QuestionnaireModel.toDomain(): Questionnaire =
