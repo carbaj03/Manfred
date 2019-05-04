@@ -14,7 +14,7 @@ class ChipView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ChipGroup(context, attrs, defStyleAttr), Errorable {
-    private var adapter: CGAdapter= CGAdapter(observable(), mutableListOf())
+    private var adapter: CGAdapter = CGAdapter(observable(), mutableListOf())
 
     fun swap(newItems: List<ChipModel>, compare: (ChipModel, ChipModel) -> Boolean) {
         adapter.swap(newItems, compare)

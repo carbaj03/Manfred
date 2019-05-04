@@ -1,5 +1,6 @@
 package com.acv.manfred.curriculum.ui.form
 
+import androidx.recyclerview.widget.ListUpdateCallback
 import arrow.effects.ForIO
 import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
@@ -16,7 +17,14 @@ import com.acv.manfred.curriculum.ui.common.fragment.observe
 import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.*
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
+import com.acv.uikit.adapterModel.Adapter
+import com.acv.uikit.adapterModel.CGAdapter
+import com.acv.uikit.adapterModel.POSITION
+import com.acv.uikit.adapterModel.autoNotify
+import com.acv.uikit.chip.ChipModel
+import com.acv.uikit.chip.ObserveChip
 import com.acv.uikit.onClick
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.view_questionaire.*
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
@@ -39,14 +47,17 @@ class QuestionaireFragment : BaseFragment() {
     override fun getLayout(): Int = R.layout.view_questionaire
 
     override fun onCreate() {
-        observe { model.questionnaire }.map { showQuestionnarie(it) }
+        observe { model.questionnaire }.map {
+            swap(it) { a, b -> a.id == b.id }
+//            it.showQuestionnarie()
+        }
         observe { model.fab }.map { it.buttonAdd() }
 
         model.run { Load.state() }
     }
 
     private fun ComponentValidation.buttonAdd() =
-        when(this){
+        when (this) {
             Valid ->
                 compatActivity.fab {
                     show()
@@ -55,16 +66,86 @@ class QuestionaireFragment : BaseFragment() {
             Invalid -> compatActivity.fab { hide() }
         }
 
-    private fun showQuestionnarie(it: List<QuestionnaireModel>) {
+    private fun List<QuestionnaireModel>.showQuestionnarie() {
         questionnaire_container.removeAllViews()
-        it.map {
+        map {
             val c = QuestionnaireComponent(compatActivity)
             observe { c.actions } map { model.run { Action(it).state() } }
             questionnaire_container.addView(c.renderType(it))
         }
     }
+
+
+    private var adapter: QuestionnaireAdapter = QuestionnaireAdapter(observable(), mutableListOf())
+
+    fun swap(newItems: List<QuestionnaireModel>, compare: (QuestionnaireModel, QuestionnaireModel) -> Boolean) {
+        adapter.swap(newItems, compare)
+    }
+
+    private fun getChip(position: Int): QuestionnaireComponent =
+        questionnaire_container.getChildAt(position) as QuestionnaireComponent
+
+    private fun observable(): ObserveQuestionnaire<QuestionnaireModel> = object : ObserveQuestionnaire<QuestionnaireModel> {
+        override fun remove(position: Int) {
+            questionnaire_container.removeViewAt(position)
+        }
+
+        override fun insert(m: QuestionnaireModel) {
+            val c = QuestionnaireComponent(compatActivity)
+            observe { c.actions } map { model.run { Action(it).state() } }
+            questionnaire_container.addView(c.renderType(m))
+        }
+
+        override fun moved(fromPosition: Int, toPosition: Int) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun change(position: Int, m: QuestionnaireModel) {
+            getChip(position).renderType(m)
+        }
+    }
 }
 
+interface ObserveQuestionnaire<M> {
+    fun remove(position: Int)
+    fun insert(m: M)
+    fun moved(fromPosition: Int, toPosition: Int)
+    fun change(position: Int, m: M)
+}
+
+class QuestionnaireAdapter(
+    private var observable: ObserveQuestionnaire<QuestionnaireModel>,
+    private var items: MutableList<QuestionnaireModel>
+) : Adapter<QuestionnaireModel>, ListUpdateCallback {
+    override fun set(position: POSITION, item: QuestionnaireModel) {
+        items[position] = item
+    }
+
+    override fun swap(newItems: List<QuestionnaireModel>, compare: (QuestionnaireModel, QuestionnaireModel) -> Boolean) {
+        val diffResult = autoNotify(items, newItems, compare)
+        items.clear()
+        items.addAll(newItems)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    override fun onChanged(position: Int, count: Int, payload: Any?) {
+        observable.change(position, items[position])
+    }
+
+    override fun onMoved(fromPosition: Int, toPosition: Int) {
+        observable.moved(fromPosition, toPosition)
+    }
+
+    override fun onInserted(position: Int, count: Int) {
+        for (a in 0 until count)
+            observable.insert(items[position + a])
+    }
+
+    override fun onRemoved(position: Int, count: Int) {
+        for (a in (count - 1)..0)
+            observable.remove(position)
+    }
+}
 
 //interface a{
 //    private val state: MediatorState = MediatorLiveData()

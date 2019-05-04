@@ -5,7 +5,7 @@ import com.acv.uikit.chip.ChipModel
 import com.acv.uikit.chip.ObserveChip
 
 class CGAdapter(
-    var observable: ObserveChip<ChipModel>,
+    private var observable: ObserveChip<ChipModel>,
     private var items: MutableList<ChipModel>
 ) : Adapter<ChipModel>, ListUpdateCallback {
     override fun set(position: POSITION, item: ChipModel) {
