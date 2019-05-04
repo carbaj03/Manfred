@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.domain.*
 import com.acv.manfred.curriculum.ui.common.arch.BaseViewModel
-import com.acv.manfred.curriculum.ui.form.components.common.ComponentAction
-import com.acv.manfred.curriculum.ui.form.components.common.Remove
-import com.acv.manfred.curriculum.ui.form.components.common.Save
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.*
 
 class QuestionaireViewModel(
     private val dependencies: UsesCasesIO
@@ -14,17 +12,36 @@ class QuestionaireViewModel(
 
     val questionnaire by lazy { MutableLiveData<List<QuestionnaireModel>>() }
 
-    fun getQuestionnaire() {
-        GetQuestionnaireDto.allView().executeResult { questionnaire.value = it }
+    val fab by lazy { MutableLiveData<ComponentValidation>() }
+
+    fun State.state(): Unit =
+        when (this) {
+            is Add -> addQuestionnaire()
+            is Load -> getQuestionnaire()
+            is Action -> componentAction.action()
+        }
+
+    fun ComponentAction.action(): Unit =
+        when (this) {
+            is Cancel -> {
+            }
+            is Remove -> remove(id)
+            is Save -> save(items)
+        }
+
+    private fun getQuestionnaire() {
+        GetQuestionnaireDto.allView().executeResult {
+            fab.value = Valid
+            questionnaire.value = it
+        }
     }
 
-    fun add() {
-        questionnaire.value = questionnaire.value!!.plus(QuestionnaireModel("", "", "", Save(listOf())))
-    }
-
-    fun action(c: ComponentAction) = when (c) {
-        is Remove -> remove(c.id)
-        is Save -> save(c.items)
+    private fun addQuestionnaire() {
+//        AddQuestionnaireDto(Questionnaire()).addView().executeResult(
+//            error = { Log.e("sdf", it.message) },
+//            success = { questionnaire.value = it })
+        fab.value = Invalid
+        questionnaire.value = questionnaire.value!!.plus(QuestionnaireModel())
     }
 
     private fun remove(id: String) {
@@ -34,8 +51,17 @@ class QuestionaireViewModel(
     private fun save(questionaires: List<QuestionnaireModel>) {
         QuestionnaireDto(questionaires).saveView().executeResult(
             error = { Log.e("sdf", it.message) },
-            success = { Log.e("asdfds", it.toString()) }
+            success = {
+                Log.e("asdfds", it.toString())
+                fab.value = Valid
+                questionnaire.value = it
+            }
         )
     }
 
 }
+
+sealed class State
+object Load : State()
+object Add : State()
+data class Action(val componentAction: ComponentAction) : State()

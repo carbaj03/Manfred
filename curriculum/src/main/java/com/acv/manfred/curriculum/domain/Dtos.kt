@@ -1,7 +1,7 @@
 package com.acv.manfred.curriculum.domain
 
 import com.acv.manfred.curriculum.domain.model.Questionnaire
-import com.acv.manfred.curriculum.ui.form.QuestionnaireModel
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireModel
 
 typealias StepName = String
 

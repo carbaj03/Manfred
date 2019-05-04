@@ -2,14 +2,12 @@ package com.acv.manfred.curriculum.data.gateway
 
 import android.content.Context
 import arrow.Kind
-import arrow.extension
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ExampleResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.local.AppDatabase
 import com.acv.manfred.curriculum.data.gateway.datasource.local.DbModule
-import com.acv.manfred.curriculum.domain.Result
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.domain.*
 
@@ -42,6 +40,9 @@ interface NetworkModuleNetworkFetcher : NetworkFetcher<ApiModule> {
 
     override fun all(proficiency: GetQuestionnaireDto, error: (Throwable) -> Unit, success: (Result<List<QuestionnaireEntity>>) -> Unit) =
         dbModule.all(proficiency, error, success)
+
+    override fun add(questionnaire: AddQuestionnaireDto, error: (Throwable) -> Unit, success: (Result<List<QuestionnaireEntity>>) -> Unit) =
+        dbModule.add(questionnaire, error, success)
 }
 
 fun ApiModule.Companion.networkFetcher(context: Context): NetworkFetcher<ApiModule> =
@@ -70,6 +71,12 @@ interface NetworkFetcher<N> {
 
     fun save(
         proficiency: QuestionnaireDto,
+        error: (Throwable) -> Unit,
+        success: (Result<List<QuestionnaireEntity>>) -> Unit
+    ): Unit
+
+    fun add(
+        questionnaire: AddQuestionnaireDto,
         error: (Throwable) -> Unit,
         success: (Result<List<QuestionnaireEntity>>) -> Unit
     ): Unit
@@ -103,6 +110,9 @@ interface NetworkOperations<F, N> : CallAsync<F>, NetworkFetcher<N> {
 
     fun QuestionnaireDto.persist(): Kind<F, Result<List<QuestionnaireEntity>>> =
         call(::save)
+
+    fun AddQuestionnaireDto.persist(): Kind<F, Result<List<QuestionnaireEntity>>> =
+        call(::add)
 
     fun RemoveQuestionnaireDto.delete(): Kind<F, Result<List<QuestionnaireEntity>>> =
         call(::remove)

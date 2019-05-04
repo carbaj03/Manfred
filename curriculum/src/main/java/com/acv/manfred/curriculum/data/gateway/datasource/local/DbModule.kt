@@ -6,12 +6,9 @@ import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
-import com.acv.manfred.curriculum.domain.GetQuestionnaireDto
-import com.acv.manfred.curriculum.domain.QuestionnaireDto
-import com.acv.manfred.curriculum.domain.RemoveQuestionnaireDto
-import com.acv.manfred.curriculum.domain.Result
+import com.acv.manfred.curriculum.domain.*
 import com.acv.manfred.curriculum.domain.model.ApiError
-import com.acv.manfred.curriculum.ui.form.toDomain
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.toDomain
 import com.google.gson.JsonParseException
 
 
@@ -26,6 +23,20 @@ class DbModule(val dao: QuestionaireDao) {
     ): Unit =
         try {
             dao.insertAll(dto.questionnaires.map { it.toDomain().toEntity() })
+            success(dao.getQuestionaire().right())
+        } catch (retrofitError: JsonParseException) {
+            success(ApiError(retrofitError.message.toOption()).left())
+        } catch (t: Throwable) {
+            error(t)
+        }
+
+    fun add(
+        dto: AddQuestionnaireDto,
+        error: (Throwable) -> Unit,
+        success: (Result<List<QuestionnaireEntity>>) -> Unit
+    ): Unit =
+        try {
+            dao.insert(dto.questionnaires.toEntity())
             success(dao.getQuestionaire().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())

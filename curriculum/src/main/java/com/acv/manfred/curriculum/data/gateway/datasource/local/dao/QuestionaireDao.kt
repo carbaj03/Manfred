@@ -15,6 +15,9 @@ interface QuestionaireDao {
     fun getQuestionaire(id: String): QuestionnaireEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(questionnaire: QuestionnaireEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(plants: List<QuestionnaireEntity>)
 
     @Delete

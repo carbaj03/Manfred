@@ -1,18 +1,19 @@
 package com.acv.manfred.curriculum.ui.form.components.common
 
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.ComponentValidation
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.Invalid
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.ObservableValidation
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.Valid
 
 
-typealias ObservableState = MutableLiveData<ComponentState>
-typealias ObservableAction = MutableLiveData<ComponentAction>
-typealias MediatorState = MediatorLiveData<ComponentState>
+typealias MediatorState = MediatorLiveData<ComponentValidation>
 
 
-fun ObservableState.valid() {
+fun ObservableValidation.valid() {
     value = Valid
 }
 
-fun ObservableState.invalid() {
+fun ObservableValidation.invalid() {
     value = Invalid
 }

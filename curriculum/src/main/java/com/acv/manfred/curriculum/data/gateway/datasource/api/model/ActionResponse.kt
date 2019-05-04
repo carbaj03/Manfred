@@ -6,7 +6,7 @@ import com.acv.manfred.curriculum.domain.model.Action
 data class ActionResponse(
 
     /**
-     * Sum up your action for this challenge
+     * Sum up your state for this challenge
      * (Required)
      *
      */

@@ -28,6 +28,9 @@ interface RequestOperations<F, N> : Async<F>, NetworkOperations<F, N>, DomainMap
     override fun GetQuestionnaireDto.all(): Kind<F, Result<List<Questionnaire>>> =
         defer(ctx) { request().toDomainQuestionnaire() }
 
+    override fun AddQuestionnaireDto.add(): Kind<F, Result<List<Questionnaire>>> =
+        defer(ctx) { persist().toDomainQuestionnaire() }
+
     override fun RemoveQuestionnaireDto.remove(): Kind<F, Result<List<Questionnaire>>> =
         defer(ctx) { delete().toDomainQuestionnaire() }
 }
