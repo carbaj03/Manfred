@@ -14,8 +14,8 @@ import com.acv.manfred.curriculum.ui.common.activity.snack
 import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.QuestionaireViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.map
+import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
-import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
 import com.acv.manfred.curriculum.ui.form.components.common.*
 import com.acv.manfred.curriculum.ui.form.components.common.Error
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireComponent
@@ -38,7 +38,7 @@ class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
     override val container: ViewGroup get() = questionnaire_container
 
     override fun createComponent(): Component<QuestionnaireModel> =
-        QuestionnaireComponent(compatActivity).apply {
+        QuestionnaireComponent(baseActivity).apply {
             observe { actions } map { model { Action(this@map).run() } }
         }
 
@@ -48,7 +48,7 @@ class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
     private val dependencies by lazy {
         object : ViewOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
-            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(compatActivity) {
+            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(baseActivity) {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }
@@ -67,12 +67,12 @@ class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
     private fun ComponentValidation.validate() =
         when (this) {
             is Valid ->
-                compatActivity.fab {
+                baseActivity.fab {
                     show()
                     onClick { model { Add.run() } }
                 }
-            is Invalid -> compatActivity.fab { hide() }
-            is Error -> compatActivity.snack(msg)
+            is Invalid -> baseActivity.fab { hide() }
+            is Error -> baseActivity.snack(msg)
         }
 
 }

@@ -14,8 +14,8 @@ import com.acv.manfred.curriculum.ui.common.activity.Actionable
 import com.acv.manfred.curriculum.ui.common.arch.FormViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.map
+import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
-import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.popup.PopupAdapter
 import kotlinx.android.synthetic.main.view_author_profile.*
@@ -30,7 +30,7 @@ class ProfileFragment : BaseFragment(), Observable<FormViewModel> {
     private val dependencies by lazy {
         object : ViewOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
-            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(compatActivity) {
+            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(baseActivity) {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }
@@ -42,12 +42,12 @@ class ProfileFragment : BaseFragment(), Observable<FormViewModel> {
         observe { cv } map { showCv() }
         observe { roles } map { showRoles() }
 
-        chaPublicLinks.action(compatActivity.supportFragmentManager)
+        chaPublicLinks.action(baseActivity.supportFragmentManager)
 
         model.getCv()
         model.getRoles()
 
-        when (val ac = compatActivity) {
+        when (val ac = baseActivity) {
             is Actionable -> ac.config {
                 hide()
             }

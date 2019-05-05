@@ -9,7 +9,7 @@ class MiscEducationFragment : BaseFragment() {
     override fun getLayout(): Int = R.layout.view_misc_education
 
     override fun onCreate() {
-        compatActivity.fab {
+        baseActivity.fab {
             show()
             setImageResource(R.drawable.ic_favorite)
         }

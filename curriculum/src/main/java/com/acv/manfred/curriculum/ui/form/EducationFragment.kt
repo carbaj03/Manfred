@@ -13,8 +13,8 @@ class EducationFragment : BaseFragment() {
 
     override fun onCreate() {
         val cal = Calendar.getInstance()
-        inputFrom.render(DateModel(cal) { cal.createDialog(inputFrom)(compatActivity) })
-        inputUntil.render(DateModel(cal) { cal.createDialog(inputUntil)(compatActivity) })
+        inputFrom.render(DateModel(cal) { cal.createDialog(inputFrom)(baseActivity) })
+        inputUntil.render(DateModel(cal) { cal.createDialog(inputUntil)(baseActivity) })
     }
 
     fun Calendar.createDialog(input: Input): (Context) -> Unit = { ctx: Context ->

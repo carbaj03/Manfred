@@ -9,7 +9,7 @@ class ExperienceFragment : BaseFragment() {
     override fun getLayout(): Int = R.layout.view_experience
 
     override fun onCreate() {
-        compatActivity.fab {
+        baseActivity.fab {
             show()
             setImageResource(R.drawable.ic_save)
         }

@@ -9,7 +9,7 @@ class AuthorFragment : BaseFragment() {
     override fun getLayout(): Int = R.layout.view_author
 
     override fun onCreate() {
-        val adapter = ViewPagerAdapter(compatActivity.supportFragmentManager)
+        val adapter = ViewPagerAdapter(baseActivity.supportFragmentManager)
         adapter.addFragment(ProfileFragment(), "Profile")
         adapter.addFragment(IntroFragment(), "Intro")
         adapter.addFragment(ProfesionalGoalsFragment(), "Professional Goals")

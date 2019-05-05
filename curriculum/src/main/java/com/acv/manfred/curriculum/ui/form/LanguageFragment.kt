@@ -12,8 +12,8 @@ import com.acv.manfred.curriculum.domain.model.Proficiency
 import com.acv.manfred.curriculum.ui.common.arch.LanguageViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.map
+import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
-import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.common.Component
 import com.acv.uikit.input.Input
@@ -33,7 +33,7 @@ class LanguageFragment : BaseFragment(), Observable<LanguageViewModel> {
     private val dependencies by lazy {
         object : ViewOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
-            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(compatActivity) {
+            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(baseActivity) {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }
@@ -51,7 +51,7 @@ class LanguageFragment : BaseFragment(), Observable<LanguageViewModel> {
     }
 
     private fun createPopup(list: List<PopupAdapter>, input: Input): () -> Component<PopupModel> = {
-        Popup(compatActivity).render(PopupModel(input, list) { x ->
+        Popup(baseActivity).render(PopupModel(input, list) { x ->
             input.render(SpinnerModel(x.title) { createPopup(list, input)() })
         })
     }

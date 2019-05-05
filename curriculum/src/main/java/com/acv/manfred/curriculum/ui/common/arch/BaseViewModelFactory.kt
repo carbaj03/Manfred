@@ -17,7 +17,9 @@ object EmptyViewModelFactory : ViewModelProvider.Factory {
     }
 }
 
-class FormViewModelFactory(private val dependencies: GatewayIO) : ViewModelProvider.Factory {
+class FormViewModelFactory(
+    private val dependencies: GatewayIO
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FormViewModel::class.java)) {
             return FormViewModel(dependencies) as T
@@ -26,7 +28,9 @@ class FormViewModelFactory(private val dependencies: GatewayIO) : ViewModelProvi
     }
 }
 
-class LanguageViewModelFactory(private val dependencies: GatewayIO) : ViewModelProvider.Factory {
+class LanguageViewModelFactory(
+    private val dependencies: GatewayIO
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LanguageViewModel::class.java)) {
             return LanguageViewModel(dependencies) as T
@@ -35,7 +39,9 @@ class LanguageViewModelFactory(private val dependencies: GatewayIO) : ViewModelP
     }
 }
 
-class QuestionaireViewModelFactory(private val dependencies: UsesCasesIO) : ViewModelProvider.Factory {
+class QuestionaireViewModelFactory(
+    private val dependencies: UsesCasesIO
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuestionaireViewModel::class.java)) {
             return QuestionaireViewModel(dependencies) as T
@@ -45,3 +51,14 @@ class QuestionaireViewModelFactory(private val dependencies: UsesCasesIO) : View
 }
 
 object EmptyViewModel : BaseViewModel()
+
+class Creator(
+    private val dependencies: UsesCasesIO
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(QuestionaireViewModel::class.java)) {
+            return QuestionaireViewModel(dependencies) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}

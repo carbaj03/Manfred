@@ -7,14 +7,14 @@ import com.acv.manfred.curriculum.ui.common.activity.Actionable
 import com.acv.manfred.curriculum.ui.common.activity.BaseActivity
 import com.acv.manfred.curriculum.ui.common.activity.Notificable
 import com.acv.manfred.curriculum.ui.common.activity.SavedInstance
+import com.acv.manfred.curriculum.ui.common.arch.Provider
 import com.acv.manfred.curriculum.ui.common.fragment.createFragment
 import com.acv.manfred.curriculum.ui.common.navigator.Launcher
 import com.acv.uikit.onClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_form.*
 
-class FormActivity : BaseActivity(), Launcher, Actionable, Notificable {
+class FormActivity : BaseActivity(), Launcher, Actionable, Notificable, Provider {
     override val fb: FloatingActionButton get() = fbAction
     override val baseActivity: BaseActivity get() = this
     override val cl: CoordinatorLayout get() = snackBarContainer

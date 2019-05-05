@@ -5,11 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.ui.common.arch.EmptyViewModelFactory
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -31,13 +27,6 @@ abstract class BaseActivity : AppCompatActivity() {
             .replace(container, this)
             .commitNow()
 }
-
-inline fun <reified T : ViewModel> BaseActivity.viewModelProviders(factory: ViewModelProvider.Factory = EmptyViewModelFactory): T =
-    viewModelProvider(factory).get(T::class.java)
-
-fun BaseActivity.viewModelProvider(factory: ViewModelProvider.Factory): ViewModelProvider =
-    if (factory !== EmptyViewModelFactory) ViewModelProviders.of(this, factory)
-    else ViewModelProviders.of(this)
 
 inline fun <reified M> BaseActivity.createIntent(f: Intent.() -> Unit = {}): Intent =
     Intent(this, M::class.java).apply { f() }
