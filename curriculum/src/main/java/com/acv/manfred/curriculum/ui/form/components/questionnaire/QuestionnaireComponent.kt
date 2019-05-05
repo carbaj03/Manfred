@@ -3,10 +3,15 @@ package com.acv.manfred.curriculum.ui.form.components.questionnaire
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.domain.model.Questionnaire
+import com.acv.manfred.curriculum.ui.form.components.common.Component
+import com.acv.manfred.curriculum.ui.form.components.common.Invalid
+import com.acv.manfred.curriculum.ui.form.components.common.ObservableValidation
+import com.acv.manfred.curriculum.ui.form.components.common.Valid
 import com.acv.uikit.common.textWatcher
 import com.acv.uikit.input.Input
 import com.acv.uikit.invisible
@@ -15,7 +20,7 @@ import com.acv.uikit.visible
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.component_questionnaire.view.*
 
-typealias ObservableValidation = MutableLiveData<ComponentValidation>
+
 
 interface Validable {
     val state: ObservableValidation
@@ -24,10 +29,6 @@ interface Validable {
 interface Actionable {
     val actions: ObservableAction
 }
-
-sealed class ComponentValidation
-object Valid : ComponentValidation()
-object Invalid : ComponentValidation()
 
 
 sealed class ComponentType(open val componentState: ComponentState)
@@ -68,7 +69,7 @@ class QuestionnaireComponent @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), Validable, Actionable {
+) : LinearLayout(context, attrs, defStyleAttr), Validable, Actionable, Component<QuestionnaireModel> {
     override val state: ObservableValidation = MutableLiveData()
     override val actions: ObservableAction = MutableLiveData()
 
@@ -96,7 +97,7 @@ class QuestionnaireComponent @JvmOverloads constructor(
         orientation = VERTICAL
     }
 
-    fun renderType(model: QuestionnaireModel): QuestionnaireComponent {
+    override fun renderType(model: QuestionnaireModel): QuestionnaireComponent {
         val byDefault: ByDefault = createByDefault(model)
         state.value = if (model.componentType is Persisted) Valid else Invalid
         initActions()
@@ -112,6 +113,7 @@ class QuestionnaireComponent @JvmOverloads constructor(
     private fun QuestionnaireModel.renderFields() {
         inputQuestion.value = question ?: ""
         inputAnswer.value = answer ?: ""
+        info.text = id
     }
 
     private fun initActions() {

@@ -1,30 +1,24 @@
 package com.acv.manfred.curriculum.domain
 
 import arrow.Kind
-import arrow.core.k
+import arrow.core.Either
+import arrow.core.toOption
 import arrow.effects.ForIO
-import arrow.effects.IO
-import arrow.effects.extensions.io.applicativeError.handleError
 import arrow.effects.fix
 import arrow.effects.typeclasses.Disposable
+import com.acv.manfred.curriculum.domain.model.BaseError
+import com.acv.manfred.curriculum.domain.model.UnknownServerError
 
 typealias GatewayResult<A> = Kind<ForIO, A>
 
-fun <A> GatewayResult<A>.executeWithError(error: (String) -> Unit): Disposable =
+fun <A> GatewayResult<A>.executeWithError(error: (BaseError) -> Unit): Disposable =
         execute(error, {})
 
-fun <A> GatewayResult<Result<A>>.executeResult(error: (Error) -> Unit = {}, success: (A) -> Unit): Disposable =
-        execute({}, { result -> result.fold({ error(it) }, { success(it) }) })
+fun <A> GatewayResult<Result<A>>.executeResult(error: (BaseError) -> Unit = {}, success: (A) -> Unit): Disposable =
+        execute(error, { result -> result.fold({ error(it) }, { success(it) }) })
 
-fun <A> GatewayResult<A>.execute(error: (String) -> Unit = {}, success: (A) -> Unit): Disposable =
-        fix().unsafeRunAsyncCancellable {
-            it.fold(
-                    { err -> error(err.message!!) },
-                    { booking -> success(booking) })
-        }
+fun <A> GatewayResult<A>.execute(error: (BaseError) -> Unit = {}, success: (A) -> Unit): Disposable =
+        fix().unsafeRunAsyncCancellable { foldResult(it, error, success) }
 
-fun <A> GatewayResult<A>.success(f: (A) -> Unit): IO<Unit> =
-        fix().map { f(it) }
-
-fun <A> GatewayResult<A>.error(f: (String) -> Unit): IO<Any?> =
-        fix().handleError { f(it.message!!) }
+private fun <A> foldResult(it: Either<Throwable, A>, fail: (BaseError) -> Unit, success: (A) -> Unit) =
+        it.fold({ err -> fail(UnknownServerError(err.message.toOption())) }, { booking -> success(booking) })

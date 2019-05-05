@@ -4,15 +4,17 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.acv.manfred.curriculum.domain.model.Questionnaire
-import java.util.*
 
 
-@Entity(tableName = "questionaire")
+@Entity(tableName = "questionnaire")
 data class QuestionnaireEntity(
-    @PrimaryKey @ColumnInfo(name = "id") val questionaireId: String,
+    @PrimaryKey @ColumnInfo(name = "id") val questionnaireId: String,
     var question: String,
     var answer: String
 )
 
-fun Questionnaire.toEntity() = QuestionnaireEntity(id, question ?: "", answer ?: "")
-fun QuestionnaireEntity.toDomain() = Questionnaire(questionaireId, question ?: "", answer ?: "")
+fun Questionnaire.toEntity(): QuestionnaireEntity =
+    QuestionnaireEntity(id, question ?: "", answer ?: "")
+
+fun QuestionnaireEntity.toDomain(): Questionnaire =
+    Questionnaire(questionnaireId, question, answer)

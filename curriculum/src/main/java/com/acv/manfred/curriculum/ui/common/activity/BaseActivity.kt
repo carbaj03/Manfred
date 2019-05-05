@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.ui.common.arch.EmptyViewModelFactory
-import com.acv.manfred.curriculum.ui.common.arch.Obs2
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -47,10 +50,6 @@ data class SavedInstance(val a: Bundle) {
     }
 }
 
-//LiveDate
-infix fun <M, T : M> BaseActivity.observe(f: () -> LiveData<T>): Obs2<T> =
-    { o: (T) -> Unit -> f().observe(this as LifecycleOwner, Observer { o(it!!) }) }
-
 
 fun BaseActivity.fab(f: FloatingActionButton.() -> Unit) {
     when (this) {
@@ -59,8 +58,24 @@ fun BaseActivity.fab(f: FloatingActionButton.() -> Unit) {
     }
 }
 
+fun BaseActivity.snack(msg: String) {
+    when (this) {
+        is Notificable -> notify(msg)
+        else -> Log.e("Error", "Is not notificable")
+    }
+}
+
 interface Actionable {
     val fb: FloatingActionButton
-    fun config(f: FloatingActionButton.() -> Unit) =
+
+    fun config(f: FloatingActionButton.() -> Unit): Unit =
         f(fb)
+}
+
+interface Notificable {
+    val cl: CoordinatorLayout
+
+    fun notify(msg: String): Unit =
+        Snackbar.make(cl, msg, Snackbar.LENGTH_SHORT).show()
+
 }

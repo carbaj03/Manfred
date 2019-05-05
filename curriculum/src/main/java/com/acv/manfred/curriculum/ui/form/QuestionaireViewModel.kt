@@ -3,24 +3,28 @@ package com.acv.manfred.curriculum.ui.form
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.domain.*
+import com.acv.manfred.curriculum.domain.model.Questionnaire
 import com.acv.manfred.curriculum.ui.common.arch.BaseViewModel
+import com.acv.manfred.curriculum.ui.form.components.common.ComponentValidation
+import com.acv.manfred.curriculum.ui.form.components.common.Error
+import com.acv.manfred.curriculum.ui.form.components.common.Invalid
+import com.acv.manfred.curriculum.ui.form.components.common.Valid
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.*
 
 class QuestionaireViewModel(
     private val dependencies: UsesCasesIO
 ) : BaseViewModel(), UsesCasesIO by dependencies {
+    val questionnaire = MutableLiveData<List<QuestionnaireModel>>()
+    val validation = MutableLiveData<ComponentValidation>()
 
-    val questionnaire by lazy { MutableLiveData<List<QuestionnaireModel>>() }
-    val fab by lazy { MutableLiveData<ComponentValidation>() }
-
-    fun State.state(): Unit =
+    fun State.run(): Unit =
         when (this) {
             is Add -> addQuestionnaire()
             is Load -> getQuestionnaire()
-            is Action -> componentAction.action()
+            is Action -> componentAction.run()
         }
 
-    private fun ComponentAction.action(): Unit =
+    private fun ComponentAction.run(): Unit =
         when (this) {
             is Cancel -> {
             }
@@ -29,31 +33,41 @@ class QuestionaireViewModel(
         }
 
     private fun addQuestionnaire() {
-//        AddQuestionnaireDto(Questionnaire()).addView().executeResult(
-//            error = { Log.e("sdf", it.message) },
-//            success = { questionnaire.value = it })
-        fab.value = Invalid
+        validation.value = Invalid
         questionnaire.value = questionnaire.value!!.plus(QuestionnaireModel())
+        Log.e("trhead", Thread.currentThread().name)
     }
 
+//    private fun addQuestionnaire() {
+//        AddQuestionnaireDto(Questionnaire()).addView().executeResult(
+//            error = { validation.value = Error(it.error) },
+//            success = {
+//                validation.value = Valid
+//                questionnaire.value = it
+//            })
+//    }
+
     private fun getQuestionnaire() {
-        GetQuestionnaireDto.allView().executeResult {
-            fab.value = Valid
-            questionnaire.value = it
-        }
+        GetQuestionnaireDto.allView().executeResult(
+            error = { validation.value = Error(it.error) },
+            success = {
+                validation.value = Valid
+                questionnaire.value = it
+            })
     }
 
     private fun remove(id: String) {
-        RemoveQuestionnaireDto(id).removeView().executeResult {
-            questionnaire.value = it
-        }
+        RemoveQuestionnaireDto(id).removeView().executeResult(
+            error = { validation.value = Error(it.error) },
+            success = { questionnaire.value = it }
+        )
     }
 
     private fun save(questionaires: ComponentResponse) {
         QuestionnaireDto(questionaires).saveView().executeResult(
-            error = { Log.e("sdf", it.message) },
+            error = { validation.value = Error(it.error) },
             success = {
-                fab.value = Valid
+                validation.value = Valid
                 questionnaire.value = it
             }
         )

@@ -6,16 +6,15 @@ import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.gateway.NetworkFetcher
-import com.acv.manfred.curriculum.data.gateway.RequestOperations
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.networkFetcher
 import com.acv.manfred.curriculum.domain.model.Example
 import com.acv.manfred.curriculum.domain.model.RoleProfile
 import com.acv.manfred.curriculum.ui.common.activity.Actionable
 import com.acv.manfred.curriculum.ui.common.arch.FormViewModelFactory
+import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
-import com.acv.manfred.curriculum.ui.common.fragment.observe
 import com.acv.manfred.curriculum.ui.common.fragment.viewModelProviders
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.popup.PopupAdapter
@@ -23,8 +22,8 @@ import kotlinx.android.synthetic.main.view_author_profile.*
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
-class ProfileFragment : BaseFragment() {
-    private val model by lazy {
+class ProfileFragment : BaseFragment(), Observable<FormViewModel> {
+    override val model by lazy {
         viewModelProviders<FormViewModel>(FormViewModelFactory(dependencies))
     }
 
@@ -40,27 +39,27 @@ class ProfileFragment : BaseFragment() {
     override fun getLayout(): Int = R.layout.view_author_profile
 
     override fun onCreate() {
-        observe { model.cv }.map { showCv(it) }
-        observe { model.roles }.map { showRoles(it) }
+        observe { cv } map { showCv() }
+        observe { roles } map { showRoles() }
 
         chaPublicLinks.action(compatActivity.supportFragmentManager)
 
         model.getCv()
         model.getRoles()
 
-        when(val ac = compatActivity){
+        when (val ac = compatActivity) {
             is Actionable -> ac.config {
                 hide()
             }
         }
     }
 
-    fun showCv(cv: Example) {
-        inputFullName.value = cv.author.profile.name
+    private fun Example.showCv() {
+        inputFullName.value = author.profile.name
     }
 
-    fun showRoles(cv: List<RoleProfile>) {
-        chaRoles.action(cv.map { PopupAdapter(it.value) })
+    fun List<RoleProfile>.showRoles() {
+        chaRoles.action(map { PopupAdapter(it.value) })
 //        chaRoles.swap(cv.map { ChipModel(it.name, it.value()) }) { a, b -> a.id == b.id }
     }
 

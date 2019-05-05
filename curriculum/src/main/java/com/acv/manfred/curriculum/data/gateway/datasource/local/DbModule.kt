@@ -64,8 +64,9 @@ class DbModule(val dao: QuestionaireDao) {
         success: (Result<List<QuestionnaireEntity>>) -> Unit
     ): Unit =
         try {
-            val temp = dao.getQuestionaire(dto.questionnaire)
-            dao.delete(temp)
+            val temp: QuestionnaireEntity? = dao.getQuestionaire(dto.questionnaire)
+            temp?.let { dao.delete(it) }
+//            dao.delete(temp!!)
             success(dao.getQuestionaire().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())

@@ -2,7 +2,6 @@ package com.acv.uikit.adapterModel
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.acv.uikit.common.inflate
 
@@ -13,7 +12,7 @@ abstract class AdapterModel(val layout: Layout)
 class RVAdapter<M : AdapterModel>(
     private val items: MutableList<M> = mutableListOf(),
     private val factory: (M, View) -> BaseViewHolder<M>
-) : RecyclerView.Adapter<BaseViewHolder<M>>(), Adapter<M> {
+) : RecyclerView.Adapter<BaseViewHolder<M>>(), Adapter<M>, DiffUtil {
     private val mapper: HashMap<Layout, Class<out M>> = hashMapOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Layout): BaseViewHolder<M> =

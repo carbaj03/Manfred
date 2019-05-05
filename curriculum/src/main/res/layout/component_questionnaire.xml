@@ -35,6 +35,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputQuestion" />
 
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/inputAnswer"
+        app:layout_constraintTop_toBottomOf="@+id/inputAnswer" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
