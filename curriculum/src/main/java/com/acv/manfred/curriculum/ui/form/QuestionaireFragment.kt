@@ -6,30 +6,28 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.gateway.NetworkFetcher
+import com.acv.manfred.curriculum.data.gateway.NetworkQuestionnaireFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
-import com.acv.manfred.curriculum.data.gateway.networkFetcher
+import com.acv.manfred.curriculum.data.gateway.networkQuestionnaireFetcher
+import com.acv.manfred.curriculum.domain.model.Questionnaire
+import com.acv.manfred.curriculum.presentation.form.component.common.Component
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireContainer
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire.*
 import com.acv.manfred.curriculum.ui.common.activity.fab
 import com.acv.manfred.curriculum.ui.common.activity.snack
-import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.QuestionaireViewModelFactory
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.common.*
-import com.acv.manfred.curriculum.ui.form.components.common.Error
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireComponent
-import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireModel
+import com.acv.manfred.curriculum.ui.operations.QuestionnaireViewOperations
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_questionaire.*
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
-
-
-interface QuestionnaireContainer :
-    ComponentContainer<QuestionnaireModel, QuestionnaireComponent>,
-    Observable<QuestionaireViewModel>
 
 class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
 
@@ -46,9 +44,9 @@ class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
         R.layout.view_questionaire
 
     private val dependencies by lazy {
-        object : ViewOperations<ForIO, ApiModule>,
+        object : QuestionnaireViewOperations<ForIO, ApiModule>,
             Async<ForIO> by IO.async(),
-            NetworkFetcher<ApiModule> by ApiModule.networkFetcher(baseActivity) {
+            NetworkQuestionnaireFetcher<ApiModule> by ApiModule.networkQuestionnaireFetcher(baseActivity) {
             override val main: CoroutineContext = Dispatchers.Main
             override val ctx: CoroutineContext = Dispatchers.IO
         }

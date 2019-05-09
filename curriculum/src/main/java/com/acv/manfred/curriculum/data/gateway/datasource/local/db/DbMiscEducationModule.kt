@@ -1,29 +1,31 @@
-package com.acv.manfred.curriculum.data.gateway.datasource.local
+package com.acv.manfred.curriculum.data.gateway.datasource.local.db
 
 import arrow.core.left
 import arrow.core.right
 import arrow.core.toOption
+import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.MiscEducationDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
 import com.acv.manfred.curriculum.domain.*
+import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.domain.model.ApiError
-import com.acv.manfred.curriculum.ui.form.components.questionnaire.toDomain
 import com.google.gson.JsonParseException
 
 
-class DbModule(val dao: QuestionaireDao) {
+class DbMiscEducationModule(val dao: MiscEducationDao) {
 
     companion object
 
     fun save(
-        dto: QuestionnaireDto,
+        dto: MiscEducationDto,
         error: (Throwable) -> Unit,
-        success: (Result<List<QuestionnaireEntity>>) -> Unit
+        success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-            dao.insert(dto.questionnaires.toDomain().toEntity())
-            success(dao.getQuestionaire().right())
+            dao.insert(dto.toDomain().toEntity())
+            success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
         } catch (t: Throwable) {
@@ -31,13 +33,13 @@ class DbModule(val dao: QuestionaireDao) {
         }
 
     fun add(
-        dto: AddQuestionnaireDto,
+        dto: AddMiscEducationDto,
         error: (Throwable) -> Unit,
-        success: (Result<List<QuestionnaireEntity>>) -> Unit
+        success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-            dao.insert(dto.questionnaires.toEntity())
-            success(dao.getQuestionaire().right())
+            dao.insert(dto.miscEducation.toEntity())
+            success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
         } catch (t: Throwable) {
@@ -45,12 +47,12 @@ class DbModule(val dao: QuestionaireDao) {
         }
 
     fun all(
-        dto: GetQuestionnaireDto,
+        dto: GetMiscEducationDto,
         error: (Throwable) -> Unit,
-        success: (Result<List<QuestionnaireEntity>>) -> Unit
+        success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-            success(dao.getQuestionaire().right())
+            success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
         } catch (t: Throwable) {
@@ -59,15 +61,14 @@ class DbModule(val dao: QuestionaireDao) {
 
 
     fun remove(
-        dto: RemoveQuestionnaireDto,
+        dto: RemoveMiscEducationDto,
         error: (Throwable) -> Unit,
-        success: (Result<List<QuestionnaireEntity>>) -> Unit
+        success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-            val temp: QuestionnaireEntity? = dao.getQuestionaire(dto.questionnaire)
+            val temp: MiscEducationEntity? = dao.getMiscEducation(dto.miscEducation)
             temp?.let { dao.delete(it) }
-//            dao.delete(temp!!)
-            success(dao.getQuestionaire().right())
+            success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
         } catch (t: Throwable) {

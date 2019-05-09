@@ -2,29 +2,31 @@ package com.acv.manfred.curriculum.ui.form
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.acv.manfred.curriculum.domain.*
-import com.acv.manfred.curriculum.domain.model.Questionnaire
+import com.acv.manfred.curriculum.domain.dto.*
+import com.acv.manfred.curriculum.domain.executeResult
+import com.acv.manfred.curriculum.presentation.form.component.common.*
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireComponentResponse
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire.*
+import com.acv.manfred.curriculum.presentation.operation.QuestionnaireUsesCasesIO
 import com.acv.manfred.curriculum.ui.common.arch.BaseViewModel
-import com.acv.manfred.curriculum.ui.form.components.common.ComponentValidation
-import com.acv.manfred.curriculum.ui.form.components.common.Error
-import com.acv.manfred.curriculum.ui.form.components.common.Invalid
-import com.acv.manfred.curriculum.ui.form.components.common.Valid
-import com.acv.manfred.curriculum.ui.form.components.questionnaire.*
+import com.acv.manfred.curriculum.ui.form.components.common.*
 
 class QuestionaireViewModel(
-    private val dependencies: UsesCasesIO
-) : BaseViewModel(), UsesCasesIO by dependencies {
+    private val dependencies: QuestionnaireUsesCasesIO
+) : BaseViewModel(), QuestionnaireUsesCasesIO by dependencies {
     val questionnaire = MutableLiveData<List<QuestionnaireModel>>()
     val validation = MutableLiveData<ComponentValidation>()
 
-    fun State.run(): Unit =
+    fun StateQuestionnnaire.run(): Unit =
         when (this) {
             is Add -> addQuestionnaire()
             is Load -> getQuestionnaire()
             is Action -> componentAction.run()
         }
 
-    private fun ComponentAction.run(): Unit =
+    private fun QuestionnaireComponentAction.run(): Unit =
         when (this) {
             is Cancel -> {
             }
@@ -63,8 +65,8 @@ class QuestionaireViewModel(
         )
     }
 
-    private fun save(questionaires: ComponentResponse) {
-        QuestionnaireDto(questionaires).saveView().executeResult(
+    private fun save(questionaires: QuestionnaireComponentResponse) {
+        questionaires.toDto().saveView().executeResult(
             error = { validation.value = Error(it.error) },
             success = {
                 validation.value = Valid
@@ -74,8 +76,3 @@ class QuestionaireViewModel(
     }
 
 }
-
-sealed class State
-object Load : State()
-object Add : State()
-data class Action(val componentAction: ComponentAction) : State()

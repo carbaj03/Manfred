@@ -3,9 +3,13 @@ package com.acv.manfred.curriculum.ui.common.arch
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.acv.manfred.curriculum.domain.GatewayIO
-import com.acv.manfred.curriculum.domain.UsesCasesIO
+import com.acv.manfred.curriculum.domain.QuestionnaireGatewayIO
+import com.acv.manfred.curriculum.domain.model.MiscEducation
+import com.acv.manfred.curriculum.presentation.operation.MiscEducationUseCaseIO
+import com.acv.manfred.curriculum.presentation.operation.QuestionnaireUsesCasesIO
 import com.acv.manfred.curriculum.ui.form.FormViewModel
 import com.acv.manfred.curriculum.ui.form.LanguageViewModel
+import com.acv.manfred.curriculum.ui.form.MiscEducationViewModel
 import com.acv.manfred.curriculum.ui.form.QuestionaireViewModel
 
 object EmptyViewModelFactory : ViewModelProvider.Factory {
@@ -28,6 +32,17 @@ class FormViewModelFactory(
     }
 }
 
+class MiscEducationViewModelFactory(
+    private val dependencies: MiscEducationUseCaseIO
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MiscEducationViewModel::class.java)) {
+            return MiscEducationViewModel(dependencies) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
 class LanguageViewModelFactory(
     private val dependencies: GatewayIO
 ) : ViewModelProvider.Factory {
@@ -40,7 +55,7 @@ class LanguageViewModelFactory(
 }
 
 class QuestionaireViewModelFactory(
-    private val dependencies: UsesCasesIO
+    private val dependencies: QuestionnaireUsesCasesIO
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuestionaireViewModel::class.java)) {
@@ -51,14 +66,3 @@ class QuestionaireViewModelFactory(
 }
 
 object EmptyViewModel : BaseViewModel()
-
-class Creator(
-    private val dependencies: UsesCasesIO
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(QuestionaireViewModel::class.java)) {
-            return QuestionaireViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

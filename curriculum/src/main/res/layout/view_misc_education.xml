@@ -37,14 +37,13 @@
                 android:layout_margin="8dp"
                 android:text="Miscellaneous education such as courses, certifications, awards, projects, etc." />
 
-            <com.acv.uikit.input.Input
-                android:id="@+id/inputMiscEducation"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/misc_education_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="Miscellany" />
-
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

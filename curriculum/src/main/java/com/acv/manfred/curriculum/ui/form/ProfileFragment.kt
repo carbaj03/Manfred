@@ -16,6 +16,7 @@ import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
+import com.acv.manfred.curriculum.ui.operations.QuestionnaireViewOperations
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.popup.PopupAdapter
 import kotlinx.android.synthetic.main.view_author_profile.*

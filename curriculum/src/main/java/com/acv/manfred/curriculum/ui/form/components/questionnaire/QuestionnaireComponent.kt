@@ -3,15 +3,14 @@ package com.acv.manfred.curriculum.ui.form.components.questionnaire
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.domain.model.Questionnaire
-import com.acv.manfred.curriculum.ui.form.components.common.Component
-import com.acv.manfred.curriculum.ui.form.components.common.Invalid
-import com.acv.manfred.curriculum.ui.form.components.common.ObservableValidation
-import com.acv.manfred.curriculum.ui.form.components.common.Valid
+import com.acv.manfred.curriculum.presentation.form.component.common.*
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.ByDefault
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireComponentResponse
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
+import com.acv.manfred.curriculum.ui.form.components.common.*
 import com.acv.uikit.common.textWatcher
 import com.acv.uikit.input.Input
 import com.acv.uikit.invisible
@@ -20,58 +19,13 @@ import com.acv.uikit.visible
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.component_questionnaire.view.*
 
-
-
-interface Validable {
-    val state: ObservableValidation
-}
-
-interface Actionable {
-    val actions: ObservableAction
-}
-
-
-sealed class ComponentType(open val componentState: ComponentState)
-data class Persisted(override val componentState: ComponentState) : ComponentType(componentState)
-data class New(override val componentState: ComponentState) : ComponentType(componentState)
-
-
-sealed class ComponentState
-object NotModified : ComponentState()
-sealed class Modified : ComponentState()
-object Incompleted : Modified()
-object Completed : Modified()
-
-
-typealias ObservableAction = MutableLiveData<ComponentAction>
-
-sealed class ComponentAction
-data class Cancel(val id: String) : ComponentAction()
-data class Remove(val id: String) : ComponentAction()
-data class Save(val item: ComponentResponse) : ComponentAction()
-
-data class ComponentResponse(
-    val id: String?,
-    var question: String,
-    var answer: String
-) {
-    fun toDomain(): Questionnaire =
-        id?.let { Questionnaire(id = it, question = question, answer = answer) } ?: Questionnaire(question = question, answer = answer)
-}
-
-data class ByDefault(
-    val id: String?,
-    var question: String,
-    var answer: String
-)
-
 class QuestionnaireComponent @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), Validable, Actionable, Component<QuestionnaireModel> {
+) : LinearLayout(context, attrs, defStyleAttr), Validable, Actionable<QuestionnaireComponentAction>, Component<QuestionnaireModel> {
     override val state: ObservableValidation = MutableLiveData()
-    override val actions: ObservableAction = MutableLiveData()
+    override val actions: MutableLiveData<QuestionnaireComponentAction> = MutableLiveData()
 
     private val Input.isValid: Boolean
         get() = value.isNotBlank()
@@ -107,7 +61,7 @@ class QuestionnaireComponent @JvmOverloads constructor(
         return this
     }
 
-    private fun createByDefault(model: QuestionnaireModel) =
+    private fun createByDefault(model: QuestionnaireModel): ByDefault =
         ByDefault(id = model.id, question = model.question ?: "", answer = model.answer ?: "")
 
     private fun QuestionnaireModel.renderFields() {
@@ -170,8 +124,8 @@ class QuestionnaireComponent @JvmOverloads constructor(
     private fun MaterialButton.save(id: String?): Unit =
         action { actions.value = Save(createResponse(id)) }
 
-    private fun createResponse(id: String?): ComponentResponse =
-        ComponentResponse(
+    private fun createResponse(id: String?): QuestionnaireComponentResponse =
+        QuestionnaireComponentResponse(
             id = id,
             answer = this@QuestionnaireComponent.inputAnswer.value,
             question = this@QuestionnaireComponent.inputQuestion.value

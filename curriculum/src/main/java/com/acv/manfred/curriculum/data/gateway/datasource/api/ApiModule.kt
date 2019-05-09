@@ -8,7 +8,7 @@ import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyR
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse.*
 import com.acv.manfred.curriculum.domain.GetCvDto
 import com.acv.manfred.curriculum.domain.ProficiencyDto
-import com.acv.manfred.curriculum.domain.Result
+import com.acv.manfred.curriculum.domain.ResultK
 import com.acv.manfred.curriculum.domain.RolesDto
 import com.acv.manfred.curriculum.domain.model.ApiError
 import com.google.gson.Gson
@@ -22,7 +22,7 @@ class ApiModule {
     fun requestGet(
         getBookingDto: GetCvDto,
         error: (Throwable) -> Unit,
-        success: (Result<ExampleResponse>) -> Unit
+        success: (ResultK<ExampleResponse>) -> Unit
     ): Unit =
         try {
             val gson = Gson()
@@ -38,7 +38,7 @@ class ApiModule {
     fun requestRoles(
         roles: RolesDto,
         error: (Throwable) -> Unit,
-        success: (Result<List<RoleProfileResponse>>) -> Unit
+        success: (ResultK<List<RoleProfileResponse>>) -> Unit
     ): Unit =
         try {
             success(mockRoles().right())
@@ -51,7 +51,7 @@ class ApiModule {
     fun requestProficiency(
         proficiency: ProficiencyDto,
         error: (Throwable) -> Unit,
-        success: (Result<List<ProficiencyResponse>>) -> Unit
+        success: (ResultK<List<ProficiencyResponse>>) -> Unit
     ): Unit =
         try {
             success(mockProficiency().right())

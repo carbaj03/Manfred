@@ -14,7 +14,7 @@ typealias GatewayResult<A> = Kind<ForIO, A>
 fun <A> GatewayResult<A>.executeWithError(error: (BaseError) -> Unit): Disposable =
         execute(error, {})
 
-fun <A> GatewayResult<Result<A>>.executeResult(error: (BaseError) -> Unit = {}, success: (A) -> Unit): Disposable =
+fun <A> GatewayResult<ResultK<A>>.executeResult(error: (BaseError) -> Unit = {}, success: (A) -> Unit): Disposable =
         execute(error, { result -> result.fold({ error(it) }, { success(it) }) })
 
 fun <A> GatewayResult<A>.execute(error: (BaseError) -> Unit = {}, success: (A) -> Unit): Disposable =

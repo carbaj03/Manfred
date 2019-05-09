@@ -1,7 +1,7 @@
-package com.acv.manfred.curriculum.ui.form.components.questionnaire
+package com.acv.manfred.curriculum.presentation.form.component.questionnaire
 
 import com.acv.manfred.curriculum.domain.model.Questionnaire
-import com.acv.manfred.curriculum.ui.form.components.common.ComponentModel
+import com.acv.manfred.curriculum.presentation.form.component.common.*
 
 data class QuestionnaireModel(
     override val id: String? = null,

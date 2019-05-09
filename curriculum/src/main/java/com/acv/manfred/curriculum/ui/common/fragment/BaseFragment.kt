@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.acv.manfred.curriculum.ui.common.activity.BaseActivity
 import com.acv.manfred.curriculum.ui.common.arch.Provider
-import com.acv.manfred.curriculum.ui.common.navigator.Extra
 import com.acv.manfred.curriculum.ui.common.navigator.ExtraExtensionsFr
 
 abstract class BaseFragment : Fragment(), ExtraExtensionsFr, Provider {
@@ -29,7 +28,3 @@ abstract class BaseFragment : Fragment(), ExtraExtensionsFr, Provider {
     protected abstract fun getLayout(): Int
     protected abstract fun onCreate()
 }
-
-//Navigation
-inline fun <reified A : BaseFragment> createFragment(args: Extra<*> = Extra.None): A =
-    A::class.java.newInstance().apply { arguments = args.toBundle() }

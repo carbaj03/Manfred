@@ -1,7 +1,8 @@
 package com.acv.manfred.curriculum.ui.form.components.common
 
-import android.util.Log
 import androidx.recyclerview.widget.ListUpdateCallback
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentModel
+import com.acv.manfred.curriculum.presentation.form.component.common.ObserveComponent
 import com.acv.uikit.adapterModel.Adapter
 import com.acv.uikit.adapterModel.DiffUtil
 import com.acv.uikit.adapterModel.POSITION

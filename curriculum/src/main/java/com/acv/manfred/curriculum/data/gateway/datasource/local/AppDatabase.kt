@@ -5,15 +5,23 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.acv.manfred.curriculum.data.gateway.datasource.local.common.DATABASE_NAME
+import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.MiscEducationDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 
 /**
  * The Room database for this app
  */
-@Database(entities = [QuestionnaireEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        QuestionnaireEntity::class,
+        MiscEducationEntity::class
+    ], version = 1, exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun questionaireDao(): QuestionaireDao
+    abstract fun miscEducationDao(): MiscEducationDao
 
     companion object {
         // For Singleton instantiation
