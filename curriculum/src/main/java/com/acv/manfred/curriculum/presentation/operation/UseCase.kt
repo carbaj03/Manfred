@@ -6,6 +6,7 @@ import com.acv.manfred.curriculum.domain.ResultK
 import com.acv.manfred.curriculum.domain.dto.RemoveQuestionnaireDto
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
 
+typealias Return<F, A> = Kind<F, ResultK<A>>
 
 typealias UsesCasesIO = UseCase<ForIO>
 

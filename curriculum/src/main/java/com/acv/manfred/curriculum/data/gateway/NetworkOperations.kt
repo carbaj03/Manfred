@@ -7,11 +7,15 @@ import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ExampleRespo
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.local.AppDatabase
+import com.acv.manfred.curriculum.data.gateway.datasource.local.db.DbLanguageModule
 import com.acv.manfred.curriculum.data.gateway.datasource.local.db.DbMiscEducationModule
+import com.acv.manfred.curriculum.data.gateway.datasource.local.db.DbProficiencyModule
 import com.acv.manfred.curriculum.data.gateway.datasource.local.db.DbQuestionnaireModule
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.LanguageEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.ProficiencyEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
-import com.acv.manfred.curriculum.domain.*
+import com.acv.manfred.curriculum.domain.ResultK
 import com.acv.manfred.curriculum.domain.dto.*
 
 
@@ -28,9 +32,6 @@ interface NetworkModuleNetworkFetcher : NetworkFetcher<ApiModule> {
 
     override fun requestRoles(roles: RolesDto, error: (Throwable) -> Unit, success: (ResultK<List<RoleProfileResponse>>) -> Unit) =
         apiModule.requestRoles(roles, error, success)
-
-    override fun requestProficiency(proficiency: ProficiencyDto, error: (Throwable) -> Unit, success: (ResultK<List<ProficiencyResponse>>) -> Unit) =
-        apiModule.requestProficiency(proficiency, error, success)
 }
 
 //@extension
@@ -74,6 +75,50 @@ interface NetworkMiscEducationModuleNetworkFetcher : NetworkMiscEducationFetcher
         dbModule.add(dto, error, success)
 }
 
+interface NetworkLanguageModuleNetworkFetcher : NetworkLanguageFetcher<ApiModule> {
+    companion object {
+        private val apiModule = ApiModule()
+    }
+
+    val dbModule: DbLanguageModule
+
+    override fun save(dto: LanguageDto, error: (Throwable) -> Unit, success: (ResultK<List<LanguageEntity>>) -> Unit) =
+        dbModule.save(dto, error, success)
+
+    override fun remove(dto: RemoveLanguageDto, error: (Throwable) -> Unit, success: (ResultK<List<LanguageEntity>>) -> Unit) =
+        dbModule.remove(dto, error, success)
+
+    override fun all(dto: GetLanguageDto, error: (Throwable) -> Unit, success: (ResultK<List<LanguageEntity>>) -> Unit) =
+        dbModule.all(dto, error, success)
+
+    override fun add(dto: AddLanguageDto, error: (Throwable) -> Unit, success: (ResultK<List<LanguageEntity>>) -> Unit) =
+        dbModule.add(dto, error, success)
+}
+
+interface NetworkProficiencyModuleNetworkFetcher : NetworkProficiencyFetcher<ApiModule> {
+    companion object {
+        private val apiModule = ApiModule()
+    }
+
+    val dbModule: DbProficiencyModule
+
+    override fun all(proficiency: GetProficiencyDto, error: (Throwable) -> Unit, success: (ResultK<List<ProficiencyEntity>>) -> Unit) =
+        dbModule.all(proficiency, error, success)
+
+}
+
+fun ApiModule.Companion.networkLanguageFetcher(context: Context): NetworkLanguageFetcher<ApiModule> =
+    object : NetworkLanguageModuleNetworkFetcher {
+        override val dbModule: DbLanguageModule =
+            DbLanguageModule(AppDatabase.getInstance(context.applicationContext).languageDao())
+    }
+
+fun ApiModule.Companion.networkProficiencyFetcher(context: Context): NetworkProficiencyFetcher<ApiModule> =
+    object : NetworkProficiencyModuleNetworkFetcher {
+        override val dbModule: DbProficiencyModule =
+            DbProficiencyModule(AppDatabase.getInstance(context.applicationContext).proficiencyDao())
+    }
+
 fun ApiModule.Companion.networkFetcher(context: Context): NetworkFetcher<ApiModule> =
     object : NetworkModuleNetworkFetcher {
         override val dbModule: DbQuestionnaireModule =
@@ -103,12 +148,6 @@ interface NetworkFetcher<N> {
         roles: RolesDto,
         error: (Throwable) -> Unit,
         success: (ResultK<List<RoleProfileResponse>>) -> Unit
-    ): Unit
-
-    fun requestProficiency(
-        proficiency: ProficiencyDto,
-        error: (Throwable) -> Unit,
-        success: (ResultK<List<ProficiencyResponse>>) -> Unit
     ): Unit
 }
 
@@ -168,6 +207,43 @@ interface NetworkMiscEducationFetcher<N> {
 
 }
 
+interface NetworkLanguageFetcher<N> {
+    fun save(
+        proficiency: LanguageDto,
+        error: (Throwable) -> Unit,
+        success: (ResultK<List<LanguageEntity>>) -> Unit
+    ): Unit
+
+    fun add(
+        questionnaire: AddLanguageDto,
+        error: (Throwable) -> Unit,
+        success: (ResultK<List<LanguageEntity>>) -> Unit
+    ): Unit
+
+    fun remove(
+        questionnaireDto: RemoveLanguageDto,
+        error: (Throwable) -> Unit,
+        success: (ResultK<List<LanguageEntity>>) -> Unit
+    ): Unit
+
+
+    fun all(
+        proficiency: GetLanguageDto,
+        error: (Throwable) -> Unit,
+        success: (ResultK<List<LanguageEntity>>) -> Unit
+    ): Unit
+
+}
+
+interface NetworkProficiencyFetcher<N> {
+
+    fun all(
+        proficiency: GetProficiencyDto,
+        error: (Throwable) -> Unit,
+        success: (ResultK<List<ProficiencyEntity>>) -> Unit
+    ): Unit
+
+}
 
 interface NetworkOperations<F, N> : CallAsync<F>, NetworkFetcher<N> {
     fun GetCvDto.request(): Kind<F, ResultK<ExampleResponse>> =
@@ -175,9 +251,6 @@ interface NetworkOperations<F, N> : CallAsync<F>, NetworkFetcher<N> {
 
     fun RolesDto.request(): Kind<F, ResultK<List<RoleProfileResponse>>> =
         call(::requestRoles)
-
-    fun ProficiencyDto.request(): Kind<F, ResultK<List<ProficiencyResponse>>> =
-        call(::requestProficiency)
 }
 
 interface NetworkQuestionnaireOperations<F, N> : CallAsync<F>, NetworkQuestionnaireFetcher<N> {
@@ -205,5 +278,25 @@ interface NetworkMiscEducationOperations<F, N> : CallAsync<F>, NetworkMiscEducat
         call(::remove)
 
     fun GetMiscEducationDto.request(): Kind<F, ResultK<List<MiscEducationEntity>>> =
+        call(::all)
+}
+
+interface NetworkLanguageOperations<F, N> : CallAsync<F>, NetworkLanguageFetcher<N> {
+    fun LanguageDto.persist(): Kind<F, ResultK<List<LanguageEntity>>> =
+        call(::save)
+
+    fun AddLanguageDto.persist(): Kind<F, ResultK<List<LanguageEntity>>> =
+        call(::add)
+
+    fun RemoveLanguageDto.delete(): Kind<F, ResultK<List<LanguageEntity>>> =
+        call(::remove)
+
+    fun GetLanguageDto.request(): Kind<F, ResultK<List<LanguageEntity>>> =
+        call(::all)
+}
+
+interface NetworkProficiencyOperations<F, N> : CallAsync<F>, NetworkProficiencyFetcher<N> {
+
+    fun GetProficiencyDto.request(): Kind<F, ResultK<List<ProficiencyEntity>>> =
         call(::all)
 }

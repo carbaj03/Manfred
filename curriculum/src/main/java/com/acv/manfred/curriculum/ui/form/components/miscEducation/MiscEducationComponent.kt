@@ -3,9 +3,11 @@ package com.acv.manfred.curriculum.ui.form.components.miscEducation
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
+import com.acv.manfred.curriculum.domain.model.GenerateId
 import com.acv.manfred.curriculum.presentation.form.component.common.*
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Remove
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Save
@@ -27,7 +29,11 @@ class MiscEducationComponent @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), Validable, Actionable<MiscEducationComponentAction>, Component<MiscEducationModel> {
+) : LinearLayout(context, attrs, defStyleAttr),
+    Validable,
+    Actionable<MiscEducationComponentAction>,
+    Component<MiscEducationModel>
+{
     override val state: ObservableValidation = MutableLiveData()
     override val actions: MutableLiveData<MiscEducationComponentAction> = MutableLiveData()
 
@@ -50,8 +56,7 @@ class MiscEducationComponent @JvmOverloads constructor(
         get() = isModified is Incompleted
 
     init {
-        val mInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        mInflater.inflate(R.layout.component_misc_education, this, true)
+        View.inflate(context, R.layout.component_misc_education, this)
         orientation = VERTICAL
     }
 
@@ -70,7 +75,7 @@ class MiscEducationComponent @JvmOverloads constructor(
 
     private fun MiscEducationModel.renderFields() {
         inputMiscEducation.value = miscellaneous ?: ""
-        info.text = id
+        info.text = id.id
     }
 
     private fun initActions() {
@@ -120,13 +125,13 @@ class MiscEducationComponent @JvmOverloads constructor(
             }
         }
 
-    private fun MaterialButton.remove(id: String): Unit =
+    private fun MaterialButton.remove(id: GenerateId): Unit =
         action { actions.value = Remove(id) }
 
-    private fun MaterialButton.save(id: String?): Unit =
+    private fun MaterialButton.save(id: GenerateId): Unit =
         action { actions.value = Save(createResponse(id)) }
 
-    private fun createResponse(id: String?): MiscEducationComponentResponse =
+    private fun createResponse(id: GenerateId): MiscEducationComponentResponse =
         MiscEducationComponentResponse(
             id = id,
             miscEducation = this@MiscEducationComponent.inputMiscEducation.value

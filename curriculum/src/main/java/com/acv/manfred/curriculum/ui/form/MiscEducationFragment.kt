@@ -6,23 +6,22 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.gateway.*
+import com.acv.manfred.curriculum.data.gateway.NetworkMiscEducationFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
+import com.acv.manfred.curriculum.data.gateway.networkMiscEducationFetcher
 import com.acv.manfred.curriculum.presentation.form.component.common.Component
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationContainer
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationModel
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.StateMiscEducation
-import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire
 import com.acv.manfred.curriculum.ui.common.activity.fab
 import com.acv.manfred.curriculum.ui.common.activity.snack
-import com.acv.manfred.curriculum.ui.common.arch.*
+import com.acv.manfred.curriculum.ui.common.arch.MiscEducationViewModelFactory
+import com.acv.manfred.curriculum.ui.common.arch.map
+import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.common.*
 import com.acv.manfred.curriculum.ui.form.components.miscEducation.MiscEducationComponent
-import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireComponent
 import com.acv.manfred.curriculum.ui.operations.MiscEducationViewOperations
-import com.acv.manfred.curriculum.ui.operations.QuestionnaireViewOperations
-import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_misc_education.*
 import kotlinx.coroutines.Dispatchers
@@ -60,7 +59,7 @@ class MiscEducationFragment : BaseFragment() , MiscEducationContainer {
             setImageResource(R.drawable.ic_favorite)
             onClick { model { StateMiscEducation.Add.run() } }
         }
-        observe { miscEducations } map { swap { a, b -> a == b } }
+        observe { miscEducations } map { swap { a, b -> a.id.id == b.id.id } }
         observe { validation } map { validate() }
         model { StateMiscEducation.Load.run() }
     }

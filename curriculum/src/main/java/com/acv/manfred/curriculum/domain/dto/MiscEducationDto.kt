@@ -1,22 +1,22 @@
 package com.acv.manfred.curriculum.domain.dto
 
-import com.acv.manfred.curriculum.domain.model.MiscEducation
-import com.acv.manfred.curriculum.domain.model.Questionnaire
+import com.acv.manfred.curriculum.domain.model.*
 
 data class MiscEducationDto(
-    val id: String?,
+    val id: GenerateId,
     var miscellaneous: String
 ) {
     fun toDomain(): MiscEducation =
-        id?.let { MiscEducation(id = it, miscellaneous = miscellaneous) } ?: MiscEducation(miscellaneous = miscellaneous)
+        when (id) {
+            is WithId, Id -> MiscEducation(id = id, miscellaneous = miscellaneous)
+            NoId -> MiscEducation(id = Id, miscellaneous = miscellaneous)
+        }
 }
 
-data class AddMiscEducationDto(
-    val miscEducation: MiscEducation
-)
+object AddMiscEducationDto
 
 data class RemoveMiscEducationDto(
-    val miscEducation: String
+    val miscEducation: GenerateId
 )
 
 object GetMiscEducationDto

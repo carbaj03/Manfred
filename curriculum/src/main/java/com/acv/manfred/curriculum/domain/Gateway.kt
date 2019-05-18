@@ -7,26 +7,36 @@ import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.domain.model.*
 
 typealias GatewayIO = CvGateway<ForIO>
-typealias QuestionnaireGatewayIO = QuestionnaireGateway<ForIO>
 
 typealias ResultK<A> = Either<BaseError, A>
+typealias ResultE<F, T> = Kind<F, ResultK<T>>
 
 interface CvGateway<F> {
-    fun GetCvDto.get(): Kind<F, ResultK<Example>>
-    fun RolesDto.get(): Kind<F, ResultK<List<RoleProfile>>>
-    fun ProficiencyDto.get(): Kind<F, ResultK<List<Proficiency>>>
+    fun GetCvDto.get(): ResultE<F, Example>
+    fun RolesDto.get(): ResultE<F, List<RoleProfile>>
 }
 
 interface QuestionnaireGateway<F> {
-    fun QuestionnaireDto.save() : Kind<F, ResultK<List<Questionnaire>>>
-    fun AddQuestionnaireDto.add() : Kind<F, ResultK<List<Questionnaire>>>
-    fun RemoveQuestionnaireDto.remove() : Kind<F, ResultK<List<Questionnaire>>>
-    fun GetQuestionnaireDto.all() : Kind<F, ResultK<List<Questionnaire>>>
+    fun QuestionnaireDto.save(): ResultE<F, List<Questionnaire>>
+    fun AddQuestionnaireDto.add(): ResultE<F, List<Questionnaire>>
+    fun RemoveQuestionnaireDto.remove(): ResultE<F, List<Questionnaire>>
+    fun GetQuestionnaireDto.all(): ResultE<F, List<Questionnaire>>
 }
 
 interface MiscEducationGateway<F> {
-    fun MiscEducationDto.save() : Kind<F, ResultK<List<MiscEducation>>>
-    fun AddMiscEducationDto.add() : Kind<F, ResultK<List<MiscEducation>>>
-    fun RemoveMiscEducationDto.remove() : Kind<F, ResultK<List<MiscEducation>>>
-    fun GetMiscEducationDto.all() : Kind<F, ResultK<List<MiscEducation>>>
+    fun MiscEducationDto.save(): ResultE<F, List<MiscEducation>>
+    fun AddMiscEducationDto.add(): ResultE<F, List<MiscEducation>>
+    fun RemoveMiscEducationDto.remove(): ResultE<F, List<MiscEducation>>
+    fun GetMiscEducationDto.all(): ResultE<F, List<MiscEducation>>
+}
+
+interface LanguageGateway<F> {
+    fun LanguageDto.save(): ResultE<F, List<Language>>
+    fun AddLanguageDto.add(): ResultE<F, List<Language>>
+    fun RemoveLanguageDto.remove(): ResultE<F, List<Language>>
+    fun GetLanguageDto.all(): ResultE<F, List<Language>>
+}
+
+interface ProficiencyGateway<F> {
+    fun GetProficiencyDto.all(): ResultE<F, List<Proficiency>>
 }

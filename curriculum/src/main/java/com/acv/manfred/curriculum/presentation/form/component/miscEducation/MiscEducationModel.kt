@@ -1,16 +1,17 @@
 package com.acv.manfred.curriculum.presentation.form.component.miscEducation
 
+import com.acv.manfred.curriculum.domain.model.GenerateId
 import com.acv.manfred.curriculum.domain.model.MiscEducation
-import com.acv.manfred.curriculum.presentation.form.component.common.*
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentModel
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentType
+import com.acv.manfred.curriculum.presentation.form.component.common.New
+import com.acv.manfred.curriculum.presentation.form.component.common.NotModified
 
 data class MiscEducationModel(
-    override val id: String? = null,
+    override val id: GenerateId,
     var miscellaneous: String? = null,
-    var componentType: ComponentType = New(NotModified)
+    override var componentType: ComponentType = New(NotModified)
 ) : ComponentModel
 
-fun MiscEducationModel.toDomain(): MiscEducation =
-    id?.let { MiscEducation(id = it, miscellaneous = miscellaneous) } ?: MiscEducation(miscellaneous = miscellaneous)
-
 fun MiscEducation.toView(): MiscEducationModel =
-    MiscEducationModel(id = id, miscellaneous = miscellaneous, componentType = Persisted(NotModified))
+    MiscEducationModel(id = id, miscellaneous = miscellaneous, componentType = id.type())

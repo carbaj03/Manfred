@@ -2,15 +2,18 @@ package com.acv.manfred.curriculum.ui.form.components.questionnaire
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
+import com.acv.manfred.curriculum.domain.model.GenerateId
 import com.acv.manfred.curriculum.presentation.form.component.common.*
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.ByDefault
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
-import com.acv.manfred.curriculum.ui.form.components.common.*
+import com.acv.manfred.curriculum.ui.form.components.common.Invalid
+import com.acv.manfred.curriculum.ui.form.components.common.ObservableValidation
+import com.acv.manfred.curriculum.ui.form.components.common.Valid
 import com.acv.uikit.common.textWatcher
 import com.acv.uikit.input.Input
 import com.acv.uikit.invisible
@@ -39,6 +42,18 @@ class QuestionnaireComponent @JvmOverloads constructor(
             else -> Incompleted
         }
 
+    private var answerC
+        get() = inputAnswer.value
+        set(value) {
+            inputAnswer.value = value
+        }
+
+    private var questionC
+        get() = inputQuestion.value
+        set(value) {
+            inputQuestion.value = value
+        }
+
     private val isCompleted
         get() = isModified is Completed
 
@@ -46,102 +61,105 @@ class QuestionnaireComponent @JvmOverloads constructor(
         get() = isModified is Incompleted
 
     init {
-        val mInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        mInflater.inflate(R.layout.component_questionnaire, this, true)
+        inflate(context, R.layout.component_questionnaire, this)
         orientation = VERTICAL
     }
 
     override fun renderType(model: QuestionnaireModel): QuestionnaireComponent {
-        val byDefault: ByDefault = createByDefault(model)
         state.value = if (model.componentType is Persisted) Valid else Invalid
-        initActions()
         model.renderFields()
-        model.renderType(byDefault)
-        model.listener(byDefault)
+        model.renderType()
+        model.listener()
         return this
     }
 
-    private fun createByDefault(model: QuestionnaireModel): ByDefault =
-        ByDefault(id = model.id, question = model.question ?: "", answer = model.answer ?: "")
+    private fun QuestionnaireModel.createByDefault(): ByDefault =
+        ByDefault(id = id, question = question, answer = answer)
 
     private fun QuestionnaireModel.renderFields() {
-        inputQuestion.value = question ?: ""
-        inputAnswer.value = answer ?: ""
-        info.text = id
+        questionC = question
+        answerC = answer
+        info.text = id.id
     }
 
-    private fun initActions() {
-        btnRemove.invisible()
-        btnSave.invisible()
-        btnCancel.invisible()
+    private fun invisible(vararg views: View): Unit =
+        views.forEach { it.invisible() }
+
+    private fun QuestionnaireModel.listener() {
+        inputQuestion.listener { if (it == question || isIncompleted) invalid() else valid(createByDefault()) }
+        inputAnswer.listener { if (it == answer || isIncompleted) invalid() else valid(createByDefault()) }
     }
 
-    private fun QuestionnaireModel.listener(byDefault: ByDefault) {
-        inputQuestion.listener(question, byDefault)
-        inputAnswer.listener(answer, byDefault)
+    private fun Input.listener(toWatch: (String) -> Unit): Unit =
+        watch(textWatcher { toWatch(it.toString()) })
+
+    private fun valid(byDefault: ByDefault) {
+        btnCancel.enableCancel(byDefault)
+        btnSave.enableSave(byDefault.id)
     }
 
-    private fun Input.listener(toCompare: String?, byDefault: ByDefault) {
-        watch(textWatcher {
-            if (value == toCompare || isIncompleted) {
-                this@QuestionnaireComponent.btnCancel.invisible()
-                this@QuestionnaireComponent.btnSave.invisible()
-            } else {
-                this@QuestionnaireComponent.btnCancel.cancel(byDefault)
-                this@QuestionnaireComponent.btnSave.save(byDefault.id)
-            }
-        })
-    }
+    private fun invalid(): Unit =
+        invisible(btnCancel, btnSave)
 
-    private fun QuestionnaireModel.renderType(byDefault: ByDefault) =
+    private fun QuestionnaireModel.renderType() =
         when (componentType) {
-            is Persisted -> when (componentType.componentState) {
-                Incompleted -> {
-                    btnRemove.remove(id!!)
-                    btnCancel.cancel(byDefault)
-                }
-                Completed -> {
-                    btnRemove.remove(id!!)
-                    btnSave.save(id)
-                    btnCancel.cancel(byDefault)
-                }
-                NotModified -> btnRemove.remove(id!!)
+            is Persisted -> persistedState()
+            is New -> newState()
+        }
+
+    private fun QuestionnaireModel.newState() =
+        when (componentType.componentState) {
+            Incompleted -> {
+                btnCancel.enableCancel(createByDefault())
+                invisible(btnRemove, btnSave)
             }
-            is New -> when (componentType.componentState) {
-                Incompleted -> btnCancel.cancel(byDefault)
-                Completed -> {
-                    btnSave.save(id)
-                    btnCancel.cancel(byDefault)
-                }
-                NotModified -> {
-                }
+            Completed -> {
+                btnSave.enableSave(id)
+                btnCancel.enableCancel(createByDefault())
+                btnRemove.invisible()
+            }
+            NotModified -> {
+                invisible(btnRemove, btnSave, btnCancel)
             }
         }
 
-    private fun MaterialButton.remove(id: String): Unit =
-        action { actions.value = Remove(id) }
+    private fun QuestionnaireModel.persistedState() =
+        when (componentType.componentState) {
+            Incompleted -> {
+                btnRemove.enableRemove(id)
+                btnCancel.enableCancel(createByDefault())
+                btnSave.invisible()
+            }
+            Completed -> {
+                btnRemove.enableRemove(id)
+                btnSave.enableSave(id)
+                btnCancel.enableCancel(createByDefault())
+            }
+            NotModified -> {
+                btnRemove.enableRemove(id)
+                invisible(btnCancel, btnSave)
+            }
+        }
 
-    private fun MaterialButton.save(id: String?): Unit =
-        action { actions.value = Save(createResponse(id)) }
+    private fun MaterialButton.enableRemove(id: GenerateId): Unit =
+        enabled { actions.value = Remove(id) }
 
-    private fun createResponse(id: String?): QuestionnaireComponentResponse =
-        QuestionnaireComponentResponse(
-            id = id,
-            answer = this@QuestionnaireComponent.inputAnswer.value,
-            question = this@QuestionnaireComponent.inputQuestion.value
-        )
+    private fun MaterialButton.enableSave(id: GenerateId): Unit =
+        enabled { actions.value = createSave(id) }
 
-    private fun MaterialButton.cancel(byDefault: ByDefault): Unit =
-        action {
-            this@QuestionnaireComponent.inputAnswer.value = byDefault.answer
-            this@QuestionnaireComponent.inputQuestion.value = byDefault.question
+    private fun MaterialButton.enableCancel(byDefault: ByDefault): Unit =
+        enabled {
+            answerC = byDefault.answer
+            questionC = byDefault.question
             invisible()
         }
 
-    private fun MaterialButton.action(f: () -> Unit) {
+    private fun MaterialButton.enabled(f: () -> Unit) {
         visible()
         onClick { f() }
     }
 
+    private fun createSave(id: GenerateId): Save =
+        Save(QuestionnaireComponentResponse(id = id, answer = answerC, question = questionC))
 
 }

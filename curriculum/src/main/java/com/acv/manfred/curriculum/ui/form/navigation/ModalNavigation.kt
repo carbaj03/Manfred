@@ -3,6 +3,8 @@ package com.acv.manfred.curriculum.ui.form.navigation
 import com.acv.manfred.curriculum.ui.common.activity.BaseActivity
 import com.acv.manfred.curriculum.ui.common.navigator.Launcher
 import com.acv.manfred.curriculum.ui.form.*
+import com.acv.manfred.curriculum.ui.form.languaje.LanguageFragment
+import com.acv.manfred.curriculum.ui.form.questionnaire.QuestionnaireFragment
 
 interface ModalNavigation : Launcher, Navigation {
     override val baseActivity: BaseActivity
@@ -14,7 +16,7 @@ interface ModalNavigation : Launcher, Navigation {
             Education -> baseActivity.run { createFragment<EducationFragment>().load() }
             Language -> baseActivity.run { createFragment<LanguageFragment>().load() }
             MiscEducation -> baseActivity.run { createFragment<MiscEducationFragment>().load() }
-            Questionnaire -> baseActivity.run { createFragment<QuestionaireFragment>().load() }
+            Questionnaire -> baseActivity.run { createFragment<QuestionnaireFragment>().load() }
             Error -> baseActivity.run { createFragment<IntroFragment>().load() }
         }
 }

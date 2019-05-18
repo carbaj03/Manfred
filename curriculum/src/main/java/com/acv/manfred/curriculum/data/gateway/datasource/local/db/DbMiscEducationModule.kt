@@ -4,13 +4,15 @@ import arrow.core.left
 import arrow.core.right
 import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.MiscEducationDao
-import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
-import com.acv.manfred.curriculum.domain.*
-import com.acv.manfred.curriculum.domain.dto.*
+import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.domain.dto.AddMiscEducationDto
+import com.acv.manfred.curriculum.domain.dto.GetMiscEducationDto
+import com.acv.manfred.curriculum.domain.dto.MiscEducationDto
+import com.acv.manfred.curriculum.domain.dto.RemoveMiscEducationDto
 import com.acv.manfred.curriculum.domain.model.ApiError
+import com.acv.manfred.curriculum.domain.model.NoId
 import com.google.gson.JsonParseException
 
 
@@ -24,6 +26,8 @@ class DbMiscEducationModule(val dao: MiscEducationDao) {
         success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
+//            val temp: MiscEducationEntity? = dao.getMiscEducation(dto.id.id)
+//            temp?.let { dao.update(dto.toDomain().toEntity()) } ?: dao.insert(dto.toDomain().toEntity())
             dao.insert(dto.toDomain().toEntity())
             success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {
@@ -38,8 +42,7 @@ class DbMiscEducationModule(val dao: MiscEducationDao) {
         success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-            dao.insert(dto.miscEducation.toEntity())
-            success(dao.getMiscEducation().right())
+            success(dao.getMiscEducation().plus(MiscEducationEntity(NoId.id, "")).right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
         } catch (t: Throwable) {
@@ -66,7 +69,7 @@ class DbMiscEducationModule(val dao: MiscEducationDao) {
         success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-            val temp: MiscEducationEntity? = dao.getMiscEducation(dto.miscEducation)
+            val temp: MiscEducationEntity? = dao.getMiscEducation(dto.miscEducation.id)
             temp?.let { dao.delete(it) }
             success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {

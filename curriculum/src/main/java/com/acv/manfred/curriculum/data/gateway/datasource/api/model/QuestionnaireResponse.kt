@@ -1,5 +1,6 @@
 package com.acv.manfred.curriculum.data.gateway.datasource.api.model
 
+import com.acv.manfred.curriculum.domain.model.NoId
 import com.acv.manfred.curriculum.domain.model.Questionnaire
 
 
@@ -17,5 +18,5 @@ data class QuestionnaireResponse(
     var answer: String? = null
 ) {
     fun toDomain(): Questionnaire =
-        Questionnaire(question = question, answer = answer)
+        Questionnaire(id = NoId, question = question ?: "", answer = answer ?: "")
 }

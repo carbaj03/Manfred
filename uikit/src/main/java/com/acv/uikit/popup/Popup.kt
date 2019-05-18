@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.acv.uikit.R
 import com.acv.uikit.adapterModel.AdapterModel
+import com.acv.uikit.adapterModel.POSITION
 import com.acv.uikit.adapterModel.RVAdapter
 import com.acv.uikit.adapterModel.ViewHolder
 import com.acv.uikit.common.Component
@@ -26,9 +27,10 @@ class Popup @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : PopupWindow(context, attrs, defStyleAttr), Errorable, Component<PopupModel> {
 
-    lateinit var f: (PopupAdapter) -> Unit
+    lateinit var f: (PopupAdapter, Int) -> Unit
+
     private val rvadapterModel by lazy {
-        RVAdapter<PopupAdapter> { _, v -> PopupAdapterHolder(v) { f(it);dismiss(); } }
+        RVAdapter<PopupAdapter> { _, v -> PopupAdapterHolder(v) { a, p -> f(a, p); dismiss(); } }
     }
 
     override fun errorK(value: String) {
@@ -69,7 +71,10 @@ class Popup @JvmOverloads constructor(
     private fun inflateView() =
         LayoutInflater.from(context).inflate(R.layout.view_popup_list, null)
 
-    private fun show(view: View, list: List<PopupAdapter>, f: (PopupAdapter) -> Unit) {
+    private fun show(
+        view: View, list: List<PopupAdapter>,
+        f: (PopupAdapter, POSITION) -> Unit
+    ) {
         this.f = f
         rvadapterModel.swap(list)
         showAsDropDown(view)
@@ -84,10 +89,10 @@ data class PopupAdapter(
 
 class PopupAdapterHolder(
     view: View,
-    val f: (PopupAdapter) -> Unit
+    val f: (PopupAdapter, POSITION) -> Unit
 ) : ViewHolder<PopupAdapter>(view) {
     override fun PopupAdapter.view() {
         text.text = title
-        itemView.setOnClickListener { f(this) }
+        itemView.setOnClickListener { f(this, adapterPosition) }
     }
 }

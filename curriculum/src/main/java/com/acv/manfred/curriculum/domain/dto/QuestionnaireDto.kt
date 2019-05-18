@@ -1,22 +1,27 @@
 package com.acv.manfred.curriculum.domain.dto
 
-import com.acv.manfred.curriculum.domain.model.Questionnaire
+import com.acv.manfred.curriculum.domain.model.*
 
 data class QuestionnaireDto(
-    val id: String?,
-    var question: String,
-    var answer: String
-){
+    val id: GenerateId,
+    val question: String,
+    val answer: String
+) {
     fun toDomain(): Questionnaire =
-        id?.let { Questionnaire(id = it, question = question, answer = answer) } ?: Questionnaire(question = question, answer = answer)
+        Questionnaire(id = id.id(), question = question, answer = answer)
+
+    private fun GenerateId.id(): GenerateId =
+        when (this) {
+            is WithId, Id -> this
+            NoId -> Id
+        }
+
 }
 
-data class AddQuestionnaireDto(
-    val questionnaire: Questionnaire
-)
+object AddQuestionnaireDto
 
 data class RemoveQuestionnaireDto(
-    val questionnaire: String
+    val questionnaire: GenerateId
 )
 
 object GetQuestionnaireDto

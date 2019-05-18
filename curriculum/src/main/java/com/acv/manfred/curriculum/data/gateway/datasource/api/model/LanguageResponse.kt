@@ -1,6 +1,7 @@
 package com.acv.manfred.curriculum.data.gateway.datasource.api.model
 
 import com.acv.manfred.curriculum.domain.model.Language
+import com.acv.manfred.curriculum.domain.model.NoId
 
 
 data class LanguageResponse(
@@ -18,5 +19,6 @@ data class LanguageResponse(
      */
     var proficiency: ProficiencyResponse
 ) {
-    fun toDomain() = Language(language, proficiency.toDomain())
+    fun toDomain(): Language =
+        Language(id = NoId, language = language, proficiency = proficiency.toDomain())
 }

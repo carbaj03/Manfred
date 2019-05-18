@@ -1,9 +1,13 @@
 package com.acv.manfred.curriculum.ui.form
 
 import androidx.lifecycle.MutableLiveData
+import com.acv.manfred.curriculum.domain.dto.AddMiscEducationDto
+import com.acv.manfred.curriculum.domain.dto.AddQuestionnaireDto
 import com.acv.manfred.curriculum.domain.dto.GetMiscEducationDto
 import com.acv.manfred.curriculum.domain.dto.RemoveMiscEducationDto
 import com.acv.manfred.curriculum.domain.executeResult
+import com.acv.manfred.curriculum.domain.model.GenerateId
+import com.acv.manfred.curriculum.domain.model.NoId
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.*
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentResponse
@@ -38,9 +42,18 @@ class MiscEducationViewModel(
             is Save -> save(item)
         }
 
+//    private fun addMiscEducation() {
+//        validation.value = Invalid
+//        miscEducations.value = miscEducations.value?.plus(MiscEducationModel(id = NoId))
+//    }
+
     private fun addMiscEducation() {
-        validation.value = Invalid
-        miscEducations.value = miscEducations.value?.plus(MiscEducationModel())
+        AddMiscEducationDto.addView().executeResult(
+            error = { validation.value = Error(it.error) },
+            success = {
+                validation.value = Invalid
+                miscEducations.value = it
+            })
     }
 
     private fun getQuestionnaire() {
@@ -52,7 +65,7 @@ class MiscEducationViewModel(
             })
     }
 
-    private fun remove(id: String) {
+    private fun remove(id: GenerateId) {
         RemoveMiscEducationDto(id).removeView().executeResult(
             error = { validation.value = Error(it.error) },
             success = { miscEducations.value = it }

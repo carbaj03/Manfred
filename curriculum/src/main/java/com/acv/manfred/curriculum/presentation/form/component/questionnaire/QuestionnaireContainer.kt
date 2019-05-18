@@ -1,10 +1,10 @@
 package com.acv.manfred.curriculum.presentation.form.component.questionnaire
 
 import com.acv.manfred.curriculum.ui.common.arch.Observable
-import com.acv.manfred.curriculum.ui.form.QuestionaireViewModel
+import com.acv.manfred.curriculum.ui.form.questionnaire.QuestionnaireViewModel
 import com.acv.manfred.curriculum.ui.form.components.common.ComponentContainer
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireComponent
 
 interface QuestionnaireContainer :
     ComponentContainer<QuestionnaireModel, QuestionnaireComponent>,
-    Observable<QuestionaireViewModel>
+    Observable<QuestionnaireViewModel>

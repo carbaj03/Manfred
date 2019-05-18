@@ -6,10 +6,9 @@ import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.*
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyResponse.*
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse.*
-import com.acv.manfred.curriculum.domain.GetCvDto
-import com.acv.manfred.curriculum.domain.ProficiencyDto
+import com.acv.manfred.curriculum.domain.dto.GetCvDto
 import com.acv.manfred.curriculum.domain.ResultK
-import com.acv.manfred.curriculum.domain.RolesDto
+import com.acv.manfred.curriculum.domain.dto.RolesDto
 import com.acv.manfred.curriculum.domain.model.ApiError
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
@@ -47,20 +46,6 @@ class ApiModule {
         } catch (t: Throwable) {
             error(t)
         }
-
-    fun requestProficiency(
-        proficiency: ProficiencyDto,
-        error: (Throwable) -> Unit,
-        success: (ResultK<List<ProficiencyResponse>>) -> Unit
-    ): Unit =
-        try {
-            success(mockProficiency().right())
-        } catch (retrofitError: JsonParseException) {
-            success(ApiError(retrofitError.message.toOption()).left())
-        } catch (t: Throwable) {
-            error(t)
-        }
-
 }
 
 typealias Role = String

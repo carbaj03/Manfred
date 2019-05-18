@@ -1,10 +1,11 @@
 package com.acv.manfred.curriculum.presentation.form.component.miscEducation
 
 import com.acv.manfred.curriculum.domain.dto.MiscEducationDto
+import com.acv.manfred.curriculum.domain.model.GenerateId
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.ComponentResponse
 
 data class MiscEducationComponentResponse(
-    val id: String?,
+    val id: GenerateId,
     var miscEducation: String
 ) : ComponentResponse {
     fun toDto(): MiscEducationDto =

@@ -2,13 +2,17 @@ package com.acv.manfred.curriculum.data.gateway.datasource.local.db
 
 import arrow.core.left
 import arrow.core.right
+import arrow.core.rightIfNotNull
 import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity.Companion.createEmpty
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
 import com.acv.manfred.curriculum.domain.*
 import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.domain.model.ApiError
+import com.acv.manfred.curriculum.domain.model.NoId
+import com.acv.manfred.curriculum.domain.model.Questionnaire
 import com.google.gson.JsonParseException
 
 
@@ -22,7 +26,8 @@ class DbQuestionnaireModule(val dao: QuestionaireDao) {
         success: (ResultK<List<QuestionnaireEntity>>) -> Unit
     ): Unit =
         try {
-            dao.insert(dto.toDomain().toEntity())
+            if (dao.insert(dto.toDomain().toEntity()) == -1L)
+                dao.update(dto.toDomain().toEntity())
             success(dao.getQuestionaire().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
@@ -36,8 +41,7 @@ class DbQuestionnaireModule(val dao: QuestionaireDao) {
         success: (ResultK<List<QuestionnaireEntity>>) -> Unit
     ): Unit =
         try {
-            dao.insert(dto.questionnaire.toEntity())
-            success(dao.getQuestionaire().right())
+            success(dao.getQuestionaire().plus(createEmpty()).right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())
         } catch (t: Throwable) {
@@ -64,9 +68,7 @@ class DbQuestionnaireModule(val dao: QuestionaireDao) {
         success: (ResultK<List<QuestionnaireEntity>>) -> Unit
     ): Unit =
         try {
-            val temp: QuestionnaireEntity? = dao.getQuestionaire(dto.questionnaire)
-            temp?.let { dao.delete(it) }
-//            dao.delete(temp!!)
+            dao.getQuestionaire(dto.questionnaire.id)?.let { dao.delete(it) }
             success(dao.getQuestionaire().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())

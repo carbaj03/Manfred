@@ -1,4 +1,4 @@
-package com.acv.manfred.curriculum.domain
+package com.acv.manfred.curriculum.domain.dto
 
 typealias StepName = String
 
@@ -9,8 +9,3 @@ data class GetCvDto(
 data class RolesDto(
     val id: String, val stepName: StepName
 )
-
-data class ProficiencyDto(
-    val id: String, val stepName: StepName
-)
-

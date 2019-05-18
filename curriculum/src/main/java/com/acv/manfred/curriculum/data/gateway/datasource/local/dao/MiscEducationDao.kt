@@ -19,6 +19,9 @@ interface MiscEducationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(miscEducations: List<MiscEducationEntity>)
 
+    @Update
+    fun update(miscEducation: MiscEducationEntity)
+
     @Delete
     fun delete(miscEducation: MiscEducationEntity)
 }

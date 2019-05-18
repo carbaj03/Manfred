@@ -104,8 +104,8 @@ class ChipsView @JvmOverloads constructor(
 //            f(it)
 //            rvadapterModel.swap(list)
 //            rvOptions.visibility = View.VISIBLE
-            Popup(context).render(PopupModel(box, list) { x ->
-                chips = chips.plus(ChipModel(x.title, x.title,None, Closelable {
+            Popup(context).render(PopupModel(box, list) { x, p ->
+                chips = chips.plus(ChipModel(x.title, x.title, None, Closelable {
                     chips = chips.minus(it)
                     swap(chips) { a, b -> a.id == b.id }
                 }.some()))

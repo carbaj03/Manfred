@@ -1,4 +1,4 @@
-package com.acv.manfred.curriculum.ui.form
+package com.acv.manfred.curriculum.ui.form.questionnaire
 
 import android.view.ViewGroup
 import arrow.effects.ForIO
@@ -9,7 +9,6 @@ import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.gateway.NetworkQuestionnaireFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.networkQuestionnaireFetcher
-import com.acv.manfred.curriculum.domain.model.Questionnaire
 import com.acv.manfred.curriculum.presentation.form.component.common.Component
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireContainer
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
@@ -23,13 +22,12 @@ import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.common.*
 import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireComponent
 import com.acv.manfred.curriculum.ui.operations.QuestionnaireViewOperations
-import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_questionaire.*
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
-class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
+class QuestionnaireFragment : BaseFragment(), QuestionnaireContainer {
 
     override val adapter: ComponentAdapter<QuestionnaireModel> = createAdapter()
 
@@ -52,12 +50,12 @@ class QuestionaireFragment : BaseFragment(), QuestionnaireContainer {
         }
     }
 
-    override val model: QuestionaireViewModel by lazy {
-        viewModelProviders<QuestionaireViewModel>(QuestionaireViewModelFactory(dependencies))
+    override val model: QuestionnaireViewModel by lazy {
+        viewModelProviders<QuestionnaireViewModel>(QuestionaireViewModelFactory(dependencies))
     }
 
     override fun onCreate() {
-        observe { questionnaire } map { swap { a, b -> a == b } }
+        observe { questionnaire } map { swap { a, b -> a.id.id == b.id.id } }
         observe { validation } map { validate() }
         model { Load.run() }
     }
