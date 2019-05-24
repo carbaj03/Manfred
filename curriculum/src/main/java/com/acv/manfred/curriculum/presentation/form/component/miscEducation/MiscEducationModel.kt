@@ -9,7 +9,7 @@ import com.acv.manfred.curriculum.presentation.form.component.common.NotModified
 
 data class MiscEducationModel(
     override val id: GenerateId,
-    var miscellaneous: String? = null,
+    var miscellaneous: String,
     override var componentType: ComponentType = New(NotModified)
 ) : ComponentModel
 

@@ -2,6 +2,7 @@ package com.acv.manfred.curriculum.presentation.form.component.questionnaire
 
 import com.acv.manfred.curriculum.domain.dto.QuestionnaireDto
 import com.acv.manfred.curriculum.domain.model.GenerateId
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentResponse
 
 data class QuestionnaireComponentResponse(
     val id: GenerateId,
@@ -11,5 +12,3 @@ data class QuestionnaireComponentResponse(
     fun toDto(): QuestionnaireDto =
         QuestionnaireDto(id = id, question = question, answer = answer)
 }
-
-interface ComponentResponse

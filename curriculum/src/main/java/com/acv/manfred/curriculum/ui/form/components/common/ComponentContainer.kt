@@ -5,13 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.acv.manfred.curriculum.presentation.form.component.common.Component
 import com.acv.manfred.curriculum.presentation.form.component.common.ComponentModel
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.common.ObserveComponent
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.ByDefault
 
-interface ComponentContainer<A : ComponentModel, B : Component<A>> {
+interface
+ComponentContainer<A : ComponentModel, B : ByDefault, C : ComponentResponse, D : Component<A, B, C>> {
     val adapter: ComponentAdapter<A>
     val container: ViewGroup
 
-    fun createComponent(): Component<A>
+    fun createComponent(): Component<A, B, C>
 
     fun createAdapter(
         observable: ObserveComponent<A> = observable(),
@@ -45,8 +48,8 @@ interface ComponentContainer<A : ComponentModel, B : Component<A>> {
         }
     }
 
-    private fun getItem(position: Int): B =
-        container.getChildAt(position) as B
+    private fun getItem(position: Int): D =
+        container.getChildAt(position) as D
 }
 
 fun <A> MutableList<A>.move(from: Int, to: Int) {

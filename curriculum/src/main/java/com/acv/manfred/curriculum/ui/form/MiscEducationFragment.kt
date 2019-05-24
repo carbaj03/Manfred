@@ -9,10 +9,8 @@ import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.gateway.NetworkMiscEducationFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.networkMiscEducationFetcher
-import com.acv.manfred.curriculum.presentation.form.component.common.Component
-import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationContainer
-import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationModel
-import com.acv.manfred.curriculum.presentation.form.component.miscEducation.StateMiscEducation
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponent
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.*
 import com.acv.manfred.curriculum.ui.common.activity.fab
 import com.acv.manfred.curriculum.ui.common.activity.snack
 import com.acv.manfred.curriculum.ui.common.arch.MiscEducationViewModelFactory
@@ -20,7 +18,7 @@ import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.common.*
-import com.acv.manfred.curriculum.ui.form.components.miscEducation.MiscEducationComponent
+import com.acv.manfred.curriculum.ui.form.components.miscEducation.MiscEducationView
 import com.acv.manfred.curriculum.ui.operations.MiscEducationViewOperations
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_misc_education.*
@@ -33,8 +31,8 @@ class MiscEducationFragment : BaseFragment() , MiscEducationContainer {
 
     override val container: ViewGroup get() = misc_education_container
 
-    override fun createComponent(): Component<MiscEducationModel> =
-        MiscEducationComponent(baseActivity).apply {
+    override fun createComponent(): MiscEducationComponent =
+        MiscEducationView(baseActivity).apply {
             observe { actions } map { model { StateMiscEducation.Action(this@map).run() } }
         }
 

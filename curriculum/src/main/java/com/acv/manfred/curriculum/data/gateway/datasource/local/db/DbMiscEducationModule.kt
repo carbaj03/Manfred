@@ -26,9 +26,8 @@ class DbMiscEducationModule(val dao: MiscEducationDao) {
         success: (ResultK<List<MiscEducationEntity>>) -> Unit
     ): Unit =
         try {
-//            val temp: MiscEducationEntity? = dao.getMiscEducation(dto.id.id)
-//            temp?.let { dao.update(dto.toDomain().toEntity()) } ?: dao.insert(dto.toDomain().toEntity())
-            dao.insert(dto.toDomain().toEntity())
+            if (dao.insert(dto.toDomain().toEntity()) == -1L)
+                dao.update(dto.toDomain().toEntity())
             success(dao.getMiscEducation().right())
         } catch (retrofitError: JsonParseException) {
             success(ApiError(retrofitError.message.toOption()).left())

@@ -2,8 +2,6 @@ package com.acv.manfred.curriculum.data.gateway.datasource.local.dao
 
 import androidx.room.*
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
-import com.acv.manfred.curriculum.domain.model.MiscEducation
 
 @Dao
 interface MiscEducationDao {
@@ -13,10 +11,10 @@ interface MiscEducationDao {
     @Query("SELECT * FROM misc_education WHERE id = :id")
     fun getMiscEducation(id: String): MiscEducationEntity?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(miscEducation: MiscEducationEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(miscEducation: MiscEducationEntity) : Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(miscEducations: List<MiscEducationEntity>)
 
     @Update

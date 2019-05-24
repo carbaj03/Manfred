@@ -21,7 +21,7 @@ import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.common.*
-import com.acv.manfred.curriculum.ui.form.components.language.LanguageComponent
+import com.acv.manfred.curriculum.ui.form.components.language.LanguageView
 import com.acv.manfred.curriculum.ui.operations.LanguageViewOperations
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_language.*
@@ -33,8 +33,8 @@ class LanguageFragment : BaseFragment(), LanguageContainer {
 
     override val container: ViewGroup get() = language_container
 
-    override fun createComponent(): LanguageComponent =
-        LanguageComponent(baseActivity).apply {
+    override fun createComponent(): LanguageView =
+        LanguageView(baseActivity).apply {
             observe { actions } map { model { StateLanguage.Action(this@map).run() } }
         }
 

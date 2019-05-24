@@ -11,6 +11,7 @@ import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.networkQuestionnaireFetcher
 import com.acv.manfred.curriculum.presentation.form.component.common.Component
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireContainer
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireDefault
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire.*
 import com.acv.manfred.curriculum.ui.common.activity.fab
@@ -20,7 +21,7 @@ import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.common.*
-import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireComponent
+import com.acv.manfred.curriculum.ui.form.components.questionnaire.QuestionnaireView
 import com.acv.manfred.curriculum.ui.operations.QuestionnaireViewOperations
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_questionaire.*
@@ -33,8 +34,8 @@ class QuestionnaireFragment : BaseFragment(), QuestionnaireContainer {
 
     override val container: ViewGroup get() = questionnaire_container
 
-    override fun createComponent(): Component<QuestionnaireModel> =
-        QuestionnaireComponent(baseActivity).apply {
+    override fun createComponent():QuestionnaireView =
+        QuestionnaireView(baseActivity).apply {
             observe { actions } map { model { Action(this@map).run() } }
         }
 
