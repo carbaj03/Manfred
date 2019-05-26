@@ -10,3 +10,6 @@ sealed class LanguageComponentAction : ComponentAction
 data class Cancel(val id: GenerateId) : LanguageComponentAction()
 data class Remove(val id: GenerateId) : LanguageComponentAction()
 data class Save(val item: LanguageComponentResponse) : LanguageComponentAction()
+
+data class LanguageChange(val language: String) : LanguageComponentAction()
+data class ProficiencyChange(val language: String) : LanguageComponentAction()

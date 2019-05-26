@@ -2,10 +2,8 @@ package com.acv.manfred.curriculum.ui.form.components.language
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.RecyclerView
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.domain.model.Proficiency
 import com.acv.manfred.curriculum.presentation.form.component.common.*
@@ -22,13 +20,6 @@ import com.acv.uikit.popup.PopupModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.component_actions.view.*
 import kotlinx.android.synthetic.main.component_language.view.*
-import kotlinx.android.synthetic.main.component_language.view.info
-import kotlinx.android.extensions.LayoutContainer
-
-
-class Actions(override val containerView: View?) : LayoutContainer {
-
-}
 
 
 class LanguageView @JvmOverloads constructor(
@@ -90,13 +81,6 @@ class LanguageView @JvmOverloads constructor(
         btnSave.enableSave(byDefault)
     }
 
-    override fun MaterialButton.enableCancel(byDefault: LanguageDefault): Unit =
-        enabled {
-            languageC = byDefault.language
-            proficiencyC = byDefault.proficiency
-            invisible()
-        }
-
     override fun LanguageModel.newIncompled() {
         btnCancel.enableCancel(createByDefault())
         invisible(btnRemove, btnSave)
@@ -133,7 +117,7 @@ class LanguageView @JvmOverloads constructor(
     override fun MaterialButton.enableSave(model: LanguageDefault) =
         enabled { actions.value = Save(model.createResponse()) }
 
-    private fun MaterialButton.cancel(byDefault: LanguageDefault): Unit =
+    override fun MaterialButton.enableCancel(byDefault: LanguageDefault): Unit =
         enabled {
             languageC = byDefault.language
             proficiencyC = byDefault.proficiency

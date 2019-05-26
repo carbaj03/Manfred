@@ -56,7 +56,7 @@ class LanguageFragment : BaseFragment(), LanguageContainer {
     override fun getLayout(): Int = R.layout.view_language
 
     override fun onCreate() {
-        observe { languages } map { swap()}
+        observe { languages } map { swap() }
         observe { validation } map { validate() }
         model { StateLanguage.Load.run() }
     }
