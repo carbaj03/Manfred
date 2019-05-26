@@ -11,4 +11,6 @@ sealed class MiscEducationComponentAction : ComponentAction {
     data class Cancel(val id: GenerateId) : MiscEducationComponentAction()
     data class Remove(val id: GenerateId) : MiscEducationComponentAction()
     data class Save(val item: MiscEducationComponentResponse) : MiscEducationComponentAction()
+
+    data class MiscEducationChange(val item: String) : MiscEducationComponentAction()
 }

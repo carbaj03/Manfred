@@ -36,10 +36,10 @@ class MiscEducationViewModel(
 
     private fun MiscEducationComponentAction.run(): Unit =
         when (this) {
-            is Cancel -> {
-            }
+            is Cancel -> { }
             is Remove -> remove(id)
             is Save -> save(item)
+            is MiscEducationChange -> TODO()
         }
 
 //    private fun addMiscEducation() {

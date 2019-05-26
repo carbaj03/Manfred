@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.presentation.form.component.common.*
+import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.*
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Remove
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Save
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponent
@@ -60,7 +61,8 @@ class MiscEducationView @JvmOverloads constructor(
     }
 
     override fun MiscEducationModel.listener() {
-        inputMiscEducation.listener { if (it == miscellaneous || isIncompleted) invalid() else valid(createByDefault()) }
+//        inputMiscEducation.listener { if (it == miscellaneous || isIncompleted) invalid() else valid(createByDefault()) }
+        inputMiscEducation.listener { actions.value = MiscEducationChange(it) }
     }
 
     override fun valid(byDefault: MiscEducationDefault) {
