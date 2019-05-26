@@ -5,10 +5,11 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.presentation.form.component.common.*
+import com.acv.manfred.curriculum.presentation.form.component.common.Actionable
+import com.acv.manfred.curriculum.presentation.form.component.common.Completed
+import com.acv.manfred.curriculum.presentation.form.component.common.Incompleted
+import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.*
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Remove
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Save
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponent
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationDefault
@@ -18,9 +19,6 @@ import com.acv.uikit.invisible
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.component_actions.view.*
 import kotlinx.android.synthetic.main.component_misc_education.view.*
-import kotlinx.android.synthetic.main.component_misc_education.view.btnCancel
-import kotlinx.android.synthetic.main.component_misc_education.view.btnRemove
-import kotlinx.android.synthetic.main.component_misc_education.view.btnSave
 
 class MiscEducationView @JvmOverloads constructor(
     context: Context,
