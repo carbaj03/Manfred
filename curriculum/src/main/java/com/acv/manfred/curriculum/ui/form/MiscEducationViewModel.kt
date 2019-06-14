@@ -27,6 +27,7 @@ class MiscEducationViewModel(
     val miscEducations = MutableLiveData<List<MiscEducationModel>>()
     val validation = MutableLiveData<ComponentValidation>()
 
+
     fun StateMiscEducation.run(): Unit =
         when (this) {
             is Add -> addMiscEducation()
@@ -39,13 +40,8 @@ class MiscEducationViewModel(
             is Cancel -> { }
             is Remove -> remove(id)
             is Save -> save(item)
-            is MiscEducationChange -> TODO()
+//            is MiscEducationChange -> TODO()
         }
-
-//    private fun addMiscEducation() {
-//        validation.value = Invalid
-//        miscEducations.value = miscEducations.value?.plus(MiscEducationModel(id = NoId))
-//    }
 
     private fun addMiscEducation() {
         AddMiscEducationDto.addView().executeResult(

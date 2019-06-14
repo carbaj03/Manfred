@@ -5,11 +5,10 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.presentation.form.component.common.Actionable
-import com.acv.manfred.curriculum.presentation.form.component.common.Completed
-import com.acv.manfred.curriculum.presentation.form.component.common.Incompleted
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction
+import com.acv.manfred.curriculum.presentation.form.component.common.*
 import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.*
+import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Remove
+import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Save
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponent
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationDefault
@@ -38,13 +37,13 @@ class MiscEducationView @JvmOverloads constructor(
 
     override val actions: MutableLiveData<MiscEducationComponentAction> = MutableLiveData()
 
-    override val isModified
+    override val isModified: Modified
         get() = when {
             inputMiscEducation.isValid -> Completed
             else -> Incompleted
         }
 
-    private var miscEducationC
+    private var miscEducationC: String
         get() = inputMiscEducation.value
         set(value) {
             inputMiscEducation.value = value
@@ -59,8 +58,8 @@ class MiscEducationView @JvmOverloads constructor(
     }
 
     override fun MiscEducationModel.listener() {
-//        inputMiscEducation.listener { if (it == miscellaneous || isIncompleted) invalid() else valid(createByDefault()) }
-        inputMiscEducation.listener { actions.value = MiscEducationChange(it) }
+        inputMiscEducation.listener { if (it == miscellaneous || isIncompleted) invalid() else valid(createByDefault()) }
+//        inputMiscEducation.listener { actions.value = MiscEducationChange(it) }
     }
 
     override fun valid(byDefault: MiscEducationDefault) {

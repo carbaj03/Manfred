@@ -12,7 +12,6 @@ import com.acv.manfred.curriculum.presentation.operation.LanguageUsesCasesIO
 import com.acv.manfred.curriculum.ui.common.arch.BaseViewModel
 import com.acv.manfred.curriculum.ui.form.components.common.ComponentValidation
 import com.acv.manfred.curriculum.ui.form.components.common.Error
-import com.acv.manfred.curriculum.ui.form.components.common.Invalid
 import com.acv.manfred.curriculum.ui.form.components.common.Valid
 
 class LanguageViewModel(
@@ -31,16 +30,12 @@ class LanguageViewModel(
 
     private fun LanguageComponentAction.run(): Unit =
         when (this) {
-            is Cancel -> {
-            }
+            is Cancel -> { }
             is Remove -> remove(id)
             is Save -> item.save()
+//            is LanguageChange -> TODO()
+//            is ProficiencyChange -> TODO()
         }
-
-//    private fun addLanguage() {
-//        validation.value = Invalid
-//        languages.value = languages.value!!.plus(LanguageModel())
-//    }
 
     private fun addLanguage() {
         AddLanguageDto.addView().executeResult(

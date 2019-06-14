@@ -15,8 +15,7 @@ interface WithResponse<A : ComponentResponse, B : ByDefault> {
     fun B.createResponse(): A
 }
 
-interface
-Component<A : ComponentModel, B : ByDefault, C : ComponentResponse> : Validable , WithResponse<C, B>{
+interface Component<A : ComponentModel, B : ByDefault, C : ComponentResponse> : Validable , WithResponse<C, B>{
 
     fun renderType(model: A): Component<A, B, C> {
         state.value = if (model.componentType is Persisted) Valid else Invalid
@@ -76,10 +75,10 @@ Component<A : ComponentModel, B : ByDefault, C : ComponentResponse> : Validable 
 
     val isModified: ComponentState
 
-    val isCompleted
+    val isCompleted: Boolean
         get() = isModified is Completed
 
-    val isIncompleted
+    val isIncompleted: Boolean
         get() = isModified is Incompleted
 
     val Input.isValid: Boolean

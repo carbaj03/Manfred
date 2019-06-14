@@ -9,8 +9,7 @@ import com.acv.manfred.curriculum.presentation.form.component.common.ComponentRe
 import com.acv.manfred.curriculum.presentation.form.component.common.ObserveComponent
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.ByDefault
 
-interface
-ComponentContainer<A : ComponentModel, B : ByDefault, C : ComponentResponse, D : Component<A, B, C>> {
+interface ComponentContainer<A : ComponentModel, B : ByDefault, C : ComponentResponse, D : Component<A, B, C>> {
     val adapter: ComponentAdapter<A>
     val container: ViewGroup
 
