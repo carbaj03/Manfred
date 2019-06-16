@@ -2,17 +2,14 @@ package com.acv.manfred.curriculum.data.gateway.datasource.local.db
 
 import arrow.core.left
 import arrow.core.right
-import arrow.core.rightIfNotNull
 import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity.Companion.createEmpty
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
-import com.acv.manfred.curriculum.domain.*
 import com.acv.manfred.curriculum.domain.dto.*
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.ApiError
-import com.acv.manfred.curriculum.domain.model.NoId
-import com.acv.manfred.curriculum.domain.model.Questionnaire
 import com.google.gson.JsonParseException
 
 

@@ -4,19 +4,19 @@ import arrow.core.left
 import arrow.core.right
 import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.LanguageDao
-import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.LanguageEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.LanguageEntity.Companion.createEmpty
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
-import com.acv.manfred.curriculum.domain.*
-import com.acv.manfred.curriculum.domain.dto.*
+import com.acv.manfred.curriculum.domain.dto.AddLanguageDto
+import com.acv.manfred.curriculum.domain.dto.GetLanguageDto
+import com.acv.manfred.curriculum.domain.dto.LanguageDto
+import com.acv.manfred.curriculum.domain.dto.RemoveLanguageDto
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.ApiError
-import com.acv.manfred.curriculum.domain.model.NoId
 import com.google.gson.JsonParseException
 
 
-class DbLanguageModule(val dao: LanguageDao) {
+class DbLanguageModule(val dao: LanguageDao) : ModuleOps {
 
     companion object
 

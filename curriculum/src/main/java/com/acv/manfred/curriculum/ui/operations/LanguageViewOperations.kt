@@ -3,9 +3,9 @@ package com.acv.manfred.curriculum.ui.operations
 import arrow.Kind
 import arrow.core.Either
 import arrow.core.flatMap
-import com.acv.manfred.curriculum.data.gateway.RequestLanguageOperations
-import com.acv.manfred.curriculum.data.gateway.RequestProficiencyOperations
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.data.gateway.request.RequestLanguageOperations
+import com.acv.manfred.curriculum.data.gateway.request.RequestProficiencyOperations
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.domain.model.BaseError
 import com.acv.manfred.curriculum.domain.model.Language
@@ -15,6 +15,8 @@ import com.acv.manfred.curriculum.presentation.form.component.language.toView
 import com.acv.manfred.curriculum.presentation.operation.LanguageUseCase
 import com.acv.manfred.curriculum.presentation.operation.ProficiencyUseCase
 import com.acv.manfred.curriculum.presentation.operation.Return
+import com.acv.manfred.curriculum.ui.mapper.LanguageViewMapper
+import com.acv.manfred.curriculum.ui.mapper.ProficiencyViewMapper
 import kotlin.coroutines.CoroutineContext
 
 interface LanguageView<F, N> : RequestLanguageOperations<F, N>, LanguageViewMapper<F>, LanguageUseCase<F>

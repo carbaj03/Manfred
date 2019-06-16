@@ -6,6 +6,7 @@ import arrow.core.toOption
 import arrow.effects.ForIO
 import arrow.effects.fix
 import arrow.effects.typeclasses.Disposable
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.BaseError
 import com.acv.manfred.curriculum.domain.model.UnknownServerError
 

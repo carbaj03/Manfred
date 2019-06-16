@@ -6,11 +6,11 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.gateway.NetworkLanguageFetcher
-import com.acv.manfred.curriculum.data.gateway.NetworkProficiencyFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkLanguageFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkProficiencyFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
-import com.acv.manfred.curriculum.data.gateway.networkLanguageFetcher
-import com.acv.manfred.curriculum.data.gateway.networkProficiencyFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.networkLanguageFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.networkProficiencyFetcher
 import com.acv.manfred.curriculum.presentation.form.component.language.LanguageContainer
 import com.acv.manfred.curriculum.presentation.form.component.language.LanguageModel
 import com.acv.manfred.curriculum.presentation.form.component.language.StateLanguage

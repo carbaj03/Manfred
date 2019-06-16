@@ -7,10 +7,9 @@ import com.acv.manfred.curriculum.data.gateway.datasource.api.model.*
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ProficiencyResponse.*
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse.*
 import com.acv.manfred.curriculum.domain.dto.GetCvDto
-import com.acv.manfred.curriculum.domain.ResultK
 import com.acv.manfred.curriculum.domain.dto.RolesDto
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.ApiError
-import com.google.gson.Gson
 import com.google.gson.JsonParseException
 
 
@@ -24,7 +23,7 @@ class ApiModule {
         success: (ResultK<ExampleResponse>) -> Unit
     ): Unit =
         try {
-            val gson = Gson()
+//            val gson = Gson()
 //            val staff = gson.fromJson(FileReader("D:\\file.json"), Example::class.java)
             val staff = mockExample()
             success(staff.right())

@@ -1,7 +1,7 @@
-package com.acv.manfred.curriculum.presentation.form.component.common
+package com.acv.manfred.curriculum.presentation.form.component.questionnaire
 
 import com.acv.manfred.curriculum.domain.model.GenerateId
-import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireComponentResponse
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentAction
 
 
 //typealias QuestionnaireObservableAction = MutableLiveData<QuestionnaireComponentAction>

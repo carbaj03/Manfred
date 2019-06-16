@@ -1,8 +1,10 @@
 package com.acv.manfred.curriculum.data.gateway
 
 import arrow.Kind
+import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import arrow.effects.IO
 import arrow.effects.typeclasses.Async
 
 interface CallAsync<F> : Async<F> {

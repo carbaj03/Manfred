@@ -3,14 +3,8 @@ package com.acv.manfred.curriculum.data.gateway.datasource.local
 import android.content.Context
 import androidx.room.*
 import com.acv.manfred.curriculum.data.gateway.datasource.local.common.DATABASE_NAME
-import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.LanguageDao
-import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.MiscEducationDao
-import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.ProficiencyDao
-import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.QuestionaireDao
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.LanguageEntity
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.ProficiencyEntity
-import com.acv.manfred.curriculum.data.gateway.datasource.local.model.QuestionnaireEntity
+import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.*
+import com.acv.manfred.curriculum.data.gateway.datasource.local.model.*
 import com.acv.manfred.curriculum.domain.model.Proficiency
 
 /**
@@ -21,7 +15,8 @@ import com.acv.manfred.curriculum.domain.model.Proficiency
         QuestionnaireEntity::class,
         MiscEducationEntity::class,
         LanguageEntity::class,
-        ProficiencyEntity::class
+        ProficiencyEntity::class,
+        EducationEntity::class
     ], version = 1, exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -30,6 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun languageDao(): LanguageDao
     abstract fun proficiencyDao(): ProficiencyDao
     abstract fun miscEducationDao(): MiscEducationDao
+    abstract fun educationDao(): EducationDao
 
     companion object {
         // For Singleton instantiation

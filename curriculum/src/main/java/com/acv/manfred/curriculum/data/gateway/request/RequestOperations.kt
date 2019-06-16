@@ -1,10 +1,11 @@
-package com.acv.manfred.curriculum.data.gateway
+package com.acv.manfred.curriculum.data.gateway.request
 
 import arrow.Kind
 import arrow.effects.typeclasses.Async
+import com.acv.manfred.curriculum.data.gateway.network.NetworkOperations
 import com.acv.manfred.curriculum.data.gateway.datasource.DomainMapper
-import com.acv.manfred.curriculum.domain.CvGateway
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.domain.gategay.CvGateway
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.GetCvDto
 import com.acv.manfred.curriculum.domain.dto.RolesDto
 import com.acv.manfred.curriculum.domain.model.Example

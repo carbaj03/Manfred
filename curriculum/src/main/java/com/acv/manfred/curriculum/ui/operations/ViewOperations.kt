@@ -1,11 +1,12 @@
 package com.acv.manfred.curriculum.ui.operations
 
 import arrow.Kind
-import com.acv.manfred.curriculum.data.gateway.RequestOperations
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.data.gateway.request.RequestOperations
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.RemoveQuestionnaireDto
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
 import com.acv.manfred.curriculum.presentation.operation.UseCase
+import com.acv.manfred.curriculum.ui.mapper.ViewMapper
 import kotlin.coroutines.CoroutineContext
 
 interface ViewOperations<F, N> : RequestOperations<F, N>, ViewMapper<F>, UseCase<F> {

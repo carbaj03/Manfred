@@ -1,6 +1,7 @@
 package com.acv.manfred.curriculum.data.gateway.datasource.api.model
 
 import com.acv.manfred.curriculum.domain.model.Education
+import com.acv.manfred.curriculum.domain.model.NoId
 
 
 data class EducationResponse(
@@ -35,5 +36,6 @@ data class EducationResponse(
      */
     var achievements: Set<String>? = null
 ){
-    fun toDomain() = Education(institution, study, from, until, achievements)
+    fun toDomain(): Education =
+        Education(id = NoId, institution = institution, study = study, from = from, until = until, achievements = achievements)
 }

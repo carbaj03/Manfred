@@ -1,22 +1,24 @@
 package com.acv.manfred.curriculum.data.gateway.datasource.local.db
 
+import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.MiscEducationDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.MiscEducationEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.AddMiscEducationDto
 import com.acv.manfred.curriculum.domain.dto.GetMiscEducationDto
 import com.acv.manfred.curriculum.domain.dto.MiscEducationDto
 import com.acv.manfred.curriculum.domain.dto.RemoveMiscEducationDto
 import com.acv.manfred.curriculum.domain.model.ApiError
+import com.acv.manfred.curriculum.domain.model.BaseError
 import com.acv.manfred.curriculum.domain.model.NoId
 import com.google.gson.JsonParseException
 
 
-class DbMiscEducationModule(val dao: MiscEducationDao) {
+class DbMiscEducationModule(val dao: MiscEducationDao): ModuleOps {
 
     companion object
 

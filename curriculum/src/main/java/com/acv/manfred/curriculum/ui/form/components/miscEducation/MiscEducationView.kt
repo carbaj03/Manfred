@@ -6,9 +6,9 @@ import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.presentation.form.component.common.*
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.*
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Remove
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.Save
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentAction
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentAction.Remove
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentAction.Save
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponent
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationDefault

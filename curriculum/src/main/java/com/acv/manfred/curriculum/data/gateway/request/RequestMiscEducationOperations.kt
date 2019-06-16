@@ -1,14 +1,13 @@
-package com.acv.manfred.curriculum.data.gateway
+package com.acv.manfred.curriculum.data.gateway.request
 
 import arrow.Kind
 import arrow.effects.typeclasses.Async
+import com.acv.manfred.curriculum.data.gateway.network.NetworkMiscEducationOperations
 import com.acv.manfred.curriculum.data.gateway.datasource.DomainMapper
-import com.acv.manfred.curriculum.domain.MiscEducationGateway
-import com.acv.manfred.curriculum.domain.QuestionnaireGateway
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.domain.gategay.MiscEducationGateway
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.domain.model.MiscEducation
-import com.acv.manfred.curriculum.domain.model.Questionnaire
 import kotlin.coroutines.CoroutineContext
 
 interface RequestMiscEducationOperations<F, N> : Async<F>, NetworkMiscEducationOperations<F, N>, DomainMapper<F>, MiscEducationGateway<F> {

@@ -6,10 +6,10 @@ import com.acv.manfred.curriculum.domain.dto.GetQuestionnaireDto
 import com.acv.manfred.curriculum.domain.dto.RemoveQuestionnaireDto
 import com.acv.manfred.curriculum.domain.executeResult
 import com.acv.manfred.curriculum.domain.model.GenerateId
-import com.acv.manfred.curriculum.presentation.form.component.common.Cancel
-import com.acv.manfred.curriculum.presentation.form.component.common.QuestionnaireComponentAction
-import com.acv.manfred.curriculum.presentation.form.component.common.Remove
-import com.acv.manfred.curriculum.presentation.form.component.common.Save
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.Cancel
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireComponentAction
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.Remove
+import com.acv.manfred.curriculum.presentation.form.component.questionnaire.Save
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire

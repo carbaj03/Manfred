@@ -5,7 +5,7 @@ import arrow.core.right
 import arrow.core.toOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.dao.ProficiencyDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.ProficiencyEntity
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.GetProficiencyDto
 import com.acv.manfred.curriculum.domain.model.*
 import com.google.gson.JsonParseException

@@ -1,11 +1,13 @@
-package com.acv.manfred.curriculum.data.gateway
+package com.acv.manfred.curriculum.data.gateway.request
 
 import arrow.Kind
 import arrow.effects.typeclasses.Async
+import com.acv.manfred.curriculum.data.gateway.network.NetworkLanguageOperations
+import com.acv.manfred.curriculum.data.gateway.network.NetworkProficiencyOperations
 import com.acv.manfred.curriculum.data.gateway.datasource.DomainMapper
-import com.acv.manfred.curriculum.domain.LanguageGateway
-import com.acv.manfred.curriculum.domain.ProficiencyGateway
-import com.acv.manfred.curriculum.domain.ResultK
+import com.acv.manfred.curriculum.domain.gategay.LanguageGateway
+import com.acv.manfred.curriculum.domain.gategay.ProficiencyGateway
+import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.domain.model.Language
 import com.acv.manfred.curriculum.domain.model.Proficiency

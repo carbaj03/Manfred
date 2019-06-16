@@ -1,15 +1,13 @@
-package com.acv.manfred.curriculum.ui.form
+package com.acv.manfred.curriculum.ui.form.components.miscEducation
 
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.domain.dto.AddMiscEducationDto
-import com.acv.manfred.curriculum.domain.dto.AddQuestionnaireDto
 import com.acv.manfred.curriculum.domain.dto.GetMiscEducationDto
 import com.acv.manfred.curriculum.domain.dto.RemoveMiscEducationDto
 import com.acv.manfred.curriculum.domain.executeResult
 import com.acv.manfred.curriculum.domain.model.GenerateId
-import com.acv.manfred.curriculum.domain.model.NoId
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction
-import com.acv.manfred.curriculum.presentation.form.component.common.MiscEducationComponentAction.*
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentAction
+import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentAction.*
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentResponse
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationModel
 import com.acv.manfred.curriculum.presentation.form.component.miscEducation.StateMiscEducation

@@ -1,8 +1,8 @@
-package com.acv.manfred.curriculum.presentation.form.component.common
+package com.acv.manfred.curriculum.presentation.form.component.miscEducation
 
 import androidx.lifecycle.MutableLiveData
 import com.acv.manfred.curriculum.domain.model.GenerateId
-import com.acv.manfred.curriculum.presentation.form.component.miscEducation.MiscEducationComponentResponse
+import com.acv.manfred.curriculum.presentation.form.component.common.ComponentAction
 
 
 typealias MiscEducationObservableAction = MutableLiveData<MiscEducationComponentAction>

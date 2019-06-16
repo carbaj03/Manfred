@@ -20,9 +20,9 @@ data class TextModel(
 ) : InputModel(InputText, value, None, TextRules())
 
 data class DateModel(
-    val cal: Calendar = Calendar.getInstance(),
+    override val value: String,
     val action: () -> Unit
-) : InputModel(InputDate, cal.format(), Eval.always { action() }.some(), DateRules())
+) : InputModel(InputDate, value, Eval.always { action() }.some(), DateRules())
 
 data class SpinnerModel(
     override val value: String = "",

@@ -1,7 +1,7 @@
 package com.acv.manfred.curriculum.ui.form
 
 import androidx.lifecycle.MutableLiveData
-import com.acv.manfred.curriculum.domain.GatewayIO
+import com.acv.manfred.curriculum.domain.gategay.GatewayIO
 import com.acv.manfred.curriculum.domain.dto.GetCvDto
 import com.acv.manfred.curriculum.domain.dto.RolesDto
 import com.acv.manfred.curriculum.domain.executeResult

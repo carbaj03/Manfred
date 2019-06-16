@@ -6,12 +6,10 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.gateway.NetworkQuestionnaireFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkQuestionnaireFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
-import com.acv.manfred.curriculum.data.gateway.networkQuestionnaireFetcher
-import com.acv.manfred.curriculum.presentation.form.component.common.Component
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.networkQuestionnaireFetcher
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireContainer
-import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireDefault
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.QuestionnaireModel
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.StateQuestionnnaire.*
 import com.acv.manfred.curriculum.ui.common.activity.fab

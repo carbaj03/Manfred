@@ -5,9 +5,9 @@ import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
 import arrow.effects.typeclasses.Async
 import com.acv.manfred.curriculum.R
-import com.acv.manfred.curriculum.data.gateway.NetworkFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkFetcher
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
-import com.acv.manfred.curriculum.data.gateway.networkFetcher
+import com.acv.manfred.curriculum.data.gateway.network.fetcher.networkFetcher
 import com.acv.manfred.curriculum.domain.model.Example
 import com.acv.manfred.curriculum.domain.model.RoleProfile
 import com.acv.manfred.curriculum.ui.common.activity.Actionable
@@ -16,7 +16,6 @@ import com.acv.manfred.curriculum.ui.common.arch.Observable
 import com.acv.manfred.curriculum.ui.common.arch.map
 import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
-import com.acv.manfred.curriculum.ui.operations.QuestionnaireViewOperations
 import com.acv.manfred.curriculum.ui.operations.ViewOperations
 import com.acv.uikit.popup.PopupAdapter
 import kotlinx.android.synthetic.main.view_author_profile.*
