@@ -1,6 +1,7 @@
 package com.acv.manfred.curriculum.data.gateway.datasource.api.model
 
-import com.acv.manfred.curriculum.data.mapSet
+import arrow.core.toOption
+import com.acv.manfred.curriculum.domain.model.NoId
 import com.acv.manfred.curriculum.domain.model.Profile
 import java.net.URI
 
@@ -46,5 +47,14 @@ data class ProfileResponse(
      */
     var yearsOfExperience: Float
 ) {
-    fun toDomain() = Profile(name, image, birthday, publicLinks, roles.mapSet { it.toDomain() }, yearsOfExperience)
+    fun toDomain(): Profile =
+        Profile(
+            id = NoId,
+            name = name,
+            image = image?.path.toOption(),
+            birthday = birthday,
+            publicLinks = publicLinks?.map { it.path } ?: emptyList(),
+            roles = roles.map { it.toDomain() },
+            yearsOfExperience = yearsOfExperience
+        )
 }

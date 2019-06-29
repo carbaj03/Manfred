@@ -1,5 +1,6 @@
 package com.acv.manfred.curriculum.ui.common.arch
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -11,5 +12,11 @@ interface Observable<A : BaseViewModel> {
         model.run { f() }
 
     infix fun <M, T : M> LifecycleOwner.observe(f: A.() -> LiveData<T>): Obs2<T> =
-        { o: (T) -> Unit -> f(model).observe(this, Observer { o(it!!) }) }
+        { o: (T) -> Unit ->
+            Log.e("Observer", "create")
+            f(model).observe(this, Observer {
+                Log.e("Observer", it!!.toString())
+                o(it!!)
+            })
+        }
 }

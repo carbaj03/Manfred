@@ -1,7 +1,10 @@
 package com.acv.manfred.curriculum.domain.model
 
 
-sealed class RoleProfile(val value: String) {
+sealed class RoleProfile(
+    val id: GenerateId,
+    val value: String
+) {
     companion object {
         operator fun invoke(value: String): RoleProfile =
             when (value) {
@@ -28,21 +31,21 @@ sealed class RoleProfile(val value: String) {
     }
 }
 
-object PROJECT_MANAGER : RoleProfile("project manager")
-object PRODUCT_MANAGER : RoleProfile("product manager")
-object OPERATIONAL_MANAGER : RoleProfile("operational manager")
-object ANALYST : RoleProfile("analyst")
-object BUSINESS_ANALYST : RoleProfile("business analyst")
-object QA_MANAGER : RoleProfile("qa manager")
-object SOFTWARE_ARCHITECT : RoleProfile("software architect")
-object PROCESS_ANALYST : RoleProfile("process analyst")
-object TEST_ENGINEER : RoleProfile("test engineer")
-object TEST_ANALYST : RoleProfile("test analyst")
-object DATABASE_ADMINISTRATOR : RoleProfile("database administrator")
-object DEVELOPER : RoleProfile("developer")
-object SOFTWARE_ENGINEER : RoleProfile("software engineer")
-object PRODUCT_OWNER : RoleProfile("product owner")
-object SCRUM_MASTER : RoleProfile("scrum master")
-object TEAM_LEAD : RoleProfile("team lead")
-object UX_DESIGNER : RoleProfile("UX designer")
-object UI_DESIGNER : RoleProfile("UI designer")
+object PROJECT_MANAGER : RoleProfile(WithId("1"),"project manager")
+object PRODUCT_MANAGER : RoleProfile(WithId("2"),"product manager")
+object OPERATIONAL_MANAGER : RoleProfile(WithId("3"),"operational manager")
+object ANALYST : RoleProfile(WithId("4"),"analyst")
+object BUSINESS_ANALYST : RoleProfile(WithId("5"),"business analyst")
+object QA_MANAGER : RoleProfile(WithId("6"),"qa manager")
+object SOFTWARE_ARCHITECT : RoleProfile(WithId("7"),"software architect")
+object PROCESS_ANALYST : RoleProfile(WithId("8"),"process analyst")
+object TEST_ENGINEER : RoleProfile(WithId("9"),"test engineer")
+object TEST_ANALYST : RoleProfile(WithId("10"),"test analyst")
+object DATABASE_ADMINISTRATOR : RoleProfile(WithId("11"),"database administrator")
+object DEVELOPER : RoleProfile(WithId("12"),"developer")
+object SOFTWARE_ENGINEER : RoleProfile(WithId("13"),"software engineer")
+object PRODUCT_OWNER : RoleProfile(WithId("14"),"product owner")
+object SCRUM_MASTER : RoleProfile(WithId("15"),"scrum master")
+object TEAM_LEAD : RoleProfile(WithId("16"),"team lead")
+object UX_DESIGNER : RoleProfile(WithId("17"),"UX designer")
+object UI_DESIGNER : RoleProfile(WithId("18"),"UI designer")

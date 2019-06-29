@@ -3,10 +3,8 @@ package com.acv.manfred.curriculum.ui.common.arch
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.acv.manfred.curriculum.domain.gategay.GatewayIO
-import com.acv.manfred.curriculum.presentation.operation.EducationUseCase
-import com.acv.manfred.curriculum.presentation.operation.LanguageUsesCasesIO
-import com.acv.manfred.curriculum.presentation.operation.MiscEducationUseCaseIO
-import com.acv.manfred.curriculum.presentation.operation.QuestionnaireUsesCasesIO
+import com.acv.manfred.curriculum.ui.form.components.author.profile.ProfileViewModel
+import com.acv.manfred.curriculum.presentation.operation.*
 import com.acv.manfred.curriculum.ui.form.FormViewModel
 import com.acv.manfred.curriculum.ui.form.components.education.EducationViewModel
 import com.acv.manfred.curriculum.ui.form.components.miscEducation.MiscEducationViewModel
@@ -74,6 +72,17 @@ class QuestionaireViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuestionnaireViewModel::class.java)) {
             return QuestionnaireViewModel(dependencies) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class ProfileViewModelFactory(
+    private val dependencies: ProfileUseCase
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(dependencies) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

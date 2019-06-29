@@ -6,7 +6,7 @@ import arrow.data.NonEmptyList
 fun createObject(
     description: Description = Description("An open CV format"),
     properties: Properties = Properties(mapOf()),
-    required: Required = NonEmptyList("")
+    required: Required = NonEmptyList.just("")
 ): Structure = Structure(description, ObjectKeyword, properties, required)
 
 fun createString(
@@ -21,7 +21,7 @@ fun createString(
 fun createArray(
     description: Description = Description("An open CV format"),
     properties: Properties = Properties(mapOf()),
-    required: Required = NonEmptyList(""),
+    required: Required = NonEmptyList.just(""),
     items: List<Structure> = listOf(),
     uniqueItems: Boolean = true,
     minItems: Lenght = Lenght(1),
@@ -33,7 +33,7 @@ data class Structure(
     var description: Description = Description(""),
     val type: TypeKeyword = NullKeyword,
     val properties: Properties = Properties(),
-    var required: Required = Required(""),
+    var required: Required = Required.just(""),
     val items: List<Structure>? = null,
     val uniqueItems: Boolean? = null,
     val minItems: Lenght? = null,
@@ -51,7 +51,7 @@ data class CvSchema(
     val description: Description = Description("An open CV format"),
     val type: TypeKeyword = ObjectKeyword,
     val properties: Properties = Properties(mapOf()),
-    val required: Required = NonEmptyList("")
+    val required: Required = NonEmptyList.just("")
 )
 
 fun properties(block: Properties.() -> Unit): Properties =
@@ -182,7 +182,7 @@ data class Lenght(val int: PositiveNumber)
 
 typealias PositiveNumber = Int
 
-typealias Required = NonEmptyList<kotlin.String>
+typealias Required = NonEmptyList<String>
 
 
 sealed class Format(val value: String)

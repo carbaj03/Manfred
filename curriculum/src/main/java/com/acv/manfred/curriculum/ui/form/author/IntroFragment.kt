@@ -1,4 +1,4 @@
-package com.acv.manfred.curriculum.ui.form
+package com.acv.manfred.curriculum.ui.form.author
 
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment

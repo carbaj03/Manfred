@@ -1,4 +1,4 @@
-package com.acv.manfred.curriculum.ui.form
+package com.acv.manfred.curriculum.ui.form.misceducation
 
 import android.view.ViewGroup
 import arrow.effects.ForIO

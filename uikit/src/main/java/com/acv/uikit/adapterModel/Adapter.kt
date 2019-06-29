@@ -5,5 +5,9 @@ interface Adapter<M> {
     fun set(position: POSITION, item: M)
 }
 
+interface FAdapter<M> {
+    fun swap()
+}
+
 typealias POSITION = Int
 

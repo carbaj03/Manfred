@@ -16,8 +16,9 @@ import com.acv.manfred.curriculum.domain.model.Proficiency
         MiscEducationEntity::class,
         LanguageEntity::class,
         ProficiencyEntity::class,
-        EducationEntity::class
-    ], version = 1, exportSchema = false
+        EducationEntity::class,
+        ProfileEntity::class
+    ], version = 2, exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -26,6 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun proficiencyDao(): ProficiencyDao
     abstract fun miscEducationDao(): MiscEducationDao
     abstract fun educationDao(): EducationDao
+    abstract fun profileDao(): ProfileDao
 
     companion object {
         // For Singleton instantiation

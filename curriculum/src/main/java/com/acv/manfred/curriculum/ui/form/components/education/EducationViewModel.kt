@@ -1,15 +1,9 @@
 package com.acv.manfred.curriculum.ui.form.components.education
 
 import androidx.lifecycle.MutableLiveData
-import arrow.effects.ForIO
-import arrow.effects.IO
-import arrow.effects.extensions.concurrent
-import arrow.unsafe
-import arrow.effects.extensions.io.unsafeRun.runBlocking
 import com.acv.manfred.curriculum.domain.dto.AddEducationDto
 import com.acv.manfred.curriculum.domain.dto.GetEducationDto
 import com.acv.manfred.curriculum.domain.dto.RemoveEducationDto
-import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.GenerateId
 import com.acv.manfred.curriculum.presentation.form.component.education.EducationComponentAction
 import com.acv.manfred.curriculum.presentation.form.component.education.EducationComponentAction.*
@@ -23,8 +17,9 @@ import com.acv.manfred.curriculum.ui.form.components.common.ComponentValidation
 import com.acv.manfred.curriculum.ui.form.components.common.Error
 import com.acv.manfred.curriculum.ui.form.components.common.Invalid
 import com.acv.manfred.curriculum.ui.form.components.common.Valid
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 class EducationViewModel(
     private val dependencies: EducationUseCase

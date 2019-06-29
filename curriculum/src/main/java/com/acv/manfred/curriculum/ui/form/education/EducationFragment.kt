@@ -1,4 +1,4 @@
-package com.acv.manfred.curriculum.ui.form
+package com.acv.manfred.curriculum.ui.form.education
 
 import android.view.ViewGroup
 import arrow.effects.ForIO
@@ -25,6 +25,7 @@ import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_education.*
 
 class EducationFragment : BaseFragment(), EducationContainer {
+
     override val adapter: ComponentAdapter<EducationModel> = createAdapter()
     override val container: ViewGroup get() = education_container
 

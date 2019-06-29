@@ -9,12 +9,12 @@ import com.acv.manfred.curriculum.presentation.form.component.common.NotModified
 
 data class EducationModel(
     override val id: GenerateId,
-    var institution: String,
-    var study: String,
-    var from: String,
-    var until: String,
-    var achievements: Set<String>? = null,
-    override var componentType: ComponentType = New(NotModified)
+    val institution: String,
+    val study: String,
+    val from: String,
+    val until: String,
+    val achievements: Set<String>? = null,
+    override val componentType: ComponentType = New(NotModified)
 ) : ComponentModel
 
 fun Education.toView(): EducationModel =

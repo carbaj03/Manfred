@@ -1,13 +1,12 @@
 package com.acv.manfred.curriculum.data.gateway.datasource
 
 import arrow.core.Either
-import arrow.core.flatMap
+import arrow.core.Try
 import arrow.typeclasses.MonadError
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.ExampleResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.api.model.RoleProfileResponse
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.*
 import com.acv.manfred.curriculum.domain.gategay.ResultE
-import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.*
 
 
@@ -34,9 +33,7 @@ interface DomainMapper<F> : MonadError<F, Throwable> {
 }
 
 
-interface DomainMapperEducatoin {
-    suspend fun ResultK<List<EducationEntity>>.toDomainEducation(): ResultK<List<Education>> =
-        flatMap { Either.catch {  it.map { it.toDomain() } }.mapLeft { NotFoundError } }
-
-}
+suspend fun <R> Either.Companion.catch(f: suspend () -> R): Either<Throwable, R> {
+    return Try.invoke { f() }.toEither()
+ }
 

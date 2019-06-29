@@ -9,6 +9,7 @@ import com.acv.manfred.curriculum.ui.common.activity.Notificable
 import com.acv.manfred.curriculum.ui.common.activity.SavedInstance
 import com.acv.manfred.curriculum.ui.common.arch.Provider
 import com.acv.manfred.curriculum.ui.common.navigator.Launcher
+import com.acv.manfred.curriculum.ui.form.author.AuthorFragment
 import com.acv.manfred.curriculum.ui.form.navigation.Navigation
 import com.acv.manfred.curriculum.ui.form.navigation.createFragment
 import com.acv.uikit.onClick

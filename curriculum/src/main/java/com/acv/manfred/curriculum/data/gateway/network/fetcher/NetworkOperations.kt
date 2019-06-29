@@ -88,6 +88,28 @@ interface NetworkEducationModuleNetworkFetcher : NetworkEducationFetcher<ApiModu
         dbModule.add(this)
 }
 
+
+interface NetworkProfileModuleNetworkFetcher : NetworkProfileFetcher {
+    companion object {
+        private val apiModule = ApiModule()
+    }
+
+    val dbModule: DbProfileModule
+
+    override suspend fun ProfileDto.saveEntity(): ResultK<ProfileEntity> =
+        dbModule.save(this)
+
+    override suspend fun RemoveProfileDto.removeEntity(): ResultK<ProfileEntity> =
+        dbModule.remove(this)
+
+    override suspend fun  GetProfileDto.allEntity(): ResultK<ProfileEntity> =
+        dbModule.all(this)
+
+    override suspend fun AddProfileDto.addEntity(): ResultK<ProfileEntity> =
+        dbModule.add(this)
+}
+
+
 interface NetworkLanguageModuleNetworkFetcher : NetworkLanguageFetcher<ApiModule> {
     companion object {
         private val apiModule = ApiModule()
@@ -154,4 +176,10 @@ fun ApiModule.Companion.networkEducationFetcher(context: Context): NetworkEducat
     object : NetworkEducationModuleNetworkFetcher {
         override val dbModule: DbEducationModule =
             DbEducationModule(AppDatabase.getInstance(context.applicationContext).educationDao())
+    }
+
+fun ApiModule.Companion.networkProfileFetcher(context: Context): NetworkProfileFetcher =
+    object : NetworkProfileModuleNetworkFetcher {
+        override val dbModule: DbProfileModule =
+            DbProfileModule(AppDatabase.getInstance(context.applicationContext).profileDao())
     }

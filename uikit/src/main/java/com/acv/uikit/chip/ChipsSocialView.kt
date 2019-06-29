@@ -1,6 +1,5 @@
 package com.acv.uikit.chip
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
@@ -12,9 +11,6 @@ import com.acv.uikit.common.Errorable
 import com.acv.uikit.common.click
 import com.acv.uikit.dialog.DateDialog
 import com.acv.uikit.dialog.FintonicDialogDateFragment
-import com.acv.uikit.invisible
-import com.acv.uikit.popup.PopupAdapter
-import com.acv.uikit.visible
 import kotlinx.android.synthetic.main.chips_social_view.view.*
 
 class ChipsSocialView @JvmOverloads constructor(

@@ -15,7 +15,6 @@ interface DiffUtil {
             }
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-
                 val a = old[oldItemPosition] == new[newItemPosition]
                 Log.e("equal",
                       """${old[oldItemPosition]}
@@ -30,8 +29,27 @@ interface DiffUtil {
             override fun getNewListSize() =
                 new.size
 
-            override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-                return new[newItemPosition]
-            }
+            override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? =
+               new[newItemPosition]
+
+        })
+
+    fun <M> autoNotify(old: M, new: M, compare: (M, M) -> Boolean): DiffUtil.DiffResult =
+
+        calculateDiff(object : DiffUtil.Callback() {
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                compare(old, new)
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                old == new
+
+            override fun getOldListSize(): Int =
+                1
+
+            override fun getNewListSize(): Int =
+                1
+
+            override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? =
+                new
         })
 }

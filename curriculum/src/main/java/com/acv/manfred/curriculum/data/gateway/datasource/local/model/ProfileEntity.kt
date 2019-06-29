@@ -1,46 +1,42 @@
 package com.acv.manfred.curriculum.data.gateway.datasource.local.model
 
-import java.net.URI
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import arrow.core.toOption
+import com.acv.manfred.curriculum.domain.model.GenerateId
+import com.acv.manfred.curriculum.domain.model.Profile
+import com.acv.manfred.curriculum.domain.model.RoleProfile
 
-
-/**
- * Personal data of the CV author
- *
- */
+@Entity(tableName = "profile")
 data class ProfileEntity(
-
-    /**
-     * Complete name of the CV author
-     * (Required)
-     *
-     */
-    var name: String,
-    /**
-     * URL of the author image
-     *
-     */
-    var image: URI? = null,
-    /**
-     * Birthday in format yyyy-mm-dd
-     * (Required)
-     *
-     */
-    var birthday: String,
-    /**
-     * List the links to code repositories, social media, professional networks or any other worthy public profile
-     *
-     */
-    var publicLinks: Set<URI>? = null,
-    /**
-     * The ones that better describe your previous or future positions
-     * (Required)
-     *
-     */
-    var roles: Set<RoleProfileEntity>,
-    /**
-     * Total number of years of professional experience
-     * (Required)
-     *
-     */
-    var yearsOfExperience: Float
+    @PrimaryKey @ColumnInfo(name = "id") val profileId: String,
+    val name: String,
+    val image: String?,
+    val birthday: String,
+    val publicLinks: List<String>,
+    val roles: List<String>,
+    val yearsOfExperience: Float
 )
+
+fun Profile.toEntity(): ProfileEntity =
+    ProfileEntity(
+        profileId = id.id,
+        name = name,
+        image = image.orNull(),
+        birthday = birthday,
+        publicLinks = publicLinks,
+        roles = roles.map { it.value },
+        yearsOfExperience = yearsOfExperience
+    )
+
+fun ProfileEntity.toDomain(): Profile =
+    Profile(
+        id = GenerateId(profileId),
+        name = name,
+        image = image.toOption(),
+        birthday = birthday,
+        publicLinks = publicLinks,
+        roles = roles.map { RoleProfile(it) },
+        yearsOfExperience = yearsOfExperience
+    )
