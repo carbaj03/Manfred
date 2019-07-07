@@ -15,11 +15,11 @@ interface RequestProfileOperations : NetworkProfileOperations, DomainMapperProfi
     override suspend fun ProfileDto.save(): ResultK<Profile> =
         persist().toDomainProfile()
 
-    override suspend fun GetProfileDto.all():ResultK<Profile> =
+    override suspend fun GetProfileDto.all(): ResultK<Profile> =
         request().toDomainProfile()
 
-    override suspend fun AddProfileDto.add():ResultK<Profile> =
-       persist().toDomainProfile()
+    override suspend fun AddProfileDto.add(): ResultK<Profile> =
+        persist().toDomainProfile()
 
     override suspend fun RemoveProfileDto.remove(): ResultK<Profile> =
         delete().toDomainProfile()

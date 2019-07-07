@@ -21,12 +21,14 @@ import com.acv.manfred.curriculum.ui.form.components.common.*
 import com.acv.manfred.curriculum.ui.form.components.education.EducationView
 import com.acv.manfred.curriculum.ui.form.components.education.EducationViewModel
 import com.acv.manfred.curriculum.ui.operations.EducationViewOperations
+import com.acv.uikit.adapterModel.AndroidDiffResult
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_education.*
 
 class EducationFragment : BaseFragment(), EducationContainer {
 
     override val adapter: ComponentAdapter<EducationModel> = createAdapter()
+
     override val container: ViewGroup get() = education_container
 
     override fun createComponent(): EducationComponent =

@@ -6,8 +6,54 @@ import android.view.ViewGroup
 import com.acv.manfred.curriculum.presentation.form.component.common.Component
 import com.acv.manfred.curriculum.presentation.form.component.common.ComponentModel
 import com.acv.manfred.curriculum.presentation.form.component.common.ComponentResponse
-import com.acv.manfred.curriculum.presentation.form.component.common.ObserveComponent
+import com.acv.uikit.adapterModel.ObserveComponent
 import com.acv.manfred.curriculum.presentation.form.component.questionnaire.ByDefault
+import com.acv.uikit.adapterModel.*
+
+
+interface ComponentContainerK<
+        A : Differ,
+        B : Updatable,
+        C : ComponentModel,
+        D : ByDefault,
+        E : ComponentResponse,
+        F : Component<C, D, E>> {
+
+    val container: ViewGroup
+
+    fun createComponent(): Component<C, D, E>
+
+//    fun swap() {
+//        swip()
+//    }
+
+    fun observable(): ObserveComponent<C> =
+        object : ObserveComponent<C> {
+            override fun remove(position: Int) {
+                Log.e("remove", "$position")
+                container.removeViewAt(position)
+            }
+
+            override fun insert(m: C) {
+                Log.e("insert", "${m.id}")
+                container.addView(createComponent().renderType(m) as View)
+            }
+
+            override fun moved(fromPosition: Int, toPosition: Int) {
+                Log.e("moved", "from $fromPosition - to $toPosition")
+                container.move(fromPosition, toPosition)
+            }
+
+            override fun change(position: Int, m: C) {
+                Log.e("change", """$position , ${m}""")
+                getItem(position).renderType(m)
+            }
+        }
+
+    private fun getItem(position: Int): F =
+        container.getChildAt(position) as F
+}
+
 
 interface ComponentContainer<A : ComponentModel, B : ByDefault, C : ComponentResponse, D : Component<A, B, C>> {
     val adapter: ComponentAdapter<A>

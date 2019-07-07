@@ -6,9 +6,8 @@ import kotlinx.android.extensions.LayoutContainer
 
 abstract class BaseViewHolder<in M>(
     view: View
-) : RecyclerView.ViewHolder(view), LayoutContainer {
+) : RecyclerView.ViewHolder(view), LayoutContainer, RvHolder<M> {
     override val containerView: View? get() = itemView
-    abstract fun bindTo(model: M)
 }
 
 abstract class ViewHolderWithParent<M, N : M>(

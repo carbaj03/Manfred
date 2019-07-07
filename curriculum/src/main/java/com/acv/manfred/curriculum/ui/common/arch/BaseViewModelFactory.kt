@@ -78,7 +78,7 @@ class QuestionaireViewModelFactory(
 }
 
 class ProfileViewModelFactory(
-    private val dependencies: ProfileUseCase
+    private val dependencies: ProfileUseCaseAndroid
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
