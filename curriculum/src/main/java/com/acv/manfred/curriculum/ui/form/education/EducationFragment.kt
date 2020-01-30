@@ -1,7 +1,7 @@
 package com.acv.manfred.curriculum.ui.form.education
 
 import android.view.ViewGroup
-import arrow.effects.ForIO
+import arrow.fx.ForIO
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkEducationFetcher

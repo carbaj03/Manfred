@@ -11,81 +11,56 @@ import com.acv.manfred.curriculum.ui.form.components.miscEducation.MiscEducation
 import com.acv.manfred.curriculum.ui.form.languaje.LanguageViewModel
 import com.acv.manfred.curriculum.ui.form.questionnaire.QuestionnaireViewModel
 
-object EmptyViewModelFactory : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EmptyViewModel::class.java)) {
-            return EmptyViewModel as T
+
+sealed class ViewModelProviderFactory : ViewModelProvider.Factory {
+    abstract val model: BaseViewModel
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(model::class.java)) {
+            return model as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
+}
+
+object EmptyViewModelFactory : ViewModelProviderFactory() {
+    override val model: BaseViewModel = EmptyViewModel
 }
 
 class FormViewModelFactory(
-    private val dependencies: GatewayIO
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FormViewModel::class.java)) {
-            return FormViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    dependencies: GatewayIO
+) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = FormViewModel(dependencies)
 }
 
 class MiscEducationViewModelFactory(
-    private val dependencies: MiscEducationUseCaseIO
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MiscEducationViewModel::class.java)) {
-            return MiscEducationViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    dependencies: MiscEducationUseCaseIO
+) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = MiscEducationViewModel(dependencies)
 }
-
 
 class EducationViewModelFactory(
-    private val dependencies: EducationUseCase
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EducationViewModel::class.java)) {
-            return EducationViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    dependencies: EducationUseCase
+) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = EducationViewModel(dependencies)
 }
 
-
 class LanguageViewModelFactory(
-    private val dependencies: LanguageUsesCasesIO
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LanguageViewModel::class.java)) {
-            return LanguageViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    dependencies: LanguageUsesCasesIO
+) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = LanguageViewModel(dependencies)
 }
 
 class QuestionaireViewModelFactory(
-    private val dependencies: QuestionnaireUsesCasesIO
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(QuestionnaireViewModel::class.java)) {
-            return QuestionnaireViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    dependencies: QuestionnaireUsesCasesIO
+) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = QuestionnaireViewModel(dependencies)
 }
 
 class ProfileViewModelFactory(
-    private val dependencies: ProfileUseCaseAndroid
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-            return ProfileViewModel(dependencies) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    dependencies: ProfileUseCaseAndroid
+) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = ProfileViewModel(dependencies)
 }
 
 object EmptyViewModel : BaseViewModel()

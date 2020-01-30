@@ -1,6 +1,6 @@
 package com.acv.manfred.curriculum.presentation.operation
 
-import arrow.effects.ForIO
+import arrow.fx.ForIO
 import com.acv.manfred.curriculum.domain.dto.*
 import com.acv.manfred.curriculum.presentation.form.component.language.LanguageModel
 import com.acv.manfred.curriculum.presentation.form.component.language.proficiency.ProficiencyModel

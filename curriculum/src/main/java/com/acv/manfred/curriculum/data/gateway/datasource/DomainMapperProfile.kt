@@ -1,7 +1,6 @@
 package com.acv.manfred.curriculum.data.gateway.datasource
 
 import arrow.core.Either
-import arrow.core.flatMap
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.ProfileEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toDomain
 import com.acv.manfred.curriculum.domain.gategay.ResultK

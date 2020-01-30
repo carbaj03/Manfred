@@ -1,7 +1,6 @@
 package com.acv.manfred.curriculum.ui.form.author
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListUpdateCallback
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.gateway.datasource.api.ApiModule
 import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkProfileFetcher
@@ -10,9 +9,6 @@ import com.acv.manfred.curriculum.presentation.form.component.author.profile.Pro
 import com.acv.manfred.curriculum.presentation.form.component.author.profile.ProfileContainer
 import com.acv.manfred.curriculum.presentation.form.component.author.profile.ProfileModel
 import com.acv.manfred.curriculum.presentation.form.component.author.profile.StateProfile
-import com.acv.manfred.curriculum.presentation.form.component.education.StateEducation
-import com.acv.manfred.curriculum.presentation.operation.ProfileUseCase
-import com.acv.manfred.curriculum.presentation.operation.ProfileUseCaseAndroid
 import com.acv.manfred.curriculum.ui.common.activity.fab
 import com.acv.manfred.curriculum.ui.common.activity.snack
 import com.acv.manfred.curriculum.ui.common.arch.ProfileViewModelFactory
@@ -21,21 +17,16 @@ import com.acv.manfred.curriculum.ui.common.arch.viewModelProviders
 import com.acv.manfred.curriculum.ui.common.fragment.BaseFragment
 import com.acv.manfred.curriculum.ui.form.components.author.profile.ProfileView
 import com.acv.manfred.curriculum.ui.form.components.author.profile.ProfileViewModel
-import com.acv.manfred.curriculum.ui.form.components.common.*
+import com.acv.manfred.curriculum.ui.form.components.common.ComponentValidation
+import com.acv.manfred.curriculum.ui.form.components.common.Error
+import com.acv.manfred.curriculum.ui.form.components.common.Invalid
+import com.acv.manfred.curriculum.ui.form.components.common.Valid
 import com.acv.manfred.curriculum.ui.operations.ProfileViewOperations
 import com.acv.uikit.adapterModel.*
 import com.acv.uikit.onClick
 import kotlinx.android.synthetic.main.view_author_profile.*
 
 class ProfileFragment : BaseFragment(), ProfileContainer {
-//    override val asyncDiffResult: AsyncDiffResult<AndroidDiffer, AndroidUpdatable> = object : AndroidDiffResult {
-//        override val differ: AndroidDiffer
-//            get() = object : AndroidDiffer {}
-//    }
-
-//    override val adapter: AdapterK<AndroidDiffer, AndroidUpdatable> = object : AdapterK <AndroidDiffer, AndroidUpdatable>{
-//        override val asyncDiffResult: AsyncDiffResult<AndroidDiffer, AndroidUpdatable> = asyncDiffResult
-//    }
 
     override val container: ViewGroup get() = profileContainer
 
@@ -61,7 +52,7 @@ class ProfileFragment : BaseFragment(), ProfileContainer {
 
     override fun onCreate() {
 //        observe { profile } map { swip() }
-        observe { validation } map { validate() }
+//        observe { validation } map { validate() }
         model { StateProfile.Load.run() }
 
         baseActivity.fab {

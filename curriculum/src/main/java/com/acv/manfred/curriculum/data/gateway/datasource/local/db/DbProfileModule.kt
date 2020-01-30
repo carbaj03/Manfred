@@ -2,8 +2,6 @@ package com.acv.manfred.curriculum.data.gateway.datasource.local.db
 
 import arrow.core.left
 import arrow.core.right
-import arrow.core.toOption
-import arrow.syntax.collections.firstOption
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.ProfileDao
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.ProfileEntity
 import com.acv.manfred.curriculum.data.gateway.datasource.local.model.toEntity

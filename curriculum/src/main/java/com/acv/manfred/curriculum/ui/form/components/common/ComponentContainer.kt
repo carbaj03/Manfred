@@ -23,10 +23,6 @@ interface ComponentContainerK<
 
     fun createComponent(): Component<C, D, E>
 
-//    fun swap() {
-//        swip()
-//    }
-
     fun observable(): ObserveComponent<C> =
         object : ObserveComponent<C> {
             override fun remove(position: Int) {

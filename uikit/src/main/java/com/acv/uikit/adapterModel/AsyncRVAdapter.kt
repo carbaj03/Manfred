@@ -92,7 +92,7 @@ data class RvCallback<A, V>(
     val swap: () -> Unit
 )
 
-class ExampleModel() : AdapterModel(1)
+//class ExampleModel() : AdapterModel(1)
 
 
 //class Example {

@@ -1,7 +1,7 @@
 package com.acv.manfred.curriculum.data.gateway.request
 
 import arrow.Kind
-import arrow.effects.typeclasses.Async
+import arrow.fx.typeclasses.Async
 import com.acv.manfred.curriculum.data.gateway.network.NetworkLanguageOperations
 import com.acv.manfred.curriculum.data.gateway.network.NetworkProficiencyOperations
 import com.acv.manfred.curriculum.data.gateway.datasource.DomainMapper

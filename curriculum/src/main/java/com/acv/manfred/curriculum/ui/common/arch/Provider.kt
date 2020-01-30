@@ -6,11 +6,20 @@ import androidx.lifecycle.ViewModelProviders
 import com.acv.manfred.curriculum.ui.common.WithActivity
 
 interface Provider : WithActivity {
-    fun viewModelProvider(factory: ViewModelProvider.Factory): ViewModelProvider =
-        if (factory != EmptyViewModelFactory) ViewModelProviders.of(baseActivity, factory)
-        else ViewModelProviders.of(baseActivity)
+    fun viewModelProvider(factory: ViewModelProviderFactory): ViewModelProvider =
+        when(factory){
+            is EmptyViewModelFactory -> ViewModelProviders.of(baseActivity)
+            is FormViewModelFactory ,
+            is MiscEducationViewModelFactory ,
+            is EducationViewModelFactory ,
+            is LanguageViewModelFactory ,
+            is QuestionaireViewModelFactory ,
+            is ProfileViewModelFactory -> ViewModelProviders.of(baseActivity, factory)
+        }
 }
 
-inline fun <reified T : ViewModel> Provider.viewModelProviders(factory: ViewModelProvider.Factory = EmptyViewModelFactory): T =
+inline fun <reified T : ViewModel> Provider.viewModelProviders(
+    factory: ViewModelProviderFactory = EmptyViewModelFactory
+): T =
     viewModelProvider(factory).get(T::class.java)
 

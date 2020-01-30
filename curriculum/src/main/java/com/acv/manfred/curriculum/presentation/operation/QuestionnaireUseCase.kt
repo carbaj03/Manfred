@@ -1,7 +1,7 @@
 package com.acv.manfred.curriculum.presentation.operation
 
 import arrow.Kind
-import arrow.effects.ForIO
+import arrow.fx.ForIO
 import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.dto.AddQuestionnaireDto
 import com.acv.manfred.curriculum.domain.dto.GetQuestionnaireDto

@@ -1,10 +1,10 @@
 package com.acv.manfred.curriculum.ui.form.languaje
 
 import android.view.ViewGroup
-import arrow.effects.ForIO
-import arrow.effects.IO
-import arrow.effects.extensions.io.async.async
-import arrow.effects.typeclasses.Async
+import arrow.fx.ForIO
+import arrow.fx.IO
+import arrow.fx.extensions.io.async.async
+import arrow.fx.typeclasses.Async
 import com.acv.manfred.curriculum.R
 import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkLanguageFetcher
 import com.acv.manfred.curriculum.data.gateway.network.fetcher.NetworkProficiencyFetcher

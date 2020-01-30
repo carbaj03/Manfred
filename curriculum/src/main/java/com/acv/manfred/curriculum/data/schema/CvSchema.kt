@@ -1,6 +1,6 @@
 package com.acv.manfred.curriculum.data.schema
 
-import arrow.data.NonEmptyList
+import arrow.core.NonEmptyList
 
 
 fun createObject(

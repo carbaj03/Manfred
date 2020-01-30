@@ -10,4 +10,3 @@ import com.acv.uikit.adapterModel.AndroidUpdatable
 interface ProfileContainer :
     ComponentContainerK<AndroidDiffer, AndroidUpdatable, ProfileModel, ProfileDefault, ProfileComponentResponse, ProfileView>,
     Observable<ProfileViewModel>
-//    AdapterK<AndroidDiffer, AndroidUpdatable>

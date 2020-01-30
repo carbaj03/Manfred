@@ -33,7 +33,7 @@ dependencies {
     implementation project(':base')
     implementation project(':uikit')
 
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
@@ -47,7 +47,7 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
 //    implementation "androidx.work:work-runtime-ktx:$workVersion"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -60,24 +60,28 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation "io.arrow-kt:arrow-core-data:$arrow_version"
-    implementation "io.arrow-kt:arrow-core-extensions:$arrow_version"
-    implementation "io.arrow-kt:arrow-syntax:$arrow_version"
-    implementation "io.arrow-kt:arrow-typeclasses:$arrow_version"
-    implementation "io.arrow-kt:arrow-extras-data:$arrow_version"
-    implementation "io.arrow-kt:arrow-extras-extensions:$arrow_version"
-    kapt "io.arrow-kt:arrow-meta:$arrow_version"
 
-    implementation "io.arrow-kt:arrow-free-data:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-free-extensions:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-mtl:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-effects-data:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-effects-extensions:$arrow_version"
-//    implementation "io.arrow-kt:arrow-effects-io-extensions:$arrow_version"
-    implementation "io.arrow-kt:arrow-optics:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-generic:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-recursion-data:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-recursion-extensions:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-query-language:$arrow_version" //optional
-    implementation "io.arrow-kt:arrow-integration-retrofit-adapter:$arrow_version" //optional
+    implementation "io.arrow-kt:arrow-fx:$arrow_version"
+    implementation "io.arrow-kt:arrow-optics:$arrow_version"
+    implementation "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+//    implementation "io.arrow-kt:arrow-core-data:$arrow_version"
+//    implementation "io.arrow-kt:arrow-core-extensions:$arrow_version"
+//    implementation "io.arrow-kt:arrow-syntax:$arrow_version"
+//    implementation "io.arrow-kt:arrow-typeclasses:$arrow_version"
+//    implementation "io.arrow-kt:arrow-extras-data:$arrow_version"
+//    implementation "io.arrow-kt:arrow-extras-extensions:$arrow_version"
+//    kapt "io.arrow-kt:arrow-meta:$arrow_version"
+
+//    implementation "io.arrow-kt:arrow-free-data:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-free-extensions:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-mtl:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-effects-data:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-effects-extensions:$arrow_version"
+//    implementation "io.arrow-kt:arrow-optics:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-generic:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-recursion-data:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-recursion-extensions:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-query-language:$arrow_version" //optional
+//    implementation "io.arrow-kt:arrow-integration-retrofit-adapter:$arrow_version" //optional
 }

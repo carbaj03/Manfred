@@ -1,8 +1,7 @@
 package com.acv.manfred.curriculum.ui.mapper
 
 import arrow.core.Either
-import arrow.core.flatMap
-import com.acv.manfred.curriculum.data.gateway.datasource.catch
+import com.acv.manfred.curriculum.data.gateway.datasource.flatMap
 import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.MapError
 import com.acv.manfred.curriculum.domain.model.Profile

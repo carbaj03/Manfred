@@ -4,8 +4,8 @@ import arrow.Kind
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import arrow.effects.IO
-import arrow.effects.typeclasses.Async
+import arrow.fx.IO
+import arrow.fx.typeclasses.Async
 
 interface CallAsync<F> : Async<F> {
     fun <A, R> A.call(a: Request<A, R>): Kind<F, R> =

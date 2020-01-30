@@ -1,8 +1,7 @@
 package com.acv.manfred.curriculum.ui.operations
 
 import arrow.core.Either
-import arrow.core.flatMap
-import com.acv.manfred.curriculum.data.gateway.datasource.catch
+import com.acv.manfred.curriculum.data.gateway.datasource.flatMap
 import com.acv.manfred.curriculum.data.gateway.request.RequestProfileOperations
 import com.acv.manfred.curriculum.domain.dto.AddProfileDto
 import com.acv.manfred.curriculum.domain.dto.GetProfileDto
@@ -12,6 +11,7 @@ import com.acv.manfred.curriculum.domain.gategay.ResultK
 import com.acv.manfred.curriculum.domain.model.MapError
 import com.acv.manfred.curriculum.presentation.form.component.author.profile.ProfileModel
 import com.acv.manfred.curriculum.presentation.operation.ProfileUseCase
+import com.acv.manfred.curriculum.ui.form.components.common.ComponentValidation
 import com.acv.manfred.curriculum.ui.mapper.ProfileDiffer
 import com.acv.manfred.curriculum.ui.mapper.ProfileOldNew
 import com.acv.manfred.curriculum.ui.mapper.ProfileUpdatable
@@ -20,9 +20,6 @@ import com.acv.uikit.adapterModel.AsyncDiffResult
 import com.acv.uikit.adapterModel.Differ
 import com.acv.uikit.adapterModel.ObserveComponent
 import com.acv.uikit.adapterModel.Updatable
-
-
-
 
 interface ProfileState {
     var oldState: List<ProfileModel>
@@ -47,6 +44,7 @@ interface ProfileViewOperations<A : AsyncDiffResult<B, C>, B : Differ, C : Updat
     ProfileState
 {
     val observeComponent: ObserveComponent<ProfileModel>
+//    val validation : ComponentValidation
 
     override suspend fun ProfileDto.saveView(): Unit {
         val b = save().toView().change().diff()
